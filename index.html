@@ -1,1 +1,140 @@
-Hello World
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Ben McDonough</title>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+    </head>
+    <header>
+        <h1>
+            Ben McDonough
+        </h1>
+        <h2>
+            <b>Research</b>
+            <b>Projects</b>
+            <b>Community</b>
+            <b>Blog</b>
+        </h2>    
+    </header>
+    <body>
+    <main>
+        <h1>
+            About
+        </h1>
+    <div class="flex">
+        <div class="pic">
+            <img src="circle_picture.png" width=350px height=auto alt="Your Image" class="image">
+            <p>Physics grad student @ CU Boulder e: first.last@colorado.edu<br>
+                <button class = "button">
+                    CV
+                </button>
+                <button class = "button">
+                    GitHub
+                </button>
+                <button class = "button">
+                    LinkedIn
+                </button>
+                <button class = "button">
+                    G Scholar
+                </button>
+            </p>
+        </div>
+        <div class = "container">
+            I am a first-year grad student in the Physics Department at the University of Colorado, Boulder working with Prof. Andrew Lucas's group. I am a mathematical physicist who is fascinated by the connection between quantum computing and emergent phenomena in physics. My research focuses on quantum dynamics, exotic quantum phases of matter, and quantum complexity. I am a Linux fanatic and a computer hobbiest. In my free time I like playing basketball, rock-climbing, and playing the flute. I also enjoy language learning, and I speak Spanish fluently and Hindi proficiently.
+        </div>
+    </main>
+    <h1>
+        Research
+    </h1>
+        <div class = "research">
+            <h2>
+                Novel Lieb-Robinson bounds and exponential-in-volume tails
+            </h2> 
+            <div class="flex">
+                <div class = "pic">
+                    <img src="research_figs/problem_setup.png" width=250px height=auto alt="Your Image" class="image">
+                </div>
+                <div class = "container">
+                Lieb-Robinson bounds quantify the speed at which information can propagate through matter with local interactions. With Prof. Andrew Lucas and collaborators Chao Yin and Carolyn Zhang, I am working on developing novel Lieb-Robinson bounds for applications in quantum computing and condensed matter physics, such as simulation complexity and spontaneous symmetry breaking phases. The manuscript will be available by the end of January.
+                </div>
+            </div>
+        </div>
+        <div class = "research">
+            <h2>
+                Crossover between classical and quantum information dynamics in operator entanglement spectrum
+            </h2>
+            <div class="flex">
+                <div class="pic">
+                    <img src="research_figs/local_permutation_moments.png" width=250px height=auto alt="Your Image" class="image">
+                </div>
+                <div class="container">
+                Chaotic quantum dynamics are characterized by operator spreading and operator scrambling, where operators in the Heisenberg picture evolve to fill the dynamical lightcone and appear suitably random. This process is quantified by the operator entanglement spectrum. In collaboration with Professors Thomas Iadecola, Justin Wilson, and Claudio Chamon, I found that the operator entanglement spectrum discriminates between classical information chaos and quantum information chaos, and also creates a bridge between the two. The manuscript will (most likely) be available by mid-February. This work was supported by the DOE as part of the 2024 SULI program.
+                </div>
+            </div>
+        </div>
+        <div class = "research">
+            <h2>
+                Benchmarking with quantum chaos
+            </h2>
+            <div class="flex">
+                <div class="pic">
+                    <img src="research_figs/aquila_data_honeycomb.png" width=250px height=auto alt="Your Image" class="image">
+                </div>
+                <div class="container">
+                Chaotic quantum evolution produces states with a ``speckle pattern," referring to a concentration of the measurement probabilities around a small number of outcomes. This is the well-known Porter-Thomas distribution. The sensitivity of these speckles to noise provide a tool for characterizing the fidelity of quantum simulators. Working at QuEra Computing Inc. in the summer of 2023, I designed and carried out benchmarking experiments to characterize the Aquila quantum simulator using quantum chaos. I also developed a noise modelling and simulation toolkit to add to the Bloqade toolchain. The code is publicly available  <a href="https://github.com/QuEraComputing/Bloqade.jl/tree/master/lib/BloqadeNoisy">here</a> and an in-depth tutorial may be found <a href="https://queracomputing.github.io/Bloqade.jl/dev/tutorials/8.simulating%20noise/main/">here</a>.
+                </div>
+            </div>
+        </div>
+        <div class = "research">
+            <h2>
+                Scalable quantum error mitigation
+            </h2>
+            <div class = "flex">
+                <div class = "pic">
+                        <img src="research_figs/magnetization.png" width=250px height=auto alt="Your Image" class="image">
+                </div>
+                    <div class="container">
+                    Near-term quantum computers do not yet feature error correction and suffer from noise that makes longer computations difficult, but they can still be useful. Working with Prof. Peter Orth and collaborators from the Unitary Fund Nathan Shammah, Misty Wahl, Nate Stemen, and William Zeng, I developed a novel method for extracting noise-mitigated expectation values from noisy quantum computers. This method, based on the restricted connectivity of quantum processors, includes a scalable noise tomography process and a low-overhead error mitigation scheme. I also developed a Python package for automating this process, and the code is available for use <a href="https://github.com/benmcdonough20/AutomatedPERTools">here</a>. This method was employed by IBM in a <a href="https://www.nature.com/articles/s41586-023-06096-3">significant experiment</a> in the summer of 2023. I was honored to <a href="https://www.computer.org/csdl/proceedings-article/qcs/2022/753600a083/1KnWCsrG5r2">present this work</a> at the IEEE SC 22 HPC conference in Dallas. The paper can be found <a href="https://arxiv.org/abs/2210.08611">here</a>.
+                </div>
+            </div>
+        </div>
+    <h1>
+        Projects
+    </h1>
+    <div class = "project">
+        <h2>
+            The Berry Phase: transport and holonomy in physics
+        </h2>
+        <div class = "flex">
+            <div class = "pic">
+                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+            </div>
+            A review of the theory of the Berry phase I wrote for my solid state physics class at CU Boulder, taught by Prof. Rahul Nandkishore. The review covers the basics of gauge theory including fiber bundles and holonomy, and explores the more general context of transport in which geometric phases arise.
+        </div>
+    </div>
+    <div class = "project">
+        <h2>
+           Lie Algebra Cohomology 
+        </h2>
+        <div class = "flex">
+            <div class = "pic">
+                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+            </div>
+            I wrote my senior project for completion of the Physics major about classifying projected-entangled pair states, which got me interested in the role of cohomology in physics. This led me to write a review for my undergraduate course Lie Groups and Representation Theory on Lie Group cohomology, with an eye for the category-theoretic underpinnings.
+        </div>
+    </div>
+    <div class = "project">
+        <h2>
+            The Peter-Weyl Theorem: harmonic analysis and representation theory of compact groups
+        </h2>
+        <div class = "flex">
+            <div class = "pic">
+                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+            </div>
+            My senior project for completion of the Mathematics major was a complete proof of the Peter-Weyl theorem, which underlies the remarkable connection between representation theory of compact groups and analysis. I provide a proof which I find quite elegant; it centers on the algebraic properties of the representative functions and the compactness of Hilbert-Schmidt operators. No approximate identities needed!
+        </div>
+    </div>
+    </body>
+</html>
