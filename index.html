@@ -12,10 +12,12 @@
             Ben McDonough
         </h1>
         <h2>
-            <b>Research</b>
-            <b>Projects</b>
-            <b>Community</b>
-            <b>Blog</b>
+            <nav>
+                <a href = "#research">Research</a>
+                <a href = "#projects">Projects</a>
+                <a href = "#community">Community</a>
+                <a href = "blog.html">Blog</a>
+            </nav>
         </h2>    
     </header>
     <body>
@@ -25,24 +27,24 @@
         </h1>
     <div class="flex">
         <div class="pic">
-            <img src="circle_picture.png" width=350px height=auto alt="Your Image" class="image">
+            <img src="images/circle_picture.png" width=350px height=auto alt="Your Image" class="image">
             <p>Physics grad student @ CU Boulder e: first.last@colorado.edu<br>
-                <a href="">
+                <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/Benjamin%20McDonough%20Resume.pdf?raw=true" target="_blank">
                     <button class = "button">
                         CV
                     </button>
                 </a>
-                <a href="https://github.com/benmcdonough20">
+                <a href="https://github.com/benmcdonough20" target="_blank">
                     <button class = "button">
                         GitHub
                     </button>
                 </a>
-                <a href="https://www.linkedin.com/in/benjamin-mcdonough-06828922a">
+                <a href="https://www.linkedin.com/in/benjamin-mcdonough-06828922a" target="_blank">
                     <button class = "button">
                         LinkedIn
                     </button>
                 </a>
-                <a href=https://scholar.google.com/citations?user=XMdADZwAAAAJ&hl=en>
+                <a href="https://scholar.google.com/citations?user=XMdADZwAAAAJ&hl=en" target="_blank">
                     <button class = "button">
                         G Scholar
                     </button>
@@ -53,9 +55,11 @@
             I am a first-year grad student in the Physics Department at the University of Colorado, Boulder working with Prof. Andrew Lucas's group. I am a mathematical physicist who is fascinated by the connection between quantum computing and emergent phenomena in physics. My research focuses on quantum dynamics, exotic quantum phases of matter, and quantum complexity. I am a Linux fanatic and a computer hobbiest. In my free time I like playing basketball, rock-climbing, and playing the flute. I also enjoy language learning, and I speak Spanish fluently and Hindi proficiently.
         </div>
     </main>
-    <h1>
-        Research
-    </h1>
+    <div id=research>
+        <h1>
+            Research
+        </h1>
+    </div>
         <div class = "research">
             <h2>
                 Novel Lieb-Robinson bounds and exponential-in-volume tails
@@ -91,7 +95,7 @@
                     <img src="images/aquila_data_honeycomb.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class="container">
-                Chaotic quantum evolution produces states with a ``speckle pattern," referring to a concentration of the measurement probabilities around a small number of outcomes. This is the well-known Porter-Thomas distribution. The sensitivity of these speckles to noise provide a tool for characterizing the fidelity of quantum simulators. Working at QuEra Computing Inc. in the summer of 2023, I designed and carried out benchmarking experiments to characterize the Aquila quantum simulator using quantum chaos. I also developed a noise modelling and simulation toolkit to add to the Bloqade toolchain. The code is publicly available  <a href="https://github.com/QuEraComputing/Bloqade.jl/tree/master/lib/BloqadeNoisy">here</a> and an in-depth tutorial may be found <a href="https://queracomputing.github.io/Bloqade.jl/dev/tutorials/8.simulating%20noise/main/">here</a>.
+                Chaotic quantum evolution produces states with a ``speckle pattern," referring to a concentration of the measurement probabilities around a small number of outcomes. This is the well-known Porter-Thomas distribution. The sensitivity of these speckles to noise provide a tool for characterizing the fidelity of quantum simulators. Working at QuEra Computing Inc. in the summer of 2023, I designed and carried out benchmarking experiments to characterize the Aquila quantum simulator using quantum chaos. I also developed a noise modelling and simulation toolkit to add to the Bloqade toolchain. The code is publicly available  <a href="https://github.com/QuEraComputing/Bloqade.jl/tree/master/lib/BloqadeNoisy" class=tl target="_blank">here</a> and an in-depth tutorial may be found <a href="https://queracomputing.github.io/Bloqade.jl/dev/tutorials/8.simulating%20noise/main/" class = "tl" target="_blank">here</a>.
                 </div>
             </div>
         </div>
@@ -104,21 +108,25 @@
                         <img src="images/magnetization.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                     <div class="container">
-                    Near-term quantum computers do not yet feature error correction and suffer from noise that makes longer computations difficult, but they can still be useful. Working with Prof. Peter Orth and collaborators from the Unitary Fund Nathan Shammah, Misty Wahl, Nate Stemen, and William Zeng, I developed a novel method for extracting noise-mitigated expectation values from noisy quantum computers. This method, based on the restricted connectivity of quantum processors, includes a scalable noise tomography process and a low-overhead error mitigation scheme. I also developed a Python package for automating this process, and the code is available for use <a href="https://github.com/benmcdonough20/AutomatedPERTools">here</a>. This method was employed by IBM in a <a href="https://www.nature.com/articles/s41586-023-06096-3">significant experiment</a> in the summer of 2023. I was honored to <a href="https://www.computer.org/csdl/proceedings-article/qcs/2022/753600a083/1KnWCsrG5r2">present this work</a> at the IEEE SC 22 HPC conference in Dallas. The paper can be found <a href="https://arxiv.org/abs/2210.08611">here</a>.
+                    Near-term quantum computers do not yet feature error correction and suffer from noise that makes longer computations difficult, but they can still be useful. Working with Prof. Peter Orth and collaborators from the Unitary Fund Nathan Shammah, Misty Wahl, Nate Stemen, and William Zeng, I developed a novel method for extracting noise-mitigated expectation values from noisy quantum computers. This method, based on the restricted connectivity of quantum processors, includes a scalable noise tomography process and a low-overhead error mitigation scheme. I also developed a Python package for automating this process, and the code is available for use <a href="https://github.com/benmcdonough20/AutomatedPERTools" class=tl target="_blank">here</a>. This method was employed by IBM in a <a href="https://www.nature.com/articles/s41586-023-06096-3" class=tl target="_blank">significant experiment</a> in the summer of 2023. I was honored to <a href="https://www.computer.org/csdl/proceedings-article/qcs/2022/753600a083/1KnWCsrG5r2" class=tl target="_blank">present this work</a> at the IEEE SC 22 HPC conference in Dallas. The paper can be found <a href="https://arxiv.org/abs/2210.08611" class=tl target="_blank">here</a>.
                 </div>
             </div>
         </div>
-    <h1>
-        Projects
-    </h1>
+    <div id="projects">
+        <h1>
+            Projects
+        </h1>
+    </div>
     <div class = "project">
         <h2>
             The Berry Phase: transport and holonomy in physics
         </h2>
         <div class = "flex">
+            <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/projects/SolidStatePsetfinal.pdf?raw=true" target="_blank">
             <div class = "pic">
-                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+                <img src="images/download_icon.png" width=50 height=auto alt="Your Image" class="icon">
             </div>
+            </a>
             A review of the theory of the Berry phase I wrote for my solid state physics class at CU Boulder, taught by Prof. Rahul Nandkishore. The review covers the basics of gauge theory including fiber bundles and holonomy, and explores the more general context of transport in which geometric phases arise.
         </div>
     </div>
@@ -127,9 +135,11 @@
            Lie Algebra Cohomology 
         </h2>
         <div class = "flex">
+            <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/projects/BenMcDonough_LieAlgebraCohomology.pdf?raw=true" target="_blank">
             <div class = "pic">
-                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+                <img src="images/download_icon.png" width=50 height=auto alt="Your Image" class="icon">
             </div>
+            </a>
             I wrote my senior project for completion of the Physics major about classifying projected-entangled pair states, which got me interested in the role of cohomology in physics. This led me to write a review for my undergraduate course Lie Groups and Representation Theory on Lie Group cohomology, with an eye for the category-theoretic underpinnings.
         </div>
     </div>
@@ -138,9 +148,11 @@
             The Peter-Weyl Theorem: harmonic analysis and representation theory of compact groups
         </h2>
         <div class = "flex">
+            <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/projects/peterweyl.pdf?raw=true" target="_blank">
             <div class = "pic">
-                <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+                <img src="images/download_icon.png" width=50 height=auto alt="Your Image" class="icon">
             </div>
+            </a>
             My senior project for completion of the Mathematics major was a complete proof of the Peter-Weyl theorem, which underlies the remarkable connection between representation theory of compact groups and analysis. I provide a proof which I find quite elegant; it centers on the algebraic properties of the representative functions and the compactness of Hilbert-Schmidt operators. No approximate identities needed!
         </div>
     </div>
@@ -148,7 +160,7 @@
         <h2>
             Bosonic Qiskit Textbook
         </h2>
-        I worked with Dr. Kevin Smith to design a Qiskit-textbook-like introduction to continuous-variable quantum computing for the <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main">Bosonic Qiskit package</a>. This strives to be a guide for computer scientists and non-physicists who are mathematically inclined. It introduces the quantum harmonic oscillator abstractly using the ladder operators, explains common operations such as SNAP and displacement with detailed derivations, and includes a in-depth description of the Wigner function and its emergence from Weyl quantization. The guide can be found <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main/tutorials/bosonic-qiskit-textbook">here</a>.
+        I worked with Dr. Kevin Smith to design a Qiskit-textbook-like introduction to continuous-variable quantum computing for the <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main" class="tl" target="_blank">Bosonic Qiskit package</a>. This strives to be a guide for computer scientists and non-physicists who are mathematically inclined. It introduces the quantum harmonic oscillator abstractly using the ladder operators, explains common operations such as SNAP and displacement with detailed derivations, and includes a in-depth description of the Wigner function and its emergence from Weyl quantization. The guide can be found <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main/tutorials/bosonic-qiskit-textbook" class="tl" target="_blank">here</a>.
     </div>
     <div class = "project">
         <h2>
@@ -156,12 +168,42 @@
         </h2>
         <div class="flex">
             <div class="pic">
-                <img src="screenshot.png" width=300 height=auto alt="Your Image" class="icon">
+                <img src="images/screenshot.png" width=300 height=auto alt="Your Image" class="icon">
             </div>
             <div class="container">
-            After using the ScQubits Python package for some research into superconducting circuits (resulting in these two tutorials <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumcz.ipynb">tutorial 1</a>, <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumreset.ipynb">tutorial 2</a>,) I realized it would be nice to have a GUI to design and quantize superconducting circuits. I worked with Prof. Jens Koch to create a GUI extension to ScQubits. The code is available <a href = "https://github.com/benmcdonough20/SuperconductingCircuitBuilder">here</a>, and the PyPI package can be found <a href = "https://pypi.org/project/sccircuitbuilder/">here</a>.
+            After using the ScQubits Python package for some research into superconducting circuits (resulting in these two tutorials <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumcz.ipynb" class="tl" target="_blank">tutorial 1</a>, <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumreset.ipynb" class="tl" target="_blank">tutorial 2</a>,) I realized it would be nice to have a GUI to design and quantize superconducting circuits. I worked with Prof. Jens Koch to create a GUI extension to ScQubits. The code is available <a href = "https://github.com/benmcdonough20/SuperconductingCircuitBuilder" class="tl" target="_blank">here</a>, and the PyPI package can be found <a href = "https://pypi.org/project/sccircuitbuilder/" class="tl" target="_blank">here</a>.
             </div>
         </div>
+    </div>
+    <div id = "community">
+        <h1>
+            Community
+        </h1>
+    </div>
+    <div class = "community">
+        <h3>
+            Quantum Coalition
+        </h3>
+        <div class = "flex">
+            <div class = "pic">
+                <img src="images/logo.png" width=150 height=auto alt="Your Image" class="icon">
+            </div>
+            <div class = "container">
+            The <a href="https://www.quantumcoalition.io/" class="tl" target="_blank">Quantum Coalition</a> is an organization of student quantum computing groups at 9 different universities around the US and IzTech in Turkiye. Educating the quantum workforce is essential to building a future where quantum information technology plays a role in many different areas of society and industry. The Quantum Coalition aims to be the first step in this pipeline through supporting grassroots efforts by passionate undergraduate students to spread enthusiasm and educate their peers about QIS. I was asked to direct <a href="https://www.quantumcoalition.io/qc-hack-2022" class="tl" target="_blank">QC Hack 2021</a>, and I founded the Quantum Coalition after realizing the outsized role a student like myself could play in this mission. I gave <a href="https://quantuminstitute.yale.edu/publications/ben-mcdonough-quantum-researcher-and-bridge-builder" class="tl" target = "_blank">an interview to IBM</a> about this afterward. Since then, we have planned several unique events, including the <a href="https://www.quantumcoalition.io/squid2023" class="tl" target="_blank">Symposium for Quantum Undergraduate Inquiry and Discovery</a> (SQUID,) which was an opportunity for undergrads to share their research in QIS and educate their peers, and the <a href="https://www.quantumcoalition.io/qrise" class="tl" target="_blank">Quantum Research and Industry Skills Exchange</a> (QRISE,) which was a six-week-long online event that brought industry proposed research projects to a worldwide audience. A recap of these events can be found on our <a href="https://www.youtube.com/@quantumcoalition4687" class="tl" target="_blank">YouTube channel</a>.
+            </div>
+        </div>
+    </div>
+    <div class = "community">
+    <h3>
+        Yale undergraduate Quantum Computing Club
+    </h3>
+    <div class = "flex">
+        <div class = "pic">
+                <img src="images/yale_qc_logo.png" width=150 height=auto alt="Your Image" class="icon">
+        </div>
+        <div class="container">
+            In the 2022-2023 year, I was president of Yale's quantum computing club, the <a href="https://yuqc.yale.edu/" class="tl" target="_blank">YuQC</a>, where I grew the club from just a handful of members the previous year to over 50. I organized community events, such as the Qiskit Fall Fest, and I led two project groups. One of these project groups was called QBasics, where along with graduate student Katie Chang, I designed and gave short lectures on introductory quantum computing topics, made activites to accompany the lectures, and posted solution. The <a href="https://github.com/benmcdonough20/QBasics/tree/main" class="tl" target="_blank">typed notes</a> are a work-in-progress.
+        <div>
     </div>
     </body>
 </html>

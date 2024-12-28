@@ -5,12 +5,9 @@
   line-height: 1.5;
 }
 
-a {
-    color: aquamarine
-}
-
 html {
   font-size: 1.3em;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -41,7 +38,21 @@ header {
   border-radius: 10px;
 }
 
+.tl {
+    color: aquamarine
+}
+
 .project {
+  color:rgb(215, 215, 215);
+  font-size: .75em;
+  padding: 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #30335b;
+  border-radius: 10px;
+}
+
+.community {
   color:rgb(215, 215, 215);
   font-size: .75em;
   padding: 20px 20px;
@@ -70,7 +81,24 @@ header {
   padding: 10px 10px;
   border-radius: 5px;
   display: inline-block;
-  border: none;
+  border: none;a:link {
+  color: red;
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
   margin: 5px 2px;
 }
 
@@ -80,9 +108,36 @@ header {
   font-size: 1em;
 }
 
+.blogpost {
+  color:rgb(215, 215, 215);
+  font-size: .75em;
+  padding: 20px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #363b44;
+  border-radius: 10px;
+}
+
 .button:hover {
-  background-color: #4CAF50; /* Green */
-  color: white;
+  background-color: DeepSkyBlue;
+  color: white;a:link {
+  color: red;
+}
+
+/* visited link */
+a:visited {
+  color: green;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+a:active {
+  color: blue;
+}
 }
 
 footer {
@@ -95,8 +150,12 @@ nav {
 }
 
 nav > a {
-  font-size: 1.8em;
-  color: #6cce77;
+  text-decoration: none; 
+  color: #dcdfe4;
+}
+
+nav > a:hover {
+  color: DarkTurquoise;
 }
 
 hr {
