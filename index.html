@@ -27,18 +27,26 @@
         <div class="pic">
             <img src="circle_picture.png" width=350px height=auto alt="Your Image" class="image">
             <p>Physics grad student @ CU Boulder e: first.last@colorado.edu<br>
-                <button class = "button">
-                    CV
-                </button>
-                <button class = "button">
-                    GitHub
-                </button>
-                <button class = "button">
-                    LinkedIn
-                </button>
-                <button class = "button">
-                    G Scholar
-                </button>
+                <a href="">
+                    <button class = "button">
+                        CV
+                    </button>
+                </a>
+                <a href="https://github.com/benmcdonough20">
+                    <button class = "button">
+                        GitHub
+                    </button>
+                </a>
+                <a href="https://www.linkedin.com/in/benjamin-mcdonough-06828922a">
+                    <button class = "button">
+                        LinkedIn
+                    </button>
+                </a>
+                <a href=https://scholar.google.com/citations?user=XMdADZwAAAAJ&hl=en>
+                    <button class = "button">
+                        G Scholar
+                    </button>
+                </a>
             </p>
         </div>
         <div class = "container">
@@ -54,7 +62,7 @@
             </h2> 
             <div class="flex">
                 <div class = "pic">
-                    <img src="research_figs/problem_setup.png" width=250px height=auto alt="Your Image" class="image">
+                    <img src="images/problem_setup.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class = "container">
                 Lieb-Robinson bounds quantify the speed at which information can propagate through matter with local interactions. With Prof. Andrew Lucas and collaborators Chao Yin and Carolyn Zhang, I am working on developing novel Lieb-Robinson bounds for applications in quantum computing and condensed matter physics, such as simulation complexity and spontaneous symmetry breaking phases. The manuscript will be available by the end of January.
@@ -67,7 +75,7 @@
             </h2>
             <div class="flex">
                 <div class="pic">
-                    <img src="research_figs/local_permutation_moments.png" width=250px height=auto alt="Your Image" class="image">
+                    <img src="images/local_permutation_moments.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class="container">
                 Chaotic quantum dynamics are characterized by operator spreading and operator scrambling, where operators in the Heisenberg picture evolve to fill the dynamical lightcone and appear suitably random. This process is quantified by the operator entanglement spectrum. In collaboration with Professors Thomas Iadecola, Justin Wilson, and Claudio Chamon, I found that the operator entanglement spectrum discriminates between classical information chaos and quantum information chaos, and also creates a bridge between the two. The manuscript will (most likely) be available by mid-February. This work was supported by the DOE as part of the 2024 SULI program.
@@ -80,7 +88,7 @@
             </h2>
             <div class="flex">
                 <div class="pic">
-                    <img src="research_figs/aquila_data_honeycomb.png" width=250px height=auto alt="Your Image" class="image">
+                    <img src="images/aquila_data_honeycomb.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class="container">
                 Chaotic quantum evolution produces states with a ``speckle pattern," referring to a concentration of the measurement probabilities around a small number of outcomes. This is the well-known Porter-Thomas distribution. The sensitivity of these speckles to noise provide a tool for characterizing the fidelity of quantum simulators. Working at QuEra Computing Inc. in the summer of 2023, I designed and carried out benchmarking experiments to characterize the Aquila quantum simulator using quantum chaos. I also developed a noise modelling and simulation toolkit to add to the Bloqade toolchain. The code is publicly available  <a href="https://github.com/QuEraComputing/Bloqade.jl/tree/master/lib/BloqadeNoisy">here</a> and an in-depth tutorial may be found <a href="https://queracomputing.github.io/Bloqade.jl/dev/tutorials/8.simulating%20noise/main/">here</a>.
@@ -93,7 +101,7 @@
             </h2>
             <div class = "flex">
                 <div class = "pic">
-                        <img src="research_figs/magnetization.png" width=250px height=auto alt="Your Image" class="image">
+                        <img src="images/magnetization.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                     <div class="container">
                     Near-term quantum computers do not yet feature error correction and suffer from noise that makes longer computations difficult, but they can still be useful. Working with Prof. Peter Orth and collaborators from the Unitary Fund Nathan Shammah, Misty Wahl, Nate Stemen, and William Zeng, I developed a novel method for extracting noise-mitigated expectation values from noisy quantum computers. This method, based on the restricted connectivity of quantum processors, includes a scalable noise tomography process and a low-overhead error mitigation scheme. I also developed a Python package for automating this process, and the code is available for use <a href="https://github.com/benmcdonough20/AutomatedPERTools">here</a>. This method was employed by IBM in a <a href="https://www.nature.com/articles/s41586-023-06096-3">significant experiment</a> in the summer of 2023. I was honored to <a href="https://www.computer.org/csdl/proceedings-article/qcs/2022/753600a083/1KnWCsrG5r2">present this work</a> at the IEEE SC 22 HPC conference in Dallas. The paper can be found <a href="https://arxiv.org/abs/2210.08611">here</a>.
@@ -134,6 +142,25 @@
                 <img src="download_icon.png" width=50 height=auto alt="Your Image" class="icon">
             </div>
             My senior project for completion of the Mathematics major was a complete proof of the Peter-Weyl theorem, which underlies the remarkable connection between representation theory of compact groups and analysis. I provide a proof which I find quite elegant; it centers on the algebraic properties of the representative functions and the compactness of Hilbert-Schmidt operators. No approximate identities needed!
+        </div>
+    </div>
+    <div class = "project">
+        <h2>
+            Bosonic Qiskit Textbook
+        </h2>
+        I worked with Dr. Kevin Smith to design a Qiskit-textbook-like introduction to continuous-variable quantum computing for the <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main">Bosonic Qiskit package</a>. This strives to be a guide for computer scientists and non-physicists who are mathematically inclined. It introduces the quantum harmonic oscillator abstractly using the ladder operators, explains common operations such as SNAP and displacement with detailed derivations, and includes a in-depth description of the Wigner function and its emergence from Weyl quantization. The guide can be found <a href = "https://github.com/C2QA/bosonic-qiskit/tree/main/tutorials/bosonic-qiskit-textbook">here</a>.
+    </div>
+    <div class = "project">
+        <h2>
+            Superconducting circuit design and quantization
+        </h2>
+        <div class="flex">
+            <div class="pic">
+                <img src="screenshot.png" width=300 height=auto alt="Your Image" class="icon">
+            </div>
+            <div class="container">
+            After using the ScQubits Python package for some research into superconducting circuits (resulting in these two tutorials <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumcz.ipynb">tutorial 1</a>, <a href="https://github.com/scqubits/scqubits-examples/blob/master/examples/demo_qutip_fluxoniumreset.ipynb">tutorial 2</a>,) I realized it would be nice to have a GUI to design and quantize superconducting circuits. I worked with Prof. Jens Koch to create a GUI extension to ScQubits. The code is available <a href = "https://github.com/benmcdonough20/SuperconductingCircuitBuilder">here</a>, and the PyPI package can be found <a href = "https://pypi.org/project/sccircuitbuilder/">here</a>.
+            </div>
         </div>
     </div>
     </body>
