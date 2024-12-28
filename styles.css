@@ -64,6 +64,7 @@ header {
 
 .flex {
   display: flex;
+  align-items: center;
 }
 
 .image {
@@ -176,5 +177,12 @@ li:not(:last-child) {
     text-align: center;
     margin-left: 20px;
     margin-right: 20px;
+  }
+  .flex {
+    align-items: center;
+    display: block;
+  }
+  * {
+    text-align:center;   
   }
 }
