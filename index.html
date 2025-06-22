@@ -7,20 +7,20 @@
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
     </head>
+    <body>
     <header>
         <h1>
             Ben McDonough
         </h1>
         <h2>
             <nav>
-                <a href = "#research">Research</a>
-                <a href = "#projects">Projects</a>
-                <a href = "#community">Community</a>
-                <a href = "blog.html">Blog</a>
+                <a href="#research">Research</a>
+                <a href="#projects">Projects</a>
+                <a href="#community">Community</a>
+                <a href="blog.html">Blog</a>
             </nav>
         </h2>    
     </header>
-    <body>
     <main>
         <h1>
             About
@@ -57,7 +57,7 @@
         <div class = "container">
                                 I am a first-year grad student in the Physics Department at the University of Colorado, Boulder working with Prof. Andrew Lucas's group. I am a mathematical physicist who is fascinated by the connection between quantum computing and emergent phenomena in physics. My research focuses on quantum dynamics, exotic quantum phases of matter, and quantum complexity. I am a Linux fanatic and a computer hobbiest. In my free time I like playing basketball, rock-climbing, and playing the flute. I also enjoy language learning, and I speak Spanish fluently and Hindi proficiently.
         </div> 
-        <div style="color: red">Last updated: 28-12-2024</div>
+        <div style="color: red">Last updated: 5-12-2025</div>
     </main>
     <div id=research>
         <h1>
@@ -88,7 +88,7 @@
                     <img src="images/problem_setup.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class = "container">
-                Lieb-Robinson bounds quantify the speed at which information can propagate through matter with local interactions. With Prof. Andrew Lucas and collaborators Chao Yin and Carolyn Zhang, I am working on developing novel Lieb-Robinson bounds for applications in quantum computing and condensed matter physics, such as simulation complexity and spontaneous symmetry breaking phases. The manuscript will be available by the end of January.
+                    Lieb-Robinson bounds quantify the speed at which information can propagate through matter with local interactions. With Prof. Andrew Lucas and collaborators Chao Yin and Carolyn Zhang, I am working on developing novel Lieb-Robinson bounds for applications in quantum computing and condensed matter physics, such as simulation complexity and spontaneous symmetry breaking phases. The manuscript is now available <a href= "https://arxiv.org/abs/2502.02652" class = "tl" target = "_blank">here</a>!
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
                     <img src="images/local_permutation_moments.png" width=250px height=auto alt="Your Image" class="image">
                 </div>
                 <div class="container">
-                Chaotic quantum dynamics are characterized by operator spreading and operator scrambling, where operators in the Heisenberg picture evolve to fill the dynamical lightcone and appear suitably random. This process is quantified by the operator entanglement spectrum. In collaboration with Professors Thomas Iadecola, Justin Wilson, and Claudio Chamon, I found that the operator entanglement spectrum discriminates between classical information chaos and quantum information chaos, and also creates a bridge between the two. The manuscript will (most likely) be available by mid-February. This work was supported by the DOE as part of the 2024 SULI program.
+                    Chaotic quantum dynamics are characterized by operator spreading and operator scrambling, where operators in the Heisenberg picture evolve to fill the dynamical lightcone and appear suitably random. This process is quantified by the operator entanglement spectrum. In collaboration with Professors Thomas Iadecola, Justin Wilson, and Claudio Chamon, I found that the operator entanglement spectrum discriminates between classical information chaos and quantum information chaos, and also creates a bridge between the two. A preprint is now available on ArXiv <a href="https://arxiv.org/abs/2505.05575">here</a>. This work was supported by the DOE as part of the 2024 SULI program.
                 </div>
             </div>
         </div>
@@ -135,6 +135,33 @@
         <h1>
             Projects
         </h1>
+    </div>
+    <div class = "project">
+        <h2>
+            Čech cohomology: categorical limits, axioms, and continuity
+        </h2>
+        <div class = "flex">
+            <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/projects/Topology_II_final_BenMcDonough.pdf?raw=true" target="_blank">
+            <div class = "pic">
+                <img src="images/download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+            </div>
+            </a>
+            Among the homology and cohomology theories developed in the late 20's and early '30s to assign topological invariants to ever-more complicated topological spaces, the Čech theory stands out for its nice properties. It is a beautiful construction that illustrates concepts from category theory, including categories of functors and limit cones, in an intuitive way. This review, written as a final project for Topology II instructed by Prof. Markus Pflaum, serves as an introduction to these concepts and an overview of the Čech cohomology theory.
+        </div>
+    </div>
+    <div class = "project">
+        <h2>
+            Complexity of quantum dynamics: Where are we with RUC sampling?
+        </h2>
+        <div class = "flex">
+            <a href="https://github.com/benmcdonough20/benmcdonough20.github.io/blob/main/projects/DynamicsFinalPaper.pdf?raw=true" target="_blank">
+            <div class = "pic">
+                <img src="images/download_icon.png" width=50 height=auto alt="Your Image" class="icon">
+            </div>
+            </a>
+                From Google's 2019 quantum supremacy experiment to the more recent one in 2024, sampling from the output distribution of random unitary circuits has been the primary method for claiming supremacy over the computational power of classical computers. However, improvements in classical algorithms over the last 7 years have called into question whether this is actually a meaningful demonstration of quantum advantage. In this review paper, written as a final paper for Quantum Dynamics, instructed by Prof. Rahul Nandkishore, I give a basic overview of what is currently known about the complexity of random unitary circuit sampling, and what remains to be proven.
+        </div>
+    </div>
     </div>
     <div class = "project">
         <h2>
@@ -205,7 +232,7 @@
         </h3>
         <div class = "flex">
             <div class = "pic">
-                <img src="images/logo.png" width=150 height=auto alt="Your Image" class="icon">
+                <img src="images/logo.png" width=150 height=auto alt="Your Image" class="image">
             </div>
             <div class = "container">
             The <a href="https://www.quantumcoalition.io/" class="tl" target="_blank">Quantum Coalition</a> is an organization of student quantum computing groups at 9 different universities around the US and IzTech in Turkiye. Educating the quantum workforce is essential to building a future where quantum information technology plays a role in many different areas of society and industry. The Quantum Coalition aims to be the first step in this pipeline through supporting grassroots efforts by passionate undergraduate students to spread enthusiasm and educate their peers about QIS. I was asked to direct <a href="https://www.quantumcoalition.io/qc-hack-2022" class="tl" target="_blank">QC Hack 2021</a>, and I founded the Quantum Coalition after realizing the outsized role a student like myself could play in this mission. I gave <a href="https://quantuminstitute.yale.edu/publications/ben-mcdonough-quantum-researcher-and-bridge-builder" class="tl" target = "_blank">an interview to IBM</a> about this afterward. Since then, we have planned several unique events, including the <a href="https://www.quantumcoalition.io/squid2023" class="tl" target="_blank">Symposium for Quantum Undergraduate Inquiry and Discovery</a> (SQUID,) which was an opportunity for undergrads to share their research in QIS and educate their peers, and the <a href="https://www.quantumcoalition.io/qrise" class="tl" target="_blank">Quantum Research and Industry Skills Exchange</a> (QRISE,) which was a six-week-long online event that brought industry proposed research projects to a worldwide audience. A recap of these events can be found on our <a href="https://www.youtube.com/@quantumcoalition4687" class="tl" target="_blank">YouTube channel</a>.
@@ -218,7 +245,7 @@
     </h3>
     <div class = "flex">
         <div class = "pic">
-                <img src="images/yale_qc_logo.png" width=150 height=auto alt="Your Image" class="icon">
+                <img src="images/yale_qc_logo.png" width=150 height=auto alt="Your Image" class="image">
         </div>
         <div class="container">
             In the 2022-2023 year, I was president of Yale's quantum computing club, the <a href="https://yuqc.yale.edu/" class="tl" target="_blank">YuQC</a>, where I grew the club from just a handful of members the previous year to over 50. I organized community events, such as the Qiskit Fall Fest, and I led two project groups. One of these project groups was called QBasics, where along with graduate student Katie Chang, I designed and gave short lectures on introductory quantum computing topics, made activites to accompany the lectures, and posted solution. The <a href="https://github.com/benmcdonough20/QBasics/tree/main" class="tl" target="_blank">typed notes</a> are a work-in-progress.
