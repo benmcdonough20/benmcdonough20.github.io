@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Blog Post - Ben McDonough</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to your existing stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../../blog-styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+        
+        <!-- MathJax Script for rendering LaTeX math -->
+          <script>
+            window.MathJax = {
+              loader: {
+                load: ['[tex]/physics']
+              },
+              tex: {
+                packages: {'[+]': ['physics']}
+              }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+    <header>
+        <h1>Ben McDonough</h1>
+        <nav>
+            <a href="../../index.html#research">Research</a>
+            <a href="../../index.html#projects">Projects</a>
+            <a href="../../index.html#community">Community</a>
+            <a href="../../blog.html">Blog</a>
+        </nav>
+    </header>
+    
+    <!-- Your Blog Content Goes Here -->
+    <main class="card" style="margin-top: 40px; padding: 40px;">
+        <!-- PASTE PANDOC OUTPUT HERE -->
+                <p><span>Symmetry-protected topological states, topological order, and group cohomology</span><br />
+<strong>Blog Post 3-15-26</strong></p>
+   <h1 id="group-cohomology">Group cohomology</h1>
+<div class="defn">
+<p><strong>Definition 1</strong> (Group cohomology). Let <span
+class="math inline">\(G\)</span> be a group and <span
+class="math inline">\(A\)</span> be a trivial <span
+class="math inline">\(G\)</span>-module. Let <span
+class="math inline">\(EG\)</span> be the free simplicial complex on
+<span class="math inline">\(G\)</span>, i.e. the <span
+class="math inline">\(k\)</span>-simplices of <span
+class="math inline">\(EG\)</span> are <span
+class="math inline">\(k\)</span>-tuples <span
+class="math inline">\([g_0,
+\ldots, g_k]\)</span>, with possible repeated elements. Consider the
+action of <span class="math inline">\(G\)</span> on <span
+class="math inline">\(EG\)</span> by <span class="math inline">\(g[g_0,
+\ldots, g_k] = [gg_0, \ldots, gg_k]\)</span>. Then let <span
+class="math inline">\(EG/G \equiv BG\)</span>, i.e. <span
+class="math inline">\([g_0, \ldots, g_k] \equiv [1,g_0^{-1}g_1, \ldots,
+g_0^{-1}g_k]\)</span> in <span class="math inline">\(BG\)</span> (note
+that <span class="math inline">\(BG\)</span> is a CW complex, not a
+simplicial complex). The cohomology of this complex with coefficients in
+<span class="math inline">\(A\)</span> is what we call the group
+cohomology (with coefficients in <span
+class="math inline">\(A\)</span>). <span
+class="math inline">\(BG\)</span> is a defined up to homotopy by the
+property <span class="math inline">\(\pi_1(BG) \cong G\)</span>, and is
+commonly called the classifying space of <span
+class="math inline">\(G\)</span>.</p>
+</div>
+<div id="prop:group-coboundary-formula" class="prop">
+<p><strong>Prop 1</strong> (Coboundary formula). From the definition
+above, we have the following boundary formula for group cocycles <span
+class="math display">\[\begin{aligned}
+\delta \phi(g_0, \dots, g_k) \equiv \delta \phi([g_0, \dots, g_k])
+&amp;=  \phi(\partial[g_0, \cdots, g_k])
+= \sum_{i}(-1)^i\phi(g_0, \dots, \widehat g_i, \dots, g_k)
+\end{aligned}\]</span> subject to the condition <span
+class="math inline">\(\phi(gg_0, \dots, gg_k) = \phi(g_0, \dots,
+g_k)\)</span> for any <span class="math inline">\(G \in g\)</span>.</p>
+</div>
+<div id="defn:bar-resolution" class="defn">
+<p><strong>Definition 2</strong> (Bar resolution). It is convenient to
+note that for any <span class="math inline">\([g_0, g_1, g_2, \cdots,
+g_k] \in BG\)</span>, we have <span
+class="math display">\[\begin{aligned}
+[g_0, g_1, g_2, \cdots, g_k] &amp;= g_0[1, g_0^{-1}g_1, \cdots,
+g_0^{-1}g_k]\notag\\
+&amp;= [1, g_0^{-1}g_1, (g_0^{-1}g_1) (g_1^{-1}g_2) \cdots,
+(g_0^{-1}g_1) \ldots (g_{k-1}^{-1}g_k)] \notag \\
+&amp;\equiv [1, h_1, h_1h_2,\cdots, h_1\ldots h_k]\equiv [h_1 | h_2 |
+\cdots | h_k],
+\end{aligned}\]</span> which is commonly denoted with bars, hence the
+name “bar resolution". Note the boundary formula for the simplicial
+chains of <span class="math inline">\(BG\)</span>: <span
+class="math display">\[\begin{aligned}
+\partial [h_1 | \cdots | h_k]  &amp;= \partial [1, h_1, h_1h_2, \cdots,
+h_1\ldots h_k] \notag \\
+&amp;= [1, h_2, h_2h_3, \cdots, h_2 \ldots h_k] + \sum_{i=2}^k(-1)^{i}
+[1, h_1, \cdots, \widehat{h_1 \ldots h_i}, \cdots, h_1 \ldots h_k]
+\notag \\
+&amp;= [h_2 | \cdots | h_k] + \sum_{i=2}^{k-1}(-1)^{i} [ h_1 | \cdots|
+h_{i-1} | h_ih_{i+1} | \cdots | h_k] + (-1)^k[h_1 | \cdots | h_{k-1}]
+\end{aligned}\]</span></p>
+</div>
+<div id="defn:inhomogeneous-cocycles" class="defn">
+<p><strong>Definition 3</strong> (Inhomogeneous). In the literature
+<span class="citation" data-cites="SPT_cohomology"><a
+href="#ref-SPT_cohomology" role="doc-biblioref">[1]</a></span>, cocycles
+using the simplicial representation of the simplices of <span
+class="math inline">\(BG\)</span> vs the bar representation of <span
+class="math inline">\(BG\)</span> are called <em>homogeneous</em> and
+<span class="math inline">\(\textit{inhomogeneous}\)</span> cocycles.
+Frequently, the formulas are prettier in inhomogeneous form, but the
+topological depiction is clearer in homogeneous form.</p>
+</div>
+<div id="cor:inhomogeneous-coboundary-formula" class="cor">
+<p><strong>Corollary 1</strong> (Inhomogeneous coboundary). The boundary
+map for inhomogeneous cocycles is the following: <span
+class="math display">\[\begin{aligned}
+\delta \phi(h_1| \dots| h_k)
+&amp;= \phi(h_2| \dots| h_k) + \sum_{i=2}^{k-1}(-1)^i\phi(h_1| \dots|
+h_{i-1}|h_ih_{i+1}| \dots| h_k) + (-1)^k\phi(h_1| \dots| h_{k-1})
+\end{aligned}\]</span> Note that it is non-standard to put the bars in
+the cochains, but we will adopt this convention to easily move between
+the two pictures.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 4</strong> (Normalized cocycles<span
+id="defn:normalized-cocycles"
+data-label="defn:normalized-cocycles"></span>). It is frequently
+convenient to quotient by the subcomplex of <span
+class="math inline">\(BG\)</span> consisting of simplices <span
+class="math inline">\([g_0, \dots, g_k]\)</span> where <span
+class="math inline">\(g_i = g_{i+1}\)</span> for any <span
+class="math inline">\(i\)</span>. This removes “degeneracies" in <span
+class="math inline">\(EG\)</span>. In the bar resolution picture, this
+is the same as quotienting by simplices <span class="math inline">\([h_1
+| \ldots | h_k]\)</span> if <span class="math inline">\(h_i = 1\)</span>
+for any <span class="math inline">\(i\)</span>. The corresponding chain
+complexes are called <em>normalized</em>, and in cohomology, this is
+equivalent to requiring that <span class="math inline">\(\phi =
+0\)</span> on the quotiented subcomplex. Every cocycle is cohomologous
+to a normalized cocycle.</p>
+</div>
+<h2 id="cocycles-in-low-dimension">Cocycles in low dimension</h2>
+<div id="cor:h-1-homomorphisms" class="cor">
+<p><strong>Corollary 2</strong> (Cocycles in low-dimension). <span
+class="math inline">\(\mathrm H^1(G, A) \cong \text{Hom}(G,
+A)\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(b \in C^1(G,
+A)\)</span> <span class="math display">\[\begin{aligned}
+\delta b(g_1|g_2) = b(g_2) - b(g_1g_2) + b(g_1) = 0
+\end{aligned}\]</span> ◻</p>
+</div>
+<div id="cor:shur-multipliers" class="cor">
+<p><strong>Corollary 3</strong> (Shur multipliers). Projective
+representations of <span class="math inline">\(G\)</span> over <span
+class="math inline">\(\mathbb F\)</span> are classified by a linear
+representation <span class="math inline">\(V\)</span> of <span
+class="math inline">\(G\)</span> (over <span
+class="math inline">\(\mathbb F\)</span>) and a 2-cocycle <span
+class="math inline">\(\omega \in H^2(G, \mathbb F)\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Given a projective representation of <span
+class="math inline">\(G\)</span>, we know that there is a representation
+<span class="math inline">\(\rho\)</span> and a function <span
+class="math inline">\(\omega : G \times G \to \mathbb F\)</span> such
+that <span class="math inline">\(\rho(g_1)\rho(g_2) = \omega(g_1,
+g_2)\rho(g_1g_2)\)</span> by definition. By associativity, <span
+class="math display">\[\begin{aligned}
+\rho(g_1g_2g_3) &amp;= \omega(g_1g_2, g_3)\rho(g_1g_2)\rho(g_3) =
+\omega(g_1g_2, g_3)\omega(g_1, g_2)\rho(g_1)\rho(g_2)\rho(g_3) \notag \\
+\rho(g_1g_2g_3) &amp;= \omega(g_1, g_2g_2)\rho(g_1)\rho(g_2g_3) =
+\omega(g_1, g_2g_3)\omega(g_2,g_3)\rho(g_1)\rho(g_2)\rho(g_3)
+\end{aligned}\]</span> Equating the two lines, <span
+class="math display">\[\omega(g_2, g_3) \omega(g_1, g_2g_3) =
+\omega(g_1, g_2)\omega(g_1g_2, g_3)\]</span> Or, in additive notation,
+<span class="math display">\[\omega(g_2, g_3) -\omega(g_1g_2, g_3)
++\omega(g_1, g_2g_3) - \omega(g_1, g_2) = \delta \omega(g_1| g_2| g_3) =
+0\]</span> This shows that <span class="math inline">\(\omega\)</span>
+is a 2-cocycle. Furthermore, suppose that <span
+class="math inline">\(\tau(g)\)</span> also lifts <span
+class="math inline">\(g\)</span>. Then <span
+class="math inline">\(\tau(g) = f(g)\rho(g)\)</span> for some <span
+class="math inline">\(f:G \to \mathbb F\)</span>. We find <span
+class="math display">\[\begin{aligned}
+\tau(g_1g_2) &amp;= c&#39;(g_1, g_2)\tau(g_1)\tau(g_2) =
+c&#39;(g_1,g_2)f(g_1)f(g_2)\rho(g_1)\rho(g_2) \notag\\
+\tau(g_1g_2) &amp;= f(g_1g_2)\rho(g_1g_2) = f(g_1g_2)c(g_1,
+g_2)\rho(g_1)\rho(g_2)
+\end{aligned}\]</span> The above chain of equalities shows that <span
+class="math display">\[\begin{aligned}
+c(g_1,g_2) = \frac{f(g_1)f(g_2)}{f(g_1g_2)}c&#39;(g_1,g_2) = (\delta
+f)(g_1|g_2)c&#39;(g_1, g_2),
+\end{aligned}\]</span> so the two cocycles differ by a coboundary. ◻</p>
+</div>
+<div id="cor:central-extensions" class="cor">
+<p><strong>Corollary 4</strong>. Central extensions, or groups <span
+class="math inline">\(G\)</span> which fit into a short exact sequence
+of the form</p>
+<div class="center">
+
+</div>
+<p>where <span class="math inline">\(i(A) \in Z(G)\)</span> are
+classified by a cocycle <span class="math inline">\(\omega \in \mathrm
+H^2(Q, A)\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(s\)</span> be a
+<em>section</em> of <span class="math inline">\(p\)</span>, i.e. <span
+class="math inline">\(p \circ s = \text{Id}\)</span>. Note that <span
+class="math inline">\(s\)</span> is not necessarily a homomorphism.
+Since <span class="math inline">\(i\)</span> is injective, we can
+consider <span class="math inline">\(A\)</span> as a subgroup of <span
+class="math inline">\(G\)</span>. Let <span
+class="math display">\[\begin{aligned}
+c(q_1, q_2)\equiv
+s(q_1)s(q_2)s(q_1q_2)^{-1} ,
+\end{aligned}\]</span> commonly called a <em>factor system</em>. Since
+<span class="math display">\[\begin{aligned}
+p[c(q_1, q_2)] = p[s(q_1)s(q_2)s(q_1q_2)^{-1}] = q_1q_2(q_1q_2)^{-1} = 1
+\end{aligned}\]</span> we have <span class="math inline">\(c(q_1, q_2)
+\in \ker p = A\)</span> (by exactness). We can compute <span
+class="math display">\[\begin{aligned}
+\delta c(q_1, q_2, q_3) &amp;= c(q_2, q_3)c(q_1, q_2q_3) c(q_1q_2,
+q_3)^{-1}c(q_1, q_2)^{-1} \notag \\
+&amp;= c(q_2,q_3)s(q_1)s(q_2q_3)s(q_3)^{-1}s(q_2)^{-1}s(q_1)^{-1} \notag
+\\
+&amp;= c(q_2,q_3)c(q_2, q_3)^{-1} = 1 \notag \\
+\end{aligned}\]</span> where we used the fact that <span
+class="math inline">\(A\)</span> is central, so <span
+class="math inline">\(c(q_2, q_3)\)</span> commutes with all elements of
+<span class="math inline">\(G\)</span>. Furthermore, two isomorphic
+extensions (in the sense of isomorphism of chain complexes, which we
+have not defined) will produce two sections <span
+class="math inline">\(s, s&#39;\)</span> of <span
+class="math inline">\(p\)</span>. Let <span class="math inline">\(\beta
+\equiv s(g)s&#39;(g)^{-1}\)</span>. Since <span class="math inline">\(p
+\beta(g) = 1\)</span>, we have <span class="math inline">\(\beta(g) \in
+A\)</span>. Furthermore, <span class="math display">\[\begin{aligned}
+c&#39;(q_1, q_2) &amp;=
+\beta(q_1)s(q_1)\beta(q_2)s(q_2)s(q_1q_2)^{-1}\beta(q_1q_2)^{-1} \notag
+\\
+&amp;=\beta(q_1)\beta(q_2)\beta(q_1q_2)^{-1}s(q_1)s(q_2)s(q_1q_2)^{-1}
+\notag \\
+&amp;= (\delta \beta)(q_1, q_2)c(q_1, q_2)
+\end{aligned}\]</span> where we used the fact that <span
+class="math inline">\(\beta(q) \in A \leq Z(G)\)</span>. ◻</p>
+</div>
+<div id="rmk:extension-multiplication-rule" class="rmk">
+<p><strong>Remark 1</strong>. The multiplication in <span
+class="math inline">\(G\)</span> is defined by the following: the choice
+of section <span class="math inline">\(s\)</span> is a choice of coset
+of <span class="math inline">\(A\)</span> in <span
+class="math inline">\(G\)</span> with coset representatives <span
+class="math inline">\(q \in Q\)</span>. Given <span
+class="math inline">\(g \in G\)</span>, we can write <span
+class="math inline">\(g = a_gq_g\)</span> uniquely with <span
+class="math inline">\(q_g = p(g) \in Q\)</span> and <span
+class="math inline">\(a_g = gq_g^{-1} = gs(p(g))^{-1}\)</span>. Since
+<span class="math inline">\(p a_g = p(g)p(g)^{-1} = 1\)</span>, we have
+<span class="math inline">\(a_g \in A\)</span>. Then the multiplication
+rule is given by <span class="math display">\[\begin{aligned}
+(a_g, q_g)\cdot (a_h, q_h) \equiv  (a_{gh}, q_{gh}) &amp;= (gh
+s(p(gh))^{-1}, p(gh)) \notag\\
+&amp;= (gh s(p(h))^{-1}s(p(g))^{-1}c(p(g), p(h)), p(g)p(h), p(g)p(h))
+\notag \\
+&amp;= (a_ga_hc(q_g, q_h), q_gq_h)
+\end{aligned}\]</span> This shows additionally that <span
+class="math inline">\(Q\)</span> is always normal in <span
+class="math inline">\(G\)</span>. Furthermore, if <span
+class="math inline">\(A\)</span> is a field, then projective
+representations over <span class="math inline">\(A\)</span> are in
+bijection with central extensions of <span
+class="math inline">\(G\)</span> by <span
+class="math inline">\(A\)</span>.</p>
+</div>
+<h1 id="spt-states-and-twisted-quantum-doubles">SPT states and twisted
+quantum doubles</h1>
+<h2 id="definition-of-spt-states">Definition of SPT states</h2>
+<p>We will explain SPT states, first through their symmetry properties
+and wavefunctions following <span class="citation"
+data-cites="lattice_models"><a href="#ref-lattice_models"
+role="doc-biblioref">[2]</a></span>, then through their stabilizers
+following <span class="citation" data-cites="Yoshida_2017"><a
+href="#ref-Yoshida_2017" role="doc-biblioref">[3]</a></span>. First,
+consider a triangulation <span class="math inline">\(T\)</span> of a
+<span class="math inline">\(d\)</span>-dimensional orientable manifold
+<span class="math inline">\(M\)</span> and a finite group <span
+class="math inline">\(G\)</span>. Let <span
+class="math inline">\(S_k(T)\)</span> denote the <span
+class="math inline">\(k\)</span>-simplices in <span
+class="math inline">\(T\)</span>.</p>
+<div id="defn:fundamental-class" class="defn">
+<p><strong>Definition 5</strong> (fundamental class). We put an acyclic
+orientation on the edges of <span class="math inline">\(M\)</span> and
+choose a total ordering of the vertices of <span
+class="math inline">\(M\)</span> which is consistent with this
+orientation. Then for each <span
+class="math inline">\(d\)</span>-simplex <span
+class="math inline">\(s\)</span>, the ordering of the vertices of <span
+class="math inline">\(s\)</span> defines an orientation of <span
+class="math inline">\(s\)</span>. We then define <span
+class="math inline">\(\epsilon(s) = \pm 1\)</span> if this orientation
+agrees (disagrees) with the orientation of the manifold. Now, we define
+the <em>fundamental class</em> <span
+class="math display">\[\begin{aligned}
+\label{}
+[M] \equiv \sum_{s \in S_d(T)}\epsilon(s)s \in C^d(T, \mathbb Z)
+\end{aligned}\]</span> and we will write the pairing of <span
+class="math inline">\([M]\)</span> with <span
+class="math inline">\(\alpha \in H^d(M, \mathbb Z)\)</span> as <span
+class="math display">\[\begin{aligned}
+\alpha([M]) \equiv \int_{[M]}\alpha
+\end{aligned}\]</span></p>
+</div>
+<p>To each 0-simplex, we associate the Hilbert space <span
+class="math inline">\(\mathbb{C}G\)</span>. Equivalently, we can think
+of the Hilbert space as spanned by 0-form <span
+class="math inline">\(G\)</span>-fields, i.e. simplicial maps from the
+vertices of <span class="math inline">\(T\)</span> into <span
+class="math inline">\(G\)</span>: <span
+class="math display">\[\begin{aligned}
+  a \in \mathbb C \text{Hom}(M, EG) \hspace{2cm} \ket{a} \equiv
+\bigotimes_{v \in S_1(T)}\ket{a(v)}
+\end{aligned}\]</span> Then let <span
+class="math display">\[\begin{aligned}
+\label{eq:trivial-SPT-definition}
+\ket{+_G} = \bigotimes_{v \in V} \sum_{g \in G}\ket{g}_{v} = \sum_{a: M
+\to EG}\ket{a}
+\end{aligned}\]</span> represent the trivial SPT state (with the trivial
+<span class="math inline">\(G\)</span> action). We will drop
+normalization factors for convenience. Given <span
+class="math inline">\(\omega \in H^{d+1}(G, \mathrm{U}(1))\)</span>, we
+will define an operator called the <em>SPT entangler</em>, which is a
+non-symmetric (does not commute with the action of <span
+class="math inline">\(G\)</span> simultaneously on all qudits) local
+unitary <span class="math display">\[\label{eq:SPT-entangler-definition}
+  U^\omega\ket{a} = a^* i_{g_*}\omega([M])\ket{a}\]</span> where <span
+class="math inline">\(g_* \in G\)</span> is arbitrary, and we have
+defined the <em>interior product</em> <span
+class="math display">\[\begin{aligned}
+\label{eq:interior-product-definition}
+  (i_g\omega)(g_0, \dots, g_d)\equiv \omega(g, g_0, \dots, g_d)
+\end{aligned}\]</span> and the pointwise pullback <span
+class="math inline">\(a^*:H^k(G, \mathrm{U}(1)) \to H^k(T,
+\mathrm{U}(1))\)</span> for <span class="math inline">\(\beta \in H^k(G,
+\mathrm{U}(1))\)</span> via <span class="math display">\[\begin{aligned}
+\label{eq:pointwise-pullback-definition}
+  (a^* \beta)([v_1, \dots, v_d]) \equiv  \beta([a(v_1), \dots, a(v_d)])
+\end{aligned}\]</span> As we will argue, the SPT wavefunction is
+independent of the choice of <span class="math inline">\(g_*\)</span>
+when <span class="math inline">\(M\)</span> is closed. We can explicitly
+express <span class="math inline">\(U^\omega\)</span> as a local
+operator using linearity: <span class="math display">\[\begin{aligned}
+\label{eq:SPT-entangler-is-local}
+U^\omega \ket{a} = \prod_{s = [v_0, \dots, v_d]}\omega(g_*, a(v_0),
+\ldots, a(v_d))\ket{a}
+\end{aligned}\]</span></p>
+<p>Another useful way to express this wavefunction is as a partition
+function. Let <span class="math inline">\(\beta \in H^{d+1}(G, \mathbb
+R/\mathbb Z)\)</span> such that <span class="math inline">\(\omega =
+(-1)^\beta\)</span>. Let <span class="math inline">\(N\)</span> be the
+cone of <span class="math inline">\(M\)</span>, i.e. <span
+class="math inline">\(N = M \times [0,1]/M \times \{1\}\)</span>, fix
+the triangulation of <span class="math inline">\(N\)</span> to be that
+of <span class="math inline">\(M\)</span> with a single additional
+vertex at <span class="math inline">\(\{1\}
+\times M\)</span>. We can imagine this vertex as representing the ‘bulk’
+of <span class="math inline">\(N\)</span>. Then <span
+class="math display">\[\begin{aligned}
+\label{eq:SPT-statesum-definition}
+  \ket{+^\omega_G} = \sum_{g_* \in G \text{ bulk}} \sum_{a:M \to
+G}Z[a]\ket{a}
+\end{aligned}\]</span> where <span
+class="math display">\[\begin{aligned}
+\label{eq:SPT-partition-function-defintion}
+  Z[a] \equiv \sum_{g_* \in G \text{ bulk}} a^* \omega([N]) = \sum_{g_*
+\in G \text{bulk}}\mathrm{e}^{\pi \mathrm{i}\int_{N}a^* \beta}
+\end{aligned}\]</span> is a partition function with ‘boundary condition’
+<span class="math inline">\(a\)</span>. For this reason <span
+class="math inline">\(\omega\)</span> is sometimes called the
+topological action associated with the SPT state.</p>
+<h2 id="properties-of-spt-states">Properties of SPT states</h2>
+<p>Using <span class="math inline">\(G\)</span>-invariance of the
+cocycles, we see that <span class="math display">\[\begin{aligned}
+\label{eq:transformation-under-G-action}
+\prod_v \overleftarrow X^h_v \ket{+^\omega_G} &amp;= \sum_{\vb g \in
+G^{|V|}}\prod_{s \in S_d(M)}\omega(g_*, s)\ket{\vb gh^{-1}} =  \sum_{\vb
+g \in G^{|V|}}\prod_{s \in S_d(M)}\omega(g_*h^{-1}, s)\ket{\vb g}
+\end{aligned}\]</span> Therefore the global action of <span
+class="math inline">\(G\)</span> is equivalent to a different choice of
+<span class="math inline">\(g_*\)</span>. When <span
+class="math inline">\(M\)</span> is closed, <span
+class="math inline">\(Z[a]\)</span> is invariant under this change, and
+when <span class="math inline">\(M\)</span> has a boundary, there is an
+<em>anomaly</em>, i.e. the partition function transforms with a
+nontrivial phase corresponding to <em>topologically protected edge
+modes</em>.</p>
+<div id="prop:anomaly-formula" class="prop">
+<p><strong>Prop 2</strong>. The anomalous phase is given by <span
+class="math display">\[\begin{aligned}
+i_gi_1\omega([\partial M])
+\end{aligned}\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We will use additive notation. Let <span
+class="math inline">\(\gamma \in H^{d+1}(M, \mathbb R/\mathbb
+Z)\)</span> such that <span class="math inline">\(\omega =
+(-1)^\gamma\)</span>. Using Eq. <a
+href="#eq:transformation-under-G-action" data-reference-type="eqref"
+data-reference="eq:transformation-under-G-action">[eq:transformation-under-G-action]</a>,
+the anomalous phase is given by <span
+class="math display">\[\begin{aligned}
+    \int_{[M]} i_g\gamma - i_1 \gamma
+  
+\end{aligned}\]</span> Then we have <span
+class="math display">\[\begin{aligned}
+     0 = \int_{M} i_gi_1\delta \gamma &amp;=
+    \int_{[M]} i_g\gamma - i_1 \gamma + \delta i_gi_1\gamma \\
+    &amp;= \int_{[M]} i_g\gamma - i_1 \gamma + \int_{[\partial
+M]}i_gi_1\gamma
+  
+\end{aligned}\]</span> where in the last line we applied discrete
+Stoke’s theorem. This proves the claim. ◻</p>
+</div>
+<div id="ex:edge-modes-1d-example" class="ex">
+<p><strong>Example 1</strong>. This becomes particularly apparent in
+(1+1)d. Consider <span class="math inline">\(M \cong S^1\)</span> and a
+triangulation consisting of 4 spins. Let <span
+class="math inline">\(\epsilon([i, i+1]) = (-1)^i\)</span>. Then <span
+class="math inline">\(\prod_{i}\omega^{(-1)^i}(h, i, i+1)\)</span> is
+the phase we get by applying <span class="math inline">\(\omega\)</span>
+to the faces of the simplex shown on the left side of the panel
+below:</p>
+<div class=pic>
+<p><img src="figures/1.png" class=figure style="max-width: 400px;" /></p>
+</div>
+<p>Applying <span class="math inline">\(\omega\)</span> to the right
+side, we get <span class="math inline">\(\prod_{i}\omega^{-(-1)^i}(1, i,
+i+1)\)</span>. But if we glue the two halves together at the face in the
+center, we clearly find a union of 3-simplices <span
+class="math inline">\(t\)</span>, and <span
+class="math display">\[\prod_{i}\omega^{(-1)^i}(h, i, i+1) \prod_{j}
+\omega^{-(-1)^j}(1, j, j+1) = \delta \omega(t) = 0\]</span> If the
+boundaries were open, then there is a phase corresponding to the two
+missing faces which connect the two open boundaries: <span
+class="math display">\[\begin{aligned}
+\frac{\omega(h, v_0, v_3)}{\omega(1, v_0, v_3)} = \frac{\omega(1,h,
+v_3)}{\omega(1,h, v_0)}
+\end{aligned}\]</span> This is an explicit example of the formula in
+Prop. <a href="#prop:anomaly-formula" data-reference-type="ref"
+data-reference="prop:anomaly-formula">2</a>.</p>
+</div>
+<p>Another reason for calling these phases topological is that there are
+no short-range degrees of freedom, and only the long-range ‘topological’
+DOFs remain. The physical manifestation of this is that the partition
+function is unchanged when <span class="math inline">\(M\)</span> is
+retriangulated. Any retriangulation can be performed by a sequence of
+“Pachner moves," <span class="citation" data-cites="twisted_qd"><a
+href="#ref-twisted_qd" role="doc-biblioref">[4]</a></span> which all
+amount to adding the boundary of a <span
+class="math inline">\(d+2\)</span>-simplex. A consequence of this is
+that the cocycle condition is equivalent to invariance under Pachner
+moves.</p>
+<div id="ex:Pachner-move-1d-example" class="ex">
+<p><strong>Example 2</strong>. To illustrate this, we give a <span
+class="math inline">\((1+1)d\)</span> example:
+<div class=pic>
+    <img src="figures/2.png" class=figure style="max-width:400px;" />
+</div>
+The <span
+class="math inline">\(+/-\)</span> symbols label orientations <span
+class="math inline">\(\epsilon(s)\)</span>. We can see that this is
+simply the cocycle condition for <span
+class="math inline">\(\omega\)</span>.</p>
+</div>
+<p>Next, we will explain why the classification factors through the
+quotient by coboundaries.</p>
+<div id="prop:SPTs-are-classified-by-cohomology" class="prop">
+<p><strong>Prop 3</strong>. Suppose that <span
+class="math inline">\(M\)</span> is closed. Then there is a local,
+finite-depth, <span class="math inline">\(G\)</span>-symmetric circuit
+<span class="math inline">\(U\)</span> such that <span
+class="math inline">\(\ket{+^\gamma_G} = U\ket{+^{\gamma + \delta
+\beta}_G}\)</span>. This is not the case when <span
+class="math inline">\(M\)</span> is open.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The difference in phase between the two SPT
+entanglers is the following: <span
+class="math display">\[\begin{aligned}
+  \int_{[M]} i_g\delta\beta ([M]) &amp;= \int_{[M]}\beta - \delta
+i_g\beta  \\
+  &amp;= \int_{[\partial M]}i_g \beta + \int_{[M]} \beta
+\end{aligned}\]</span> We see that the phase <span
+class="math inline">\(\int_{[M]}\beta\)</span> is <span
+class="math inline">\(G\)</span>-symmetric and local, which proves the
+claim. ◻</p>
+</div>
+<h2 id="stabilizers">Stabilizers</h2>
+<p>The stabilizers of <span
+class="math inline">\(\ket{+_G^\omega}\)</span> are <span
+class="math display">\[\label{eq:TQD-stabilizers-definition}
+\widetilde X_v^g \equiv U^\omega \overleftarrow X_v^g
+(U^{\omega})^\dagger = \prod_{s \ni v}U_{s}^\omega \overleftarrow X_v^g
+(U^{\omega}_s)^\dagger\]</span> (note the symmetry operators are taken
+to be <em>right</em> multiplication). Now the goal is to find a diagonal
+operator <span class="math inline">\(D_v^g\)</span> such that <span
+class="math display">\[\begin{aligned}
+\label{eq:phase-of-TQD-stabilizers-definition}
+\widetilde X^g_v = \overleftarrow X^g_vD_{v}^g
+\end{aligned}\]</span> This is given by Eq. 30 in <span class="citation"
+data-cites="Yoshida_2017"><a href="#ref-Yoshida_2017"
+role="doc-biblioref">[3]</a></span>. We will derive it below.</p>
+<div id="prop:formula-for-TQD-stabilizer-phase" class="prop">
+<p><strong>Prop 4</strong>. Suppose that <span
+class="math inline">\(v\)</span> is a bulk vertex, i.e. there are no
+simplices <span class="math inline">\(s \ni v\)</span> which intersect
+with the boundary of <span class="math inline">\(M\)</span>. Then <span
+class="math display">\[\begin{aligned}
+D_v^g = \prod_{s = [v_0, \dots, v_d] \ni
+v}\omega^{\epsilon&#39;(s)}(v_0, \ldots, vg^{-1}, v, \ldots, v_n)
+   
+\end{aligned}\]</span> where <span class="math inline">\(\epsilon&#39; =
+\pm 1\)</span> if <span class="math inline">\(\epsilon = \pm 1\)</span>
+and <span class="math inline">\(v = v_i\)</span> where <span
+class="math inline">\(i\)</span> is odd(even).</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We can write down an explicit formula for <span
+class="math inline">\(D_{v}^g\)</span>: <span
+class="math display">\[\begin{aligned}
+  D_v^g = \qty(\overleftarrow X^{g^{-1}}_v\prod_{s \ni v}U_s^\omega
+\overleftarrow X^g_v  \prod_{s&#39; \ni
+v}\qty(U_{s&#39;}^\omega)^\dagger) &amp;= \prod_{s \ni v}
+\omega^{\epsilon(s)}(g_*, v_1, \ldots, vg^{-1}, \ldots, g_n)
+\omega^{\epsilon(s)}(g_*, v_1, \ldots, v, \ldots, g_n)
+\end{aligned}\]</span> Then for each simplex <span
+class="math inline">\(s \ni v\)</span>, consider the <span
+class="math inline">\(d+2\)</span>-simplex <span
+class="math display">\[\begin{aligned}
+  S_s = [g_*, v_1, \ldots, vg^{-1}, v, \ldots, v_n]
+\end{aligned}\]</span> If we compute <span
+class="math inline">\(\partial S_s\)</span>, we see that whenever <span
+class="math inline">\(v_i\)</span> is removed, the resulting face is
+also contained within another simplex <span
+class="math inline">\(S_{s&#39;}\)</span> where <span
+class="math inline">\(s&#39;\)</span> contains <span
+class="math inline">\(v\)</span>, and due to their shared edge, <span
+class="math inline">\(\epsilon(s&#39;) = -\epsilon(s)\)</span> (this is
+true because <span class="math inline">\(v\)</span> is a bulk vertex).
+The only faces which do not have any <span
+class="math inline">\(v_i\)</span> removed are unique to <span
+class="math inline">\(S_s\)</span>, and are <span
+class="math display">\[\begin{aligned}
+  &amp;[v_1, \ldots, v_g^{-1}, v, \ldots, v_n] &amp; &amp;[g_*, v_1,
+\ldots, v, \ldots, v_n] &amp; &amp;[g_*, v_1, \ldots, vg^{-1}, \ldots,
+v_n]
+\end{aligned}\]</span> Therefore we find <span
+class="math display">\[\begin{aligned}
+\prod_{s \ni v} \omega^{\epsilon(s)}(g_*, v_1, \ldots, vg^{-1}, \ldots,
+g_n) \omega^{-\epsilon(s)}(g_*, v_1, \ldots, v, \ldots, g_n) &amp;=
+\prod_{s \ni v} \delta\omega^{\epsilon&#39;(s)}(S_s)
+\omega^{-\epsilon&#39;(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n)
+\notag\\
+&amp;= \prod_{s \ni v} \omega^{-\epsilon&#39;(s)}(v_1, \ldots, vg^{-1},
+v, \ldots, v_n)
+\end{aligned}\]</span> where <span class="math inline">\(\epsilon&#39; =
+1\)</span> if <span class="math inline">\(\epsilon = \pm 1\)</span> and
+<span class="math inline">\(v = v_i\)</span> where <span
+class="math inline">\(i\)</span> is even(odd). This completes the
+proof. ◻</p>
+</div>
+<div id="ex:TQD-stabilizer-phase-1d-example" class="ex">
+<p><strong>Example 3</strong>. We will again give a 1d example. Consider
+a 1d state and a stabilizer <span class="math inline">\(\widetilde
+X^g_{v_2}\)</span> which acts on a vertex <span
+class="math inline">\(v_2\)</span> neighbored by vertices <span
+class="math inline">\(v_0, v_1\)</span>. The two simplices <span
+class="math inline">\(s\)</span> containing <span
+class="math inline">\(v_2\)</span> are <span class="math inline">\([v_1,
+v_2]\)</span> and <span class="math inline">\([v_0, v_1]\)</span>. Thus,
+the commutator evaluates to</p>
+<div class=pic>
+<p><img src="figures/3.png" class=figure style="max-width: 600px;"/></p>
+</div>
+<p>where on the right, the value is determined by taking the product of
+<span class="math inline">\(\omega\)</span> evaluated on each of the
+four 2-simplices and and inverting if the orientation is negative. We
+can see that this product forms the faces of two tetrahedra, as shown
+below: 
+<div class=pic>
+    <img src="figures/4.png" class=figure style="max-width: 400px" />
+</div>
+<span class="math display">\[\begin{aligned}
+\label{eq:phasefactor}
+= \omega(g_{v_0}, g_{v_2}g^{-1}, g_2)\omega^{-1}(g_{v_1}, g_{v_2}g^{-1},
+g_{v_2})
+\end{aligned}\]</span></p>
+</div>
+<p>We notice that the phase in Prop. <a
+href="#prop:formula-for-TQD-stabilizer-phase" data-reference-type="ref"
+data-reference="prop:formula-for-TQD-stabilizer-phase">4</a> corresponds
+to the cocycle <span class="math inline">\(\omega\)</span> applied to a
+<span class="math inline">\(d+1\)</span>-simplex obtained from a simplex
+<span class="math inline">\(s\)</span> of <span
+class="math inline">\(M\)</span> by adding an additional vertex <span
+class="math inline">\(vg^{-1}\)</span> ordered such that it appears
+right before <span class="math inline">\(v\)</span>.</p>
+<div id="ex:geometric-interpretation-of-TQD-phase" class="ex">
+<p><strong>Example 4</strong>. The following diagram shows the 3d
+simplex constructed from a 2d simplex of <span
+class="math inline">\(M\)</span> as described above:
+<div class=pic>
+    <img src="figures/5.png" class = figure style="max-width: 550px" />
+</div>
+</p>
+</div>
+<p>Lastly, the cocycle condition gives us the important property
+that</p>
+<div id="prop:TQD-stabilizers-are-group-representation" class="prop">
+<p><strong>Prop 5</strong>. <span class="math display">\[\widetilde
+X_v^g \widetilde X_v^h = \widetilde X_v^{gh}\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math display">\[\overleftarrow
+X_v^{h^{-1}}D_v^g \overleftarrow X_v^hD_v^h = \prod_{s = [v_1, \cdots,
+v_n] \ni v}\omega^{\epsilon(s)}(v_1, \ldots, vh^{-1}g^{-1}, v, \ldots,
+v_n)\omega^{\epsilon(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n)\]</span>
+Consider the simplex <span class="math display">\[\begin{aligned}
+  S_s &amp;= [v_1, \ldots, v, vh^{-1}, vh^{-1}g^{-1}, \ldots, v_n]
+\end{aligned}\]</span> We see that any face of <span
+class="math inline">\(S_s\)</span> which contains <span
+class="math inline">\(v, vh^{-1}, vh^{-1}g^{-1}\)</span> is also the
+face of a unique other simplex <span
+class="math inline">\(s&#39;\)</span> containing <span
+class="math inline">\(v\)</span>, and due to the opposite orientations,
+these faces cancel. Therefore we have <span
+class="math display">\[\begin{aligned}
+  &amp;\prod_{s = [v_1, \cdots, v_n] \ni v}\omega^{\epsilon(s)}(v_1,
+\ldots, vh^{-1}g^{-1}, v, \ldots, v_n)\omega^{\epsilon(s)}(v_1, \ldots,
+vg^{-1}, v, \ldots, v_n) \\
+  &amp;=
+\prod_{s = [v_1, \cdots, v_n] \ni v}\delta
+\omega^{\epsilon(s)}(S_s)\omega(v_1, \ldots, v, vh^{-1}g^{-1}, \ldots,
+v_n) = D_v^{gh}
+\end{aligned}\]</span> as required. ◻</p>
+</div>
+<p>We will explore some other important properties of the stabilizers.
+First, we will define an operator <span
+class="math display">\[\begin{aligned}
+\label{eq:stabilizer-product-phase-definition}
+  D^g = \prod_{v}X_v^{g^{-1}}\widetilde X_v^g =
+  \prod_{v}X_v^{g^{-1}}U^\omega\prod_{v}\widetilde
+X_v^g(U^\omega)^\dagger = \prod_{s \in
+S_d(M)}\frac{i_g\omega^{\epsilon(s)}(s)}{i_1\omega^{\epsilon(s)}(s)}
+\end{aligned}\]</span> Comparing this to Eq. <a
+href="#eq:transformation-under-G-action" data-reference-type="eqref"
+data-reference="eq:transformation-under-G-action">[eq:transformation-under-G-action]</a>,
+we see that the operator <span class="math inline">\(D^g\)</span> is
+exactly the anomalous phase at the boundary.</p>
+<h2 id="twisted-topological-order-from-gauging-spt-phases">Twisted
+topological order from gauging SPT phases</h2>
+<p>There is a duality between SPT phases with an onsite <span
+class="math inline">\(G\)</span>-symmetry and twisted quantum doubles,
+where both are classified by <span class="math inline">\(H^{d+1}(G,
+\mathrm{U}(1))\)</span>. In this section, we will introduce the
+procedure of gauging that realates the two models. First, we recall the
+general procedure of gauging <span class="citation"
+data-cites="Yoshida_2016"><a href="#ref-Yoshida_2016"
+role="doc-biblioref">[5]</a></span>. Take a cellulation of a 2D
+orientable surface <span class="math inline">\(\Sigma = (V, E,
+F)\)</span>. Suppose that <span
+class="math inline">\(\ket{\psi}_V\)</span> is some <span
+class="math inline">\(G\)</span>-symmetric state on the vertices. Place
+the state <span class="math inline">\(\ket{\vb 1}_E\)</span> on the
+edges (more generally, one can put any flux-free state on the edges to
+prepare another ground state, but for now we focus on the trivial
+state). Then we implement the following “Kramers-Wannier" (KW) map,
+which can be described as follows:</p>
+<ul>
+<li><p>Map site variables to bond variables</p></li>
+<li><p>Turn the onsite <span class="math inline">\(G\)</span> symmetry
+into a gauge symmetry</p></li>
+</ul>
+<div class="pic">
+<p><img src="figures/6.png" class="figure" style="max-width:400px;"/></p>
+</div>
+<p>This map results in the following transformation of operators: <span
+class="math display">\[\begin{aligned}
+\overrightarrow X_v^g &amp;\mapsto 1 &amp; \overleftarrow X_{v}^g
+&amp;\mapsto \prod_{(v, e)}X_{e}^{g} &amp;
+(Z_v^{\Gamma})^\dagger Z_{v&#39;}^{\Gamma} &amp;\mapsto Z^{\Gamma}_e
+\label{eq:gauging}
+\end{aligned}\]</span> where <span class="math inline">\(e =
+[v,v&#39;]\)</span> and <span class="math inline">\(X^g_e\)</span> acts
+by left(right) translation if <span class="math inline">\(e\)</span> is
+oriented away from(toward) <span class="math inline">\(v\)</span>. Note
+that <em>left</em> translation becomes trivial while the <span
+class="math inline">\(G\)</span>-symmetry is implemented by
+<em>right</em> translation. This is fixed by the convention that path
+ordering is from left-to-right.</p>
+<p>Now we will see that when we gauge these stabilizers, we obtain the
+stabilizers from Refs. <span class="citation"
+data-cites="CuiTwisted twisted_qd"><a href="#ref-twisted_qd"
+role="doc-biblioref">[4]</a>, <a href="#ref-CuiTwisted"
+role="doc-biblioref">[6]</a></span>. Consider writing down the
+inhomogeneous version of the cocycle phase in Prop. <a
+href="#prop:formula-for-TQD-stabilizer-phase" data-reference-type="ref"
+data-reference="prop:formula-for-TQD-stabilizer-phase">4</a>: <span
+class="math display">\[\begin{aligned}
+\omega(v_1, \ldots, vg^{-1},v, \ldots, v_n) &amp;=  \omega(g_{[v_0,v_1]}
+| g_{[v_1,v_2]} | \ldots | g_{[v_{i-1}, v_i]}g^{-1}| g |\ldots|
+g_{[v_{n-1},v_n]})
+\end{aligned}\]</span> where <span class="math inline">\(v_i =
+v\)</span> and <span class="math inline">\(g_{[v_j, v_{j+1}]} =
+v_j^{-1}v_{j+1}\)</span>. Therefore we see that <span
+class="math inline">\(D^g_v\)</span> passes through the gauging map.
+However, this is only the case if <span class="math inline">\(M\)</span>
+is closed, i.e. there is no anomaly, which is the physical manifestation
+of the common phrase <em>an anomalous symmetry cannot be gauged</em>.
+This is the case for any <span
+class="math inline">\(G\)</span>-symmetric transformation, including
+<span class="math inline">\(\omega\)</span> and <span
+class="math inline">\(\omega&#39;\)</span> which differ by a coboundary
+as in Prop. <a href="#prop:SPTs-are-classified-by-cohomology"
+data-reference-type="ref"
+data-reference="prop:SPTs-are-classified-by-cohomology">3</a>.</p>
+<p>The important property of the <span
+class="math inline">\(\mathrm{KW}\)</span> map is that it induces an
+isomorphism between the ground state of <span
+class="math inline">\(\overleftarrow X_{v}^g\)</span> and the space of
+flat connections, spanned by <span class="math inline">\(\ket{\vb
+g}\)</span> such that <span class="math inline">\(\prod_{e \in
+\gamma}g_e = 1\)</span> for any loop <span
+class="math inline">\(\gamma\)</span> (non just homotopically trivial
+ones). To show this, first note that <span
+class="math display">\[\begin{aligned}
+  \mathrm{KW}\ket{\vb g}  = \mathrm{KW}\ket{\vb h}
+\end{aligned}\]</span> if and only if there exists <span
+class="math inline">\(k \in G\)</span> such that <span
+class="math inline">\(\vb g = k\vb h\)</span> (acting simultaneously on
+all qubits). This implies that <span
+class="math inline">\(\mathrm{KW}\)</span> is injective on the
+gauge-symmetric subspace. To see the isomorphism, given any flat
+connection <span class="math inline">\(\ket{\vb g}_E\)</span>, define
+the state <span class="math display">\[\begin{aligned}
+\sum_{h \in G}\bigotimes_v
+\ket{h\operatorname{hol}_{\vb g}(\gamma(v_0, v))}_v
+\end{aligned}\]</span> where <span class="math inline">\(v_0\)</span> is
+a chosen basepoint, <span class="math inline">\(\gamma(v_0, v)\)</span>
+is a path from <span class="math inline">\(v_0\)</span> to <span
+class="math inline">\(v\)</span>, and <span
+class="math inline">\(\operatorname{hol}_{\vb g}(\gamma)\)</span>
+computes the holonomy around <span
+class="math inline">\(\gamma\)</span>. The fact that <span
+class="math inline">\(\vb g\)</span> is flat is precisely what allows
+this state to be well-defined independently of the choice of <span
+class="math inline">\(\gamma(v_0, v)\)</span>. The essential consequence
+of this isomorphism is that the stabilizers <span
+class="math inline">\(\widetilde X_{\delta
+  v}^g, \widetilde X_{\delta v&#39;}^h\)</span> have the same
+commutation relations as the ungauged stabilizers within the flux-free
+subspace (although they will generally fail to commute outside of this
+subspace).</p>
+<h2 id="path-integral-interpretation">Path integral interpretation</h2>
+<p>For this discussion, we take <span class="math inline">\(G\)</span>
+to be cyclic of order <span class="math inline">\(m\)</span> (the
+Abelian assumption is important, cyclic is just to simplify the
+stabilizers). The gauged model is now an eigenstate of the stabilizers
+<span class="math display">\[\begin{aligned}
+\label{eq:homological-stabilizer-formulas}
+  Z_{\partial p} &amp;= \prod_{e \in \partial p}Z_e
+  &amp;
+    \widetilde X_{\delta v}^g &amp;= \prod_{e:\delta v(e) \neq
+  0}X^{g}_{e}D_{v}^g
+\end{aligned}\]</span> Therefore we can write the ground state as <span
+class="math display">\[\begin{aligned}
+\label{eq:TQD-ground-state-expression}
+  \ket{\Omega} = (\prod_v \sum_{g}\widetilde X_{\delta v}^g)(\prod_p
+\sum_{n = 1}^mZ_e^n)\ket{+} =
+  \prod_v \sum_{g}\widetilde X_{\delta v}^g\sum_{a \in Z^1(M, G)}\ket{a}
+\end{aligned}\]</span> where we have identified the <span
+class="math inline">\(Z\)</span>-stabilizer ground state as a sum over
+all flat connections, or equivalently, the cocycles <span
+class="math inline">\(Z^1(M, G)\)</span>. Now let <span
+class="math inline">\(N \cong M
+\times [0,1]\)</span> be a “thickened” version of <span
+class="math inline">\(M\)</span>. We will think of the application of
+<span class="math inline">\(\prod_v
+\sum_g \widetilde X^g_{\delta v}\)</span> as a single step in time. From
+Ex. <a href="#ex:geometric-interpretation-of-TQD-phase"
+data-reference-type="ref"
+data-reference="ex:geometric-interpretation-of-TQD-phase">4</a>,
+assuming the cocycle <span class="math inline">\(\omega\)</span> is
+normalized, the phase <span
+class="math inline">\(D_{v}^g\ket{a}\)</span> can be viewed as
+decorating the vertical edges of <span class="math inline">\(N\)</span>
+with <span class="math inline">\(1\)</span> except for the edge lying
+above <span class="math inline">\(v\)</span> decorated with <span
+class="math inline">\(g\)</span>, then decorating the edges of the slice
+<span class="math inline">\(M \times \{1\}\)</span> with <span
+class="math inline">\(a +
+\delta v\)</span>, where we now imagine <span
+class="math inline">\(v\)</span> as a <span
+class="math inline">\(G\)</span>-valued cocycle which takes the value
+<span class="math inline">\(g\)</span> on vertex <span
+class="math inline">\(v\)</span> and <span
+class="math inline">\(1\)</span> elsewhere: <span
+class="math display">\[\begin{aligned}
+  \prod_v \sum_gX_{\delta v}^g = \sum_{s \in C^0(M, G)}X_{\delta s}
+\end{aligned}\]</span> Thus we can rewrite the ground state as <span
+class="math display">\[\begin{aligned}
+\label{eq:TQD-statesum-representation}
+\ket{\Omega} = \sum_{a \in Z^1(N, G)}\mathrm{e}^{\pi \mathrm{i}\int a^*
+\omega}\ket{a|_{t = 1}}
+\end{aligned}\]</span> This is called the <em>state-sum</em>
+representation, in the same way as Eq. <a
+href="#eq:SPT-statesum-definition" data-reference-type="eqref"
+data-reference="eq:SPT-statesum-definition">[eq:SPT-statesum-definition]</a>.
+Furthermore, since <span class="math display">\[\begin{aligned}
+(\prod_v \sum_g \widetilde X_{\delta v}^g)^N = \prod_v \sum_g \widetilde
+X_{\delta v}^g
+\end{aligned}\]</span> for any <span class="math inline">\(N\)</span>,
+we can make the “time-steps” as small as desired, so this is an
+honest-to-goodness path integral. This is an explicit illustration of
+how <span class="math inline">\(d\)</span>-dimensional twisted quantum
+doubles correspond to <span
+class="math inline">\(d+1\)</span>-dimensional bulk Dijkgraaf-Witten
+theories. Also by comparison with Eq. <a
+href="#eq:SPT-statesum-definition" data-reference-type="eqref"
+data-reference="eq:SPT-statesum-definition">[eq:SPT-statesum-definition]</a>,
+we see that “gauging” a <span class="math inline">\(G\)</span>-symmetry
+corresponds to <em>making the global symmetry local</em> by coupling the
+action of <span class="math inline">\(G\)</span> to a background field
+and then letting the field fluctuate.</p>
+<h2 id="cocycles-of-product-groups">Cocycles of product groups</h2>
+<p><span class="math inline">\(H^3(\mathbb Z_N^k,
+\mathrm{U}(1))\)</span> is typically broken up into three
+classifications; type-I, type-II, and type-III. This classification
+follows from the Kunneth formula for the cohomology of a product of
+groups: <span class="math display">\[H^n(X \times Y, \mathbb Z) \cong
+\bigoplus_{i+j = n}H^i(X, \mathbb Z) \otimes H^j(Y, \mathbb Z) \oplus
+\bigoplus_{p+q=n+1}\text{Tor}(H^p(X, \mathbb Z), H^q(Y, \mathbb
+Z))\]</span> This relates the cohomology in degree <span
+class="math inline">\(n\)</span> to the products of lower-degree
+cohomologies. SPT phases with <span class="math inline">\(\mathbb
+Z_N^k\)</span> symmetry are essentially stacks of toric codes, and
+cocycles which live in the tensor product of lower-degree cohomology
+groups do not couple all of the sheets in the stack. For <span
+class="math inline">\(n = 3\)</span>, the types I, II, and III cocycles
+are given explicitly by the formulae <span
+class="math display">\[\begin{aligned}
+\omega^{(i)}_{\mathrm{I}}(\vec a, \vec b, \vec c) &amp;= \exp(\frac{2\pi
+\mathrm{i}p}{N^2}a_i\qty(b_i+c_i - (b_i + c_i) \mod N)) \\
+\omega^{(ij)}_{\mathrm{II}}(\vec a, \vec b, \vec c) &amp;=
+\exp(\frac{2\pi \mathrm{i}p}{N^2}a_i\qty(b_j+c_j - (b_j + c_j) \mod N))
+\\
+\omega^{(ijk)}_{\mathrm{III}}(\vec a, \vec b, \vec c) &amp;=
+\exp(\frac{2\pi \mathrm{i}p}{N}a_ib_jc_k)
+\end{aligned}\]</span> where <span class="math inline">\(p\)</span> is
+an integer. In this way, up to 3 sheets of toric codes can be coupled
+together in 2D with a type-III cocycle, and types I and II always lead
+to Abelian theories <span class="citation" data-cites="propitius"><a
+href="#ref-propitius" role="doc-biblioref">[7]</a></span>. We can see
+that the unique type-III cocyle of <span class="math inline">\(\mathbb
+Z^3\)</span> is just a <span class="math inline">\(\mathrm{CCZ}\)</span>
+gate between the three sheets.</p>
+<h1 id="review-of-gauging-symmetries">Review of gauging symmetries</h1>
+<h2 id="microscopic-model">Microscopic model</h2>
+<p>Gauging is a process where an onsite symmetry of some state is made
+dynamical by coupling it to a fluctuating gauge field. Obtaining the
+twisted quantum doubles by gauging the <span
+class="math inline">\(G\)</span>-symmetry was a special case of this. We
+will mostly follow <span class="citation" data-cites="bombindelgado"><a
+href="#ref-bombindelgado" role="doc-biblioref">[8]</a></span> for this
+discussion. Our first model will be gauging the SWAP symmetry of two
+toric codes, which is isomorphic to the <span
+class="math inline">\(D_4\)</span> toric code, as described in <span
+class="citation" data-cites="shortest_route"><a
+href="#ref-shortest_route" role="doc-biblioref">[9]</a></span>. We can
+consider the gauging procedure as proliferating domain walls of the
+symmetry (corresponding to Dirac strings), and broken domain walls will
+then correspond to topological excitations. At the stabilizer level, a
+fixed domain wall will transform the stabilizers in the following
+way:
+<div class="pic">
+<img src="figures/7.png" class="figure" style="max-width:800px;" id="fig:lattice_level_gauging_procedure"
+data-label="fig:lattice_level_gauging_procedure"/>
+</div>
+In the left panel above, we show <span
+class="math inline">\(X\)</span> stabilizers by crosses and <span
+class="math inline">\(Z\)</span> stabilizers by red boxes. The red
+indicates the stabilizer acts on <span
+class="math inline">\(\mathrm{TC}_1\)</span> and the blue indicates
+action on <span class="math inline">\(\mathrm{TC}_2\)</span>. The blue
+edges show the gauge field, and the green line shows a domain wall.
+Within the domain wall, the SWAP symmetry is applied, and this
+transforms the stabilizers that intersect the domain wall to be composed
+of operators on <span class="math inline">\(\mathrm{TC}_1\)</span>
+(shown in red) and operators on <span
+class="math inline">\(\mathrm{TC}_2\)</span> (shown in blue). It is
+irrelevant that we transform the stabilizers in the bulk of the domain,
+and only the stabilizers which intersect the domain wall are relevant.
+This allows us to define a broken domain wall, shown on the right. The
+green crosses illustrate excited plaquettes on the gauge field (magnetic
+excitations) and the green line illustrates the Dirac string connecting
+them. We have illustrated a string of <span
+class="math inline">\(X_1\)</span> operators on the dual lattice
+creating a magnetic excitation in <span
+class="math inline">\(\mathrm{TC}_1\)</span> with a red dotted line.
+Since a SWAP gate is applied just to one side of the defect line, and
+the Dirac string must commute with the deformed plaquettes, this forces
+it to switch from an <span class="math inline">\(m_1\)</span> anyon to
+an <span class="math inline">\(m_2\)</span> anyon as it crosses the
+green domain wall. Now, the identification of these anyons with <span
+class="math inline">\(D(D_4)\)</span>, the quantum double of <span
+class="math inline">\(D_4\)</span> is straightforward. We begin with the
+following presentation: <span class="math display">\[\begin{aligned}
+  D_4 = \langle  a,b,c| a^2 = b^2 = c^2, cac = b , ab =
+ba\rangle  =\mathbb Z_2 \rtimes \mathbb Z_2^2
+\end{aligned}\]</span> This is the semidirect product. In other words,
+we have <span class="math inline">\(a = rs\)</span>, <span
+class="math inline">\(b = r^3s\)</span>, and <span
+class="math inline">\(c = s\)</span>. In the general picture of gauge
+theory <span class="citation" data-cites="propitius"><a
+href="#ref-propitius" role="doc-biblioref">[7]</a></span>, fluxes are
+represented by elements of the gauge group, and when a flux <span
+class="math inline">\(g\)</span> crosses the Dirac string of another
+flux <span class="math inline">\(h\)</span>, the flux transforms under a
+gauge transformation <span class="math inline">\(g \mapsto
+hgh^{-1}\)</span>. Therefore, the flux of the twist acting by
+conjugation swaps the other fluxes, so we can identify <span
+class="math inline">\(c\)</span> with the flux of the twist, <span
+class="math inline">\(a\)</span> with <span
+class="math inline">\(m_1\)</span> and <span
+class="math inline">\(b\)</span> with <span
+class="math inline">\(m_2\)</span>.</p>
+<h2 id="cluster-states">Cluster states</h2>
+<p>As pointed out in <span class="citation"
+data-cites="sahay_nonabelian"><a href="#ref-sahay_nonabelian"
+role="doc-biblioref">[10]</a></span>, there is an interpretation of the
+gauging procedure in terms of cluster states that makes the
+transformation of the stabilizers much more transparent. For simplicity,
+we will work with <span class="math inline">\(G = \mathbb Z_2\)</span>,
+although all the manipulations straightforwardly generalize to an
+arbitrary symmetry group.</p>
+<p>Consider the cluster state on a graph <span class="math inline">\(V,
+E\)</span> with the stabilizers <span
+class="math display">\[\begin{aligned}
+  &amp;X_{v}X_{\delta v} &amp; &amp;Z_{e}Z_{\partial
+e}  \label{eq:clusterstabilizers}
+\end{aligned}\]</span> This is a symmetry-enriched state, which is a
+precursor to an LRE state before “integrating out the matter
+fields".</p>
+<p>Now we couple this state to a 0-form <span
+class="math inline">\(\mathbb Z_2\)</span> symmetry <span
+class="math inline">\(U = \prod_v U_v\)</span> of a state <span
+class="math inline">\(\ket{\psi}\)</span>. Let <span
+class="math inline">\(V&#39;\)</span> be the vertices of <span
+class="math inline">\(\psi\)</span> in bijection with those of <span
+class="math inline">\(V\)</span> (possible after coarse-graining). We
+apply a symmetry-enriching unitary <span
+class="math inline">\(\Omega_{\mathrm{SET}}\)</span> such that <span
+class="math display">\[\begin{aligned}
+\Omega_{\mathrm{SET}}X_{v&#39;} \Omega_{\mathrm{SET}}^\dagger =
+X_{v&#39;} U_{v}
+\end{aligned}\]</span> The edges of the cluster state correspond to the
+gauge field, and the unitary <span
+class="math inline">\(\Omega_{\mathrm{SET}}\)</span> couples domains of
+this field to the symmetry <span class="math inline">\(U\)</span> as
+shown in Fig. 1 <a href="#fig:lattice_level_gauging_procedure"
+data-reference-type="ref"
+data-reference="fig:lattice_level_gauging_procedure">[fig:lattice_level_gauging_procedure]</a>.
+It is easy to see that the form of <span
+class="math inline">\(\Omega_{\mathrm{SET}}\)</span> should always be
+<span class="math display">\[\begin{aligned}
+  \Omega_{\mathrm{SET}} = \ketbra{0}{0}_{v&#39;} \otimes 1_{v} +
+\ketbra{1}{1}_{v&#39;} \otimes U_{v}.
+\end{aligned}\]</span> Lastly, we add <span
+class="math inline">\(X_v\)</span> for each <span
+class="math inline">\(V \in v\)</span> to the stabilizer group to obtain
+the gauged model. This is the lattice-level manifestation of integrating
+out the matter field supported on the vertices. We can see that <span
+class="math inline">\(Z_{\gamma}Z_{\partial \gamma}\)</span> only
+commutes with all <span class="math inline">\(X_v\)</span> if <span
+class="math inline">\(\gamma = \partial p\)</span>, so the remaining
+stabilizers are <span class="math inline">\(\Omega_{\mathrm{SET}}
+X_vX_{\delta v}\Omega^\dagger_{\mathrm{SET}}\)</span> and <span
+class="math inline">\(Z_{\partial p}\)</span>. If the manifold <span
+class="math inline">\(M\)</span> has a non-trivial fundamental group,
+then the logical-<span class="math inline">\(X\)</span> operators must
+also be added.</p>
+<h1
+id="gauging-symmetries-fault-tolerant-logical-gates-and-cup-product">Gauging
+symmetries, fault-tolerant logical gates, and cup product</h1>
+<p>The square lattice model of the <span
+class="math inline">\(\mathrm{D}_4\)</span> quantum double is the
+paradigmatic example of several different important concepts that are
+appearing recently in the literature. Using this model, we will
+illustrate</p>
+<ul>
+<li><p>Gauging a SPT state</p></li>
+<li><p>PEM duality on a normal subgroup</p></li>
+<li><p>The decorated domain wall construction</p></li>
+<li><p>The state sum description of TQDs</p></li>
+<li><p>Gauging a fault-tolerant logical gate constructed with the cup
+product</p></li>
+</ul>
+<h2 id="introducing-the-model">Introducing the model</h2>
+<p>The model we will consider can be found in <span class="citation"
+data-cites="non_pauli_decoding kobayashi_twisted_double"><a
+href="#ref-non_pauli_decoding" role="doc-biblioref">[11]</a>, <a
+href="#ref-kobayashi_twisted_double"
+role="doc-biblioref">[12]</a></span>. The lattice is a stack of three
+squarelattice toric codes with <span class="math inline">\(\mathbb
+Z_3^2\)</span> qubits. The stabilizers are shown below: 
+<div class=pic>
+    <img src="figures/8.png" class=figure style="max-width:700px;"/>
+</div>
+The <span
+class="math inline">\(Z\)</span> stabilizers are unchanged from the
+standard stack of toric codes, but the <span
+class="math inline">\(X\)</span> stabilizers are modified with <span
+class="math inline">\(\mathrm{CZ}\)</span> gates as shown in the figure
+above.</p>
+<h2 id="from-gauging-an-spt-state">From gauging an SPT state</h2>
+<p>From Prop. <a href="#prop:formula-for-TQD-stabilizer-phase"
+data-reference-type="ref"
+data-reference="prop:formula-for-TQD-stabilizer-phase">4</a>, we can
+calculate <span class="math inline">\(D_v\)</span> explicitly.
+Fortunately, this is already done for us in Ref. <span class="citation"
+data-cites="np_stabilizer_models"><a href="#ref-np_stabilizer_models"
+role="doc-biblioref">[13]</a></span>:
+<div class=pic>
+    <img src="figures/9.png" class=figure style="max-width:600px;"/>
+</div>
+Note that
+their orientation convention is reversed from ours.</p>
+<ul>
+<li><p><span class="math inline">\(g = (1,0,0)\)</span>; In formula <a
+href="#eq:reference" data-reference-type="eqref"
+data-reference="eq:reference">[eq:reference]</a>, the cocycle is trivial
+unless <span class="math inline">\(g\)</span> comes in the first
+argument <span class="math display">\[\frac{\omega(l_9, l_3 \oplus g,
+g)\omega(l_3 \oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1
+\oplus g, g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} =
+\frac{\omega(g, l_4, l_{11})}{\omega(g, l_6, l_{12})} =
+(-1)^{l_4^{(2)}l_{11}^{(3)} + l_6^{(2)}l_{12}^{(3)}}\]</span></p></li>
+<li><p><span class="math inline">\(g = (0,1,0)\)</span>; similarly,
+<span class="math inline">\(g\)</span> can only appear in the second
+argument <span class="math display">\[\frac{\omega(l_9, l_3 \oplus g,
+g)\omega(l_3 \oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1
+\oplus g, g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} =
+\frac{\omega(l_3 \oplus g,g, l_4)}{\omega(l_1 \oplus g, g, l_6)} =
+(-1)^{l_3^{(1)}l_4^{(3)}+l_1^{(1)}l_6^{(3)}}\]</span></p></li>
+<li><p><span class="math inline">\(g = (0,0,1)\)</span> <span
+class="math display">\[\frac{\omega(l_9, l_3 \oplus g, g)\omega(l_3
+\oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1 \oplus g,
+g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} =
+\frac{\omega(l_9, l_3 \oplus g, g)}{\omega(l_8, l_1 \oplus g, g)} =
+(-1)^{l_9^{(1)}l_3^{(2)}+l_8^{(1)}l_1^{(2)}}\]</span></p></li>
+</ul>
+<p>Graphically, these stabilizers are the following; 
+<div class=pic>
+    <img src=figures/10.png class=figure style="max-width:500px;"/>
+</div>
+We can see that after
+disentangling the diagonal edges (in orange) with a local unitary
+circuit (specifically, <span class="math inline">\(\mathrm{CX}\)</span>
+gates around the leftward triangles) we arrive at the stabilizers in
+Eq. <a href="#eq:Z23-squarelattice-TQD-stabilizer-definition"
+data-reference-type="eqref"
+data-reference="eq:Z23-squarelattice-TQD-stabilizer-definition">[eq:Z23-squarelattice-TQD-stabilizer-definition]</a>.</p>
+<h2 id="pem-duality">PEM duality</h2>
+<p>It is a result that all equivalences of topological order arise
+through a partial Fourier transformation on a normal subgroup <span
+class="citation" data-cites="HuPEMDuality"><a href="#ref-HuPEMDuality"
+role="doc-biblioref">[14]</a></span>. Consider the following
+presentation of <span class="math inline">\(\mathrm{D}_4\)</span>: <span
+class="math display">\[\begin{aligned}
+\mathrm{D}_4 \cong \langle  a,b,c| a^2=b^2=c^2 = 1, cac = ab \rangle
+\end{aligned}\]</span> This realizes <span
+class="math inline">\(\mathrm{D}_8\)</span> as a central extension of
+<span class="math inline">\(\mathbb Z_2\)</span> by <span
+class="math inline">\(\mathbb Z_2^2\)</span>. Explicitly, the cocycle
+<span class="math inline">\(\omega \in \mathrm H^2(\mathbb Z_2^2,
+\mathbb Z_2)\)</span> is given by <span
+class="math display">\[\begin{aligned}
+  \omega(\vb a, \vb c) = a_1c_2
+\end{aligned}\]</span> where we are using additive notation. The
+multiplication rule is <span class="math display">\[\begin{aligned}
+  (a_1, b_1, c_1) \times (a_2, b_2, c_2) = (a_1a_2, b_1b_2 + \omega(a_2,
+c_1), c_1c_2)
+\end{aligned}\]</span> Inversion is found to be <span
+class="math display">\[\begin{aligned}
+  (a_1, b_1, c_1)^{-1} = (0,0,c_1) \times (0, b_1, 0) \times (a_1, 0, 0)
+= (a_1, b_1 + a_1c_1, c_1)
+\end{aligned}\]</span> Consider a <span
+class="math inline">\(\mathrm{D}_8\)</span> quantum double on a square
+lattice. Under this presentation of <span
+class="math inline">\(\mathrm{D}_8\)</span>, the <span
+class="math inline">\(X\)</span> checks are given by 
+<div class=pic>
+    <img src=figures/11.png class=figure style="max-width:600px;"\>
+</div>
+To derive the
+<span class="math inline">\(Z\)</span>-checks, consider the following
+plaquette: 
+<div class=pic>
+    <img src=figures/12.png class=figure />
+</div>
+Then the flux-free constraint is equivalent to
+<span class="math display">\[\begin{aligned}
+  &amp;(a_1, b_1, c_1) \times
+  (a_2, b_2, c_2) \times
+  (a_3, b_3, c_3)^{-1} \times
+  (a_4, b_4, c_4)^{-1} \notag\\
+  &amp;= (a_1+a_2+a_3+a_4, \notag \\&amp;\hspace{1cm}b_1+b_2+b_3+b_4 +
+a_3c_3 + a_4c_4 + c_1(a_2+a_3+a_4) + c_2(a_3+a_4) + c_3a_4,
+\notag\\&amp;\hspace{1cm}c_1+c_2+c_3+c_4)
+\end{aligned}\]</span> For <span class="math inline">\(Z\)</span>-checks
+on the <span class="math inline">\(b\)</span> sublattice, we assume the
+flux-free constraints <span class="math inline">\(c_1+c_2+c_3+c_4 =
+1\)</span> and <span class="math inline">\(a_1 +
+a_2 + a_3 + a_4 = 1\)</span>: <span
+class="math display">\[\begin{aligned}
+  &amp;a_3c_3 + a_4c_4 + c_1(a_2+a_3+a_4) + c_2(a_3+a_4) + c_3a_4
+\notag\\
+  &amp;a_3c_3 + c_1(a_2+a_3) + c_2a_3  \notag\\
+  &amp;c_1a_2+c_4a_3
+\end{aligned}\]</span> Therefore our checks are the following: 
+<div class=pic>
+    <img src=figures/13.png class=figure style="max-width:500;"/>
+</div>
+These checks are the same ones stabilizing the
+quantum double model appearing in <span class="citation"
+data-cites="Tantivasadakarn_2023"><a href="#ref-Tantivasadakarn_2023"
+role="doc-biblioref">[15]</a></span>. Now, we Fourier transform the
+<span class="math inline">\(b\)</span> sublattice and move it to the
+northeast by half a cell. This transforms the <span
+class="math inline">\(Z\)</span>-checks on the blue sublattice into
+<span class="math inline">\(X\)</span> checks and vice-versa. It also
+converts the <span class="math inline">\(\mathrm{CX}\)</span> gates in
+<a href="#eq:Xstabilizers" data-reference-type="eqref"
+data-reference="eq:Xstabilizers">[eq:Xstabilizers]</a> into <span
+class="math inline">\(\mathrm{CZ}\)</span> gates, producing the
+stabilizers of the twisted double in Eq. <a
+href="#eq:Z23-squarelattice-TQD-stabilizer-definition"
+data-reference-type="eqref"
+data-reference="eq:Z23-squarelattice-TQD-stabilizer-definition">[eq:Z23-squarelattice-TQD-stabilizer-definition]</a>.</p>
+<h2 id="decorated-domain-walls">Decorated domain walls</h2>
+<p>We comment on the relationship with the decorated domain wall
+construction in <span class="citation"
+data-cites="Tantivasadakarn_2023"><a href="#ref-Tantivasadakarn_2023"
+role="doc-biblioref">[15]</a></span>. To recap this construction, we
+wish to realize a central extension <span
+class="math inline">\(G\)</span> of <span class="math inline">\(N =
+\mathbb Z_2\)</span> by <span class="math inline">\(Q\)</span>
+classified by the cocycle <span class="math inline">\(\omega
+\in H^2(Q, N)\)</span>. Consider the gauging map applied to a single
+<span class="math inline">\(G\)</span> edge <span
+class="math inline">\([(n_i,
+q_i), (n_f, q_f)]\)</span>: <span class="math display">\[\begin{aligned}
+  \mathrm{KW}^G: [(n_i, q_i), (n_f, q_f)] \mapsto (n_i, q_i)^{-1}(n_f,
+q_f)
+\end{aligned}\]</span> we work out <span
+class="math display">\[\begin{aligned}
+  (n_i, q_i)(n_i^{-1}, q_i^{-1}) = (\omega(q_i, q_i^{-1}), 1) \implies
+(n_i, q_i)^{-1} = (n_i^{-1}\overline \omega(q_i, q_i^{-1}), q_i^{-1})
+\end{aligned}\]</span> Therefore we have <span
+class="math display">\[\begin{aligned}
+  (n_i, q_i)^{-1}(n_f, q_f) = (n_i^{-1}n_f\overline \omega(q_i,
+q_i^{-1})\omega(q_i^{-1}, q_f), q_iq_f^{-1}) = (n_i^{-1}n_f \overline
+\omega(q_i, q_i^{-1}q_f), q_i^{-1}q_f)
+\end{aligned}\]</span> where in the last step, we used the cocycle
+condition <span class="math display">\[\begin{aligned}
+  \delta \omega(q_i, q_i^{-1}, q_f) = \omega(q_i^{-1},
+q_f)\cancel{\overline \omega(q_iq_i^{-1}, q_f)} \omega(q_i, q_i^{-1}q_f)
+\overline \omega(q_i, q_i^{-1}) = 1
+\end{aligned}\]</span> where we used <span
+class="math inline">\(\omega(q_i, 1) = 1\)</span> if <span
+class="math inline">\(\omega\)</span> is normalized. Now consider an
+<span class="math inline">\(N\times Q\)</span> toric code. We can
+sequentially gauge <span class="math inline">\(N\)</span> first, then
+apply <span class="math inline">\(X_{e}^{\overline \omega(q_i, q_i^{-1}
+q_f)}\)</span>, then gauge <span class="math inline">\(Q\)</span>, which
+is then equivalent to <span
+class="math inline">\(\mathrm{KW}^G\)</span>. Another option is to first
+Fourier transform the <span class="math inline">\(N\)</span> toric code,
+converting <span class="math display">\[\begin{aligned}
+  X_e^{\overline \omega(q_i, q_i^{-1}q_f)} \mapsto Z_e^{\overline
+\omega(q_i, q_i^{-1}q_f)}
+\end{aligned}\]</span> where the edge <span
+class="math inline">\(e\)</span> is imagined as now intersecting the
+corresponding edge in the <span class="math inline">\(Q\)</span> toric
+code perpendicularly. Writing <span class="math inline">\(\nu\)</span>
+as the homogeneous version of <span
+class="math inline">\(\omega\)</span>, we see that <span
+class="math inline">\(\omega(q_i, q_i^{-1}q_f) = \nu(1, q_i,
+q_f)\)</span>, so wherever there is a domain wall in the <span
+class="math inline">\(N\)</span> toric code, the corresponding bond in
+the <span class="math inline">\(Q\)</span> toric code is in an SPT state
+classified by <span class="math inline">\(\nu\)</span>. This is known as
+the <em>decorated domain wall construction</em>. Explicitly, the SPT
+entangler is <span class="math display">\[\begin{aligned}
+U\ket{\vb n, \vb q} = \prod_{s = n, q_i, q_f} (-1)^{n\nu(1, q_i, q_f)}
+\ket{\vb n, \vb q}
+\end{aligned}\]</span> This is generalized beyond <span
+class="math inline">\(N = \mathbb Z_2\)</span> by recognizing that <span
+class="math inline">\(\chi(n) = (-1)^{n}\)</span> is a 1-cocycle, or
+representation of <span class="math inline">\(N = \mathbb Z_2\)</span>,
+which relates <span class="math inline">\(\alpha \in
+\mathrm H^3(G, \mathrm{U}(1))\)</span> to <span
+class="math inline">\(\omega \in \mathrm H^2(Q, N)\)</span> and <span
+class="math inline">\(\chi \in \mathrm H^1(N,
+\mathrm{U}(1))\)</span> via the Kunneth formula.</p>
+<h2 id="state-sum-and-cup-product-action">State sum and cup-product
+action</h2>
+<p>The cup product is a bilinear operation <span
+class="math inline">\(\smile: C^p(M, \mathbb Z) \times C^q(M, \mathbb Z)
+\to C^{p+q}(M, \mathbb Z)\)</span> via <span
+class="math display">\[\begin{aligned}
+\label{eq:cup-product-definition}
+  (\omega \smile \nu)(v_0, \ldots, v_{p+q}) \equiv \omega(v_0, \ldots,
+v_p)\nu(v_p, \ldots, v_{p+q})
+\end{aligned}\]</span> We can verify directly that the cup product
+satisfies the graded Leibniz rule <span
+class="math display">\[\begin{aligned}
+\label{eq:cup-product-liebniz-rule}
+\delta(\omega \smile \nu) = \delta\omega \smile \nu + (-1)^{p}\omega
+\smile \delta \nu
+\end{aligned}\]</span> and this implies that the cup product descends to
+an operation on cohomology. The cup product is associative on cohomology
+but not on cochains directly. Since <span class="math inline">\(Z^3(M,
+\mathbb Z_2^3) \cong Z^3(M,\mathbb Z_2)^{\times 3}\)</span>, we can
+write <span class="math inline">\(\vb a \in
+Z^3(M, \mathbb Z_2^3)\)</span> as <span class="math inline">\(\vb a =
+(a_r, a_g, a_b)\)</span>. Then we can specify a state-sum with the
+following action: <span class="math display">\[\begin{aligned}
+  Z[a] = (-1)^{\int a_1 \smile a_2 \smile a_3}
+\end{aligned}\]</span> This relates to our definition of a quantum
+double via the following correspondence:</p>
+<div id="prop:equivalence_cup_typeIII_cocycle" class="prop">
+<p><strong>Prop 6</strong>. Let <span class="math inline">\(\omega \in
+H^3(\mathbb Z_2^3, \mathbb R/\mathbb Z)\)</span> be the normalized
+type-III cocycle, and let <span class="math inline">\(\vb a \in Z^3(M,
+\mathbb Z_2^3)\)</span>. Then we have <span
+class="math display">\[\begin{aligned}
+  a_1 \smile a_2 \smile a_3 = \vb a^* \omega
+\end{aligned}\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> This is verified through direct computation; <span
+class="math display">\[\begin{aligned}
+  \vb a^*\omega(v_0, v_1, v_2, v_3) &amp;= \omega(\vb a([v_0, v_1]) |
+\vb a([v_1, v_2]) | \vb a([v_2, v_3])) \notag \\
+                                &amp;= a_1([v_0, v_1])a_2([v_1,
+v_2])a_3([v_2, v_3]) \notag \\
+  &amp;= (a_1 \smile a_2 \smile a_3)(v_0, v_1, v_2, v_3)
+\end{aligned}\]</span> ◻</p>
+</div>
+<h2 id="cup-products-and-fault-tolerant-logical-gates">Cup products and
+fault-tolerant logical gates</h2>
+<h3 id="cups-and-gates">Cups and gates</h3>
+<p>A CSS code can be specified by a two-term cochain complex, which we
+will recap briefly. For simplicity, we consider <span
+class="math inline">\(\mathbb Z_M\)</span>-valued qudits with the clock
+and shift operators <span class="math inline">\(X\ket{k} =
+\ket{k+1}\)</span> and <span class="math inline">\(Z\ket{k} =
+\mathrm{e}^{2\pi \mathrm{i}k / M}\ket{k}\)</span>, with the commutators
+<span class="math inline">\(ZX = \mathrm{e}^{2\pi
+\mathrm{i}/M}XZ\)</span>. If <span class="math inline">\(Q\)</span> is
+the set of qudits, then a basis for the Hilbert space can be identified
+with <span class="math inline">\(\mathbb Z_M[Q]\)</span>, the free <span
+class="math inline">\(\mathbb Z_M\)</span>-module over <span
+class="math inline">\(Q\)</span>. Let the stabilizer group be <span
+class="math inline">\(\mathcal S = \mathcal S_X \sqcup
+\mathcal S_Z\)</span>, where <span class="math inline">\(\mathcal
+S_X\)</span> contains <span class="math inline">\(X\)</span>-type
+stabilizers and <span class="math inline">\(\mathcal
+S_Z\)</span> contains <span class="math inline">\(Z\)</span>-type
+stabilizers. From the <span
+class="math inline">\(Z\)</span>-stabilizers, we get a map <span
+class="math display">\[\begin{aligned}
+\label{eq:CSS-chain-complex-boundary-map}
+  \mathbb Z_M[\mathcal S_Z] \xrightarrow{\partial} \mathbb Z_M[Q]
+\hspace{2cm}  \mathcal Z_k = \prod_{q \in Q}Z_{q}^{n_{kq}} \mapsto
+\sum_{q \in Q}n_{kq}q
+\end{aligned}\]</span> We similarly construct a map <span
+class="math display">\[\begin{aligned}
+  \mathbb Z_m[\mathcal S_X] \xrightarrow{\delta} \mathbb Z_m[Q]
+\end{aligned}\]</span> The commutator between stabilizers <span
+class="math inline">\(\mathcal X_j\)</span>, <span
+class="math inline">\(\mathcal Z_k\)</span> is given by <span
+class="math display">\[\begin{aligned}
+\label{eq:CSS-chain-complex-stabilizer-commutators}
+\mathcal Z_k \mathcal X_j = \prod_{q \in Q}Z_q^{n_{kq}} \prod_{p \in
+Q}X_{p}^{m_{jp}} =
+\mathrm{e}^{2\pi \mathrm{i}\sum_{r \in Q}m_{jr}n_{kr}/M}\prod_{p \in
+Q}X_{p}^{m_{jp}}\prod_{q \in Q}Z_q^{n_{kq}} = \mathrm{e}^{2\pi
+\mathrm{i}\sum_{r \in Q}m_{jr}n_{kr}/M}\mathcal X_j \mathcal Z_k
+\end{aligned}\]</span> We can see that <span
+class="math display">\[\begin{aligned}
+\label{eq:CSS-code-chain-complex-correspondence}
+   \sum_{r \in Q}m_{jr}n_{kr} = \langle  \delta \mathcal X_j,  \partial
+\mathcal Z_k\rangle = \langle\mathcal X_j, \delta^T \partial\mathcal Z_k
+\rangle
+\end{aligned}\]</span> wherein the pairwise commutativity of the
+stabilizers implies that <span class="math inline">\(\partial^T
+\delta = 0\)</span> as this form is non-degenerate. Thus, the code is
+specified by a chain complex <span
+class="math display">\[\begin{aligned}
+C_\bullet = \mathbb Z_M[\mathcal S_Z] \xrightarrow{\partial} \mathbb
+Z_M[Q] \xrightarrow{\delta^T} \mathbb Z_M[\mathcal S_X]
+\end{aligned}\]</span> The logical <span
+class="math inline">\(Z\)</span> operators are those elements of <span
+class="math inline">\(\ker \delta^T\)</span> (the <span
+class="math inline">\(Z\)</span> operators which commute with all <span
+class="math inline">\(X\)</span> stabilizers) modulo <span
+class="math inline">\(\operatorname{im}\partial\)</span>, or those <span
+class="math inline">\(Z\)</span> operators which are products of
+stabilizers. Therefore the logical <span
+class="math inline">\(Z\)</span> operators are elements of <span
+class="math inline">\(H_1(C_\bullet)\)</span>. We can also dualize the
+sequence by applying <span class="math inline">\(\text{Hom}(\bullet,
+\mathbb Z_M)\)</span>: <span class="math display">\[\begin{aligned}
+C^\bullet = \text{Hom}(\mathbb Z_{M}[\mathcal S_Z], \mathbb Z_M)
+\xleftarrow{\partial^T} \text{Hom}(\mathbb Z_M[Q], \mathbb Z_M)
+\xleftarrow{\delta} \text{Hom}(\mathbb Z_M[\mathcal S_X], \mathbb Z_M)
+\end{aligned}\]</span> We can interpret <span
+class="math inline">\(\text{Hom}(\mathbb Z_M[Q], \mathbb Z_M)\)</span>
+as a basis for the Hilbert space consisting of <span
+class="math display">\[\begin{aligned}
+  \ket{c} \equiv \bigotimes_{q \in Q}\ket{c(q)}
+\end{aligned}\]</span> The eigenspace of the <span
+class="math inline">\(Z\)</span>-stabilizers is <span
+class="math inline">\(\ker{\partial^T}\)</span>, and the code words are
+an even superposition off all basis states differing by an application
+of <span class="math inline">\(X\)</span>-stabilizers: <span
+class="math display">\[\begin{aligned}
+  z \in \ker{\partial^T}: \ket{[c]} \equiv \sum_{j}\mathcal X_j\ket{c} =
+\sum_{j}\ket{c+\delta \mathcal X_j}
+\end{aligned}\]</span> This implies that the distinct codewords are
+given by <span class="math inline">\(H^1(C^\bullet)\)</span>. Abelian
+quantum doubles are a special case of this construction where the chain
+complex is taken to be the first 3 terms in the cellular chain complex
+of an orientable manifold.</p>
+<p>The observation of <span class="citation"
+data-cites="cupsandgates"><a href="#ref-cupsandgates"
+role="doc-biblioref">[16]</a></span> is that elements of <span
+class="math inline">\(\text{Hom}(H^1(C^\bullet),
+\mathrm{U}(1))\)</span> give rise to diagonal logical gates. In
+particular, if one starts with <span
+class="math inline">\(\Lambda\)</span> copies of a single CSS code and
+then looks for elements <span class="math inline">\(\psi \in
+\text{Hom}(C^1(C^\bullet)^\Lambda, \mathrm{U}(1))\)</span> which descend
+to operations on cohomology, then one finds non-Clifford logical gates
+on <span class="math inline">\(\Lambda\)</span> copies of the CSS code.
+Explicitly, we will define operator-valued cochains, denoted with hat,
+by <span class="math display">\[\begin{aligned}
+  (-1)^{\psi(\hat c_1, \ldots, \hat c_{\Lambda})} \equiv \sum_{\vb c \in
+C^1(C^\bullet)^\Lambda} (-1)^{\psi(c_1, \ldots, c_\Lambda)}\ketbra{c_1,
+\ldots, c_\Lambda}{c_1, \ldots, c_\Lambda}
+\end{aligned}\]</span> because <span class="math inline">\(\psi\)</span>
+only depends on the cohomology classes <span
+class="math inline">\([c_1], \ldots,
+[c_\Lambda]\)</span>, it induces a logical gate. Then we will express
+<span class="math inline">\(c_i = \sum_{q^*}c_i(q)q^*\)</span>, where
+<span class="math inline">\(q^*\)</span> is an indicator cochain on the
+qudit <span class="math inline">\(q\)</span>. Using the bilinearity of
+<span class="math inline">\(\psi\)</span>, <span
+class="math display">\[\begin{aligned}
+  &amp;\sum_{\vb c \in C^1(C^\bullet)^\Lambda} (-1)^{\psi(c_1, \ldots,
+c_\Lambda)}\ketbra{c_1, \ldots, c_\Lambda}{c_1, \ldots, c_\Lambda}
+\notag\\
+&amp;= \sum_{\vb c \in C^1(C^\bullet)^\Lambda} (-1)^{\sum_{q_1, \ldots,
+q_\Lambda}c_1(q_1)\ldots c_\Lambda(q_\Lambda)\psi(q_1^*, \ldots,
+q_\Lambda^*)}\bigotimes_{q_1, \ldots, q_n}\ketbra{c_1(q_1), \ldots,
+c_\Lambda(q_\Lambda)}{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)} \notag\\
+            &amp;= \sum_{\vb c \in C^1(C^\bullet)^\Lambda}
+\bigotimes_{q_1, \ldots, q_n}(-1)^{c_1(q_1)\ldots
+c_\Lambda(q_\Lambda)\psi(q_1^*, \ldots, q_\Lambda^*)}\ketbra{c_1(q_1),
+\ldots, c_\Lambda(q_\Lambda)}{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)}
+\notag\\
+            &amp;= \bigotimes_{q_1, \ldots, q_n}\sum_{z_1, \ldots,
+z_\Lambda \in \mathbb Z_M^\Lambda} (-1)^{z_1\ldots z_\Lambda\psi(q_1^*,
+\ldots, q_\Lambda^*)}\ketbra{z_1, \ldots, z_\Lambda}{z_1, \ldots,
+z_\Lambda} \notag\\
+            &amp;= \bigotimes_{q_1, \ldots,
+q_n}(\mathrm{C}^{\Lambda}Z_{q_1, \ldots, q_n})^{\psi(q_1^*, \ldots,
+q_\Lambda^*)}
+\end{aligned}\]</span> where <span
+class="math inline">\(\mathrm{C}^{\Lambda}Z_{q_1, \ldots,
+q_\Lambda}\)</span> is a controlled phase gate between the qudits <span
+class="math inline">\(q_1,\ldots, q_\Lambda\)</span>. If <span
+class="math inline">\(\psi\)</span> is a local function, then this gate
+is manifestly transversal. The cup product provides the fundamental
+example of such an operation; it is by construction local, and by the
+Leibniz rule [Eq. <a href="#eq:cup-product-liebniz-rule"
+data-reference-type="eqref"
+data-reference="eq:cup-product-liebniz-rule">[eq:cup-product-liebniz-rule]</a>],
+it descends to a cohomology operation.</p>
+<h2 id="gauging-a-cup-product-symmetry">Gauging a cup product
+symmetry</h2>
+<p>We will bring these concepts together to describe the <span
+class="math inline">\(\mathrm{D}_4\)</span> double through gauging a cup
+product symmetry. Let <span class="math inline">\(M\)</span> be any
+closed, connected 2D CW complex. Then we can construct the fundamental
+class <span class="math inline">\([M]\)</span> as in Def. <a
+href="#defn:fundamental-class" data-reference-type="ref"
+data-reference="defn:fundamental-class">5</a>. We will take the
+coefficients in <span class="math inline">\(\mathbb Z_2\)</span> so that
+the orientations can be ignored. Consider the operation <span
+class="math display">\[\begin{aligned}
+  U = (-1)^{\int \hat c_1 \smile \hat c_2} &amp;= \prod_{q,
+q&#39;}(\mathrm{CZ}_{qq&#39;})^{\int q^* \smile q&#39;^*}
+\end{aligned}\]</span> on two copies <span
+class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> of <span
+class="math inline">\(M\)</span>. Starting with the quantum double
+stabilizers, we find that <span class="math display">\[\begin{aligned}
+\label{eq:stabilizer-transformation-cup-product-symmetry}
+  UX_{\delta v}^aU^\dagger = X_{\delta v}^a(-1)^{\int_M \delta v \smile
+\hat c_2} = X_{\delta v}^a \prod_{q&#39;}Z_{q&#39;}^{\int_M \delta v
+\smile q&#39;^*}
+\end{aligned}\]</span> Now we need to introduce the cap product and
+Poincare map.</p>
+<div class="defn">
+<p><strong>Definition 6</strong>. The cap product is defined as the dual
+to the cup product: <span class="math display">\[\begin{aligned}
+  (\alpha \smile \psi)(s) = \psi(s \frown \alpha)
+\end{aligned}\]</span> From this, we can write <span
+class="math inline">\(s \frown \psi\)</span> in a basis of indicator
+cochains: <span class="math display">\[\begin{aligned}
+  x^*(s \frown \alpha) = (\alpha \smile x^*)(s) \implies s\frown \alpha
+= \sum_{x}x (\alpha\smile x^*)(s)
+\end{aligned}\]</span></p>
+</div>
+<p>This also gives us an expression for the boundary of a cap
+product:</p>
+<div id="prop:cap-product-boundary-formula" class="prop">
+<p><strong>Prop 7</strong>. <span class="math display">\[\begin{aligned}
+  \partial (s \frown \alpha) = (-1)^{|s| - |\alpha|}\qty[\delta s \frown
+\alpha - s \frown \partial \alpha]
+\end{aligned}\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Fix an arbitrary cocycle <span
+class="math inline">\(\psi\)</span> of degree <span
+class="math inline">\(|s|- |\alpha|\)</span>. Then <span
+class="math display">\[\begin{aligned}
+  \psi(\partial (s \frown \alpha)) &amp;= \delta \psi(s \frown \alpha)\\
+                                   &amp;= (\alpha \smile \delta \psi)(s)
+\\
+  &amp;= (-1)^{|\psi|}[\delta(\alpha \smile \psi) - \delta \alpha \smile
+\psi](s) \\
+  &amp;= (-1)^{|s| - |\alpha|}\psi(\partial s\frown \alpha - s \frown
+\delta \alpha)
+\end{aligned}\]</span> and since the duality pairing is nondegenerate,
+this implies the claim. ◻</p>
+</div>
+<div id="def:Poincare-duality-isomorphism" class="defn">
+<p><strong>Definition 7</strong>. The Poincare map sends <span
+class="math inline">\(H^{q}(M) \to H_{d-q}(M)\)</span> via <span
+class="math display">\[\begin{aligned}
+    c \mapsto [M] \frown c = \sum_{x}x \int_M c \smile x^*
+  
+\end{aligned}\]</span> in the case of a <span
+class="math inline">\(d\)</span>-manifold, Poincare duality says that
+this map is an isomorphism.</p>
+</div>
+<p>Now we can rewrite the transformed stabilizers from Eq. <a
+href="#eq:stabilizer-transformation-cup-product-symmetry"
+data-reference-type="eqref"
+data-reference="eq:stabilizer-transformation-cup-product-symmetry">[eq:stabilizer-transformation-cup-product-symmetry]</a>:
+<span class="math display">\[\begin{aligned}
+  \prod_{q&#39;}Z_{q&#39;}^{\int_M \delta v \smile q&#39;^*} &amp;=
+Z_{\sum_{q&#39;} q&#39;\int_M \delta v \smile q&#39;^*} = Z_{[M] \frown
+\delta v}
+\end{aligned}\]</span> Since we assumed <span
+class="math inline">\(M\)</span> is closed, we have <span
+class="math display">\[\begin{aligned}
+\partial([M] \frown  v) = (-1)^d([\partial M] \frown v - [M] \frown
+\delta v) = -(-1)^d [M] \frown \delta v
+\end{aligned}\]</span> Therefore <span class="math inline">\(Z_{[M]
+\frown \delta v} = Z_{\partial([M] \frown  v)}\)</span> is a product of
+plaquettes surrounding <span class="math inline">\(v\)</span>, so <span
+class="math display">\[\begin{aligned}
+  UX_{\delta v}^aU^\dagger &amp;= X_{\delta v}^aZ^b_{\partial([M] \frown
+v)} \\
+  UX_{\delta v}^bU^\dagger &amp;= X_{\delta v}^bZ^a_{\partial(v \frown
+[M])}
+\end{aligned}\]</span> are products of stabilizers after the
+transformation. We did not use Poincare duality at this point. Suppose
+that <span class="math inline">\([c] \in H^1(M)\)</span> is an essential
+cocycle, which supports a logical <span class="math inline">\(X\)</span>
+operator. Then <span class="math display">\[\begin{aligned}
+  UX^a_cU = X^a_c Z^b_{[M] \frown c}
+\end{aligned}\]</span> so <span class="math inline">\(U\)</span> maps
+<span class="math inline">\(X_c\)</span> to its Poincare dual <span
+class="math inline">\(Z\)</span>-operator on the other copy of the toric
+code.</p>
+<p>The cup product symmetry is manifestly local, and so we can gauge it.
+Consider adding a third copy of the toric code, which we will label
+<span class="math inline">\(c\)</span>. Then one way to express <span
+class="math inline">\(U\)</span> is via <span
+class="math display">\[\begin{aligned}
+  U = (-1)^{\sum_v \int v^* \smile (\hat c_1 \smile \hat c_2)} =
+\prod_{v}(-1)^{\int v^* \smile (\hat c_1 \smile \hat c_2)}
+\end{aligned}\]</span> Then we can turn <span
+class="math inline">\(v\)</span> into a field (which we will call <span
+class="math inline">\(u\)</span>) and quantize it: <span
+class="math display">\[\begin{aligned}
+\Omega_{\mathrm{SET}} &amp;= (-1)^{\int \hat u \smile (\hat c_1 \smile
+\hat c_2)}
+\end{aligned}\]</span> The stabilizers are then the following: <span
+class="math display">\[\begin{aligned}
+  &amp;X^c_{\delta v}U_v = X^c_{\delta v}(-1)^{\int v^* \smile (\hat c_1
+\smile \hat c_2)} \\
+  &amp; \Omega_{\mathrm{SET}}X^a_{\delta v}
+\Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^a(-1)^{\int \hat u \smile
+(\delta v \smile \hat c_2)} \\
+  &amp; \Omega_{\mathrm{SET}}X^b_{\delta v}
+\Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^b(-1)^{\int \hat u \smile
+(\hat c_1 \smile  \delta v)}
+\end{aligned}\]</span> The last two equations still depend on the matter
+field <span class="math inline">\(u\)</span>, which we then couple to a
+gauge field through <span class="math inline">\(Z_{\partial e} =
+Z_{e}\)</span> and then integrate out with <span
+class="math inline">\(Z_{\partial p} = 1\)</span>. This is accomplished
+through the following observation: <span
+class="math display">\[\begin{aligned}
+  (-1)^{\int \hat u \smile (\delta v \smile \hat c_2)} &amp;= Z_{[M]
+\frown (\delta v \smile \hat c_2)} \notag \\
+                                                       &amp;=
+Z_{\partial([M] \frown (v \smile \hat c_2)) } Z_{[M]\frown (v \smile
+\delta \hat c_2)} \notag \\
+                                                       &amp;= Z_{[M]
+\frown (v \smile \hat c_2)} \\
+  &amp;= (-1)^{\int \hat c_0 \smile (v \smile \hat c_2)}
+\end{aligned}\]</span> where we noticed that if <span
+class="math inline">\(c&#39;\)</span> is a cycle, then <span
+class="math display">\[\begin{aligned}
+Z_{[M] \frown (v \smile \delta \hat c_2)}
+  X^b_{c&#39;}Z_{[M] \frown (v \smile \delta \hat c_2)} =
+X^b_{c&#39;}Z_{[M] \frown (v \smile \delta c&#39;)} = 1
+\end{aligned}\]</span> so <span class="math inline">\(Z_{[M] \frown (v
+\smile \delta \hat c_2)} = 1\)</span> because it commutes with all <span
+class="math inline">\(X\)</span>-stabilizers and logical operators.
+Together, this gives the stabilizers <span
+class="math display">\[\begin{aligned}
+\label{eq:stabilizers-cup-product-formula}
+&amp;X^c_{\delta v}U_v = X^c_{\delta v}(-1)^{\int v^* \smile (\hat c_1
+\smile \hat c_2)} \\
+  &amp; \Omega_{\mathrm{SET}}X^a_{\delta v}
+\Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^a(-1)^{\int \hat u \smile
+(\delta v \smile \hat c_2)}  = X_{\delta v}^a(-1)^{\int \hat c_0
+\smile(v^* \smile \hat c_2)}\\
+  &amp; \Omega_{\mathrm{SET}}X^b_{\delta v}
+\Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^b(-1)^{\int \hat u \smile
+(\hat c_1 \smile  \delta v)} = X^b_{\delta v}(-1)^{\int \hat c_0 \smile
+(\hat c_1 \smile  v^*)}
+\end{aligned}\]</span> a form which is appealingly symmetric.</p>
+<p>Now we can show explicitly that these stabilizers are those of our
+squarelattice <span class="math inline">\(D_4\)</span> double model. On
+a square lattice, the cup product <span class="math inline">\(q \smile
+q&#39;\)</span> is nonzero only if <span
+class="math inline">\(q\)</span> and <span
+class="math inline">\(q&#39;\)</span> form an oriented corner of a
+plaquette. The cup products from <a
+href="#eq:stabilizers-cup-product-formula" data-reference-type="eqref"
+data-reference="eq:stabilizers-cup-product-formula">[eq:stabilizers-cup-product-formula]</a>
+are shown below:</p>
+<div class="pic">
+    <p><img src="figures/14.png" class=figure style="max-width:700px;"/></p>
+</div>
+<p>The red and green show the two non-trivial cup products surrounding
+the vertex <span class="math inline">\(v\)</span>.</p>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-SPT_cohomology" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">X.
+Chen, Z.-C. Gu, Z.-X. Liu, and X.-G. Wen, <span>“Symmetry protected
+topological orders and the group cohomology of their symmetry
+group,”</span> <em>Physical Review B</em>, vol. 87, no. 15, Apr. 2013,
+doi: <a
+href="https://doi.org/10.1103/physrevb.87.155114">10.1103/physrevb.87.155114</a>.</div>
+</div>
+<div id="ref-lattice_models" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">C.
+Bao, S. Yang, C. Wang, and Z.-C. Gu, <span>“Lattice model constructions
+for gapless domain walls between topological phases,”</span>
+<em>Physical Review Research</em>, vol. 4, no. 2, Apr. 2022, doi: <a
+href="https://doi.org/10.1103/physrevresearch.4.023038">10.1103/physrevresearch.4.023038</a>.</div>
+</div>
+<div id="ref-Yoshida_2017" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">B.
+Yoshida, <span>“Gapped boundaries, group cohomology and fault-tolerant
+logical gates,”</span> <em>Annals of Physics</em>, vol. 377, pp.
+387–413, Feb. 2017, doi: <a
+href="https://doi.org/10.1016/j.aop.2016.12.014">10.1016/j.aop.2016.12.014</a>.</div>
+</div>
+<div id="ref-twisted_qd" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y.
+Hu, Y. Wan, and Y.-S. Wu, <span>“Twisted quantum double model of
+topological phases in two dimensions,”</span> <em>Physical Review
+B</em>, vol. 87, no. 12, Mar. 2013, doi: <a
+href="https://doi.org/10.1103/physrevb.87.125114">10.1103/physrevb.87.125114</a>.</div>
+</div>
+<div id="ref-Yoshida_2016" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">B.
+Yoshida, <span>“Topological phases with generalized global
+symmetries,”</span> <em>Physical Review B</em>, vol. 93, no. 15, Apr.
+2016, doi: <a
+href="https://doi.org/10.1103/physrevb.93.155131">10.1103/physrevb.93.155131</a>.</div>
+</div>
+<div id="ref-CuiTwisted" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">S.
+X. Cui, C. Galindo, and D. Romero, <span>“Twisted kitaev quantum double
+model as local topological order.”</span> 2025. Available: <a
+href="https://arxiv.org/abs/2411.08675">https://arxiv.org/abs/2411.08675</a></div>
+</div>
+<div id="ref-propitius" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">M.
+de Wild Propitius, <span>“Topological interactions in broken gauge
+theories.”</span> 1995. Available: <a
+href="https://arxiv.org/abs/hep-th/9511195">https://arxiv.org/abs/hep-th/9511195</a></div>
+</div>
+<div id="ref-bombindelgado" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">H.
+Bombin and M. A. Martin-Delgado, <span>“Family of non-abelian kitaev
+models on a lattice: Topological condensation and confinement,”</span>
+<em>Physical Review B</em>, vol. 78, no. 11, 2008, doi: <a
+href="https://doi.org/10.1103/physrevb.78.115421">10.1103/physrevb.78.115421</a>.</div>
+</div>
+<div id="ref-shortest_route" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">N.
+Tantivasadakarn, R. Verresen, and A. Vishwanath, <span>“Shortest route
+to non-abelian topological order on a quantum processor,”</span>
+<em>Physical Review Letters</em>, vol. 131, no. 6, Aug. 2023, doi: <a
+href="https://doi.org/10.1103/physrevlett.131.060405">10.1103/physrevlett.131.060405</a>.</div>
+</div>
+<div id="ref-sahay_nonabelian" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">M.
+Christos, C. F. B. Lo, V. Khemani, and R. Sahay, <span>“Non-abelian
+quantum low-density parity check codes and non-clifford operations from
+gauging logical gates via measurements,”</span> <em>arXiv preprint
+arXiv:2602.12228</em>, 2026.</div>
+</div>
+<div id="ref-non_pauli_decoding" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">J.
+C. Magdalena de la Fuente, N. Feldman, J. Eisert, and A. Bauer,
+<span>“High-threshold decoding of non-pauli codes for 2D
+universality,”</span> <em>arXiv e-prints</em>, pp. arXiv–2604,
+2026.</div>
+</div>
+<div id="ref-kobayashi_twisted_double" class="csl-entry"
+role="listitem">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">R.
+Kobayashi, G. Zhu, and P.-S. Hsin, <span>“Clifford hierarchy stabilizer
+codes: Transversal non-clifford gates and magic.”</span> 2025.
+Available: <a
+href="https://arxiv.org/abs/2511.02900">https://arxiv.org/abs/2511.02900</a></div>
+</div>
+<div id="ref-np_stabilizer_models" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">J.
+C. Magdalena de la Fuente, N. Tarantino, and J. Eisert, <span>“Non-pauli
+topological stabilizer codes from twisted quantum doubles,”</span>
+<em>Quantum</em>, vol. 5, p. 398, Feb. 2021, doi: <a
+href="https://doi.org/10.22331/q-2021-02-17-398">10.22331/q-2021-02-17-398</a>.</div>
+</div>
+<div id="ref-HuPEMDuality" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">Y.
+Hu and Y. Wan, <span>“Electric-magnetic duality in twisted quantum
+double model of topological orders,”</span> <em>Journal of High Energy
+Physics</em>, vol. 2020, no. 11, p. 170, 2020.</div>
+</div>
+<div id="ref-Tantivasadakarn_2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">N.
+Tantivasadakarn, A. Vishwanath, and R. Verresen, <span>“Hierarchy of
+topological order from finite-depth unitaries, measurement, and
+feedforward,”</span> <em>PRX Quantum</em>, vol. 4, no. 2, Jun. 2023,
+doi: <a
+href="https://doi.org/10.1103/prxquantum.4.020339">10.1103/prxquantum.4.020339</a>.</div>
+</div>
+<div id="ref-cupsandgates" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">N.
+P. Breuckmann, M. Davydova, J. N. Eberhardt, and N. Tantivasadakarn,
+<span>“Cups and gates i: Cohomology invariants and logical quantum
+operations,”</span> <em>Communications in Mathematical Physics</em>,
+vol. 407, no. 5, Apr. 2026, doi: <a
+href="https://doi.org/10.1007/s00220-026-05570-z">10.1007/s00220-026-05570-z</a>.</div>
+</div>
+</div>
+    </main>
+    </body>
+</html>

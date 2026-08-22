@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{eulervm}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{dsfont}
+\usepackage{blkarray}
+
+\newtheorem{defn}{Def}
+\newtheorem{rmk}{Remark}
+\newtheorem{prop}{Prop}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Cor}
+\newtheorem{thm}{Theorem}
+
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\e}{\mathrm e}
+\newcommand{\ii}{\mathrm i}
+
+\begin{document}
+\noindent\huge{The operator norm of matrix truncations} \\
+\normalsize\textbf{Blog Post \today}
+
+\section{Introduction}
+An interesting question showed up the other day. First, consider a Hamiltonian $H = H_0 + \epsilon V$ where $H_0$ is degeneracy-free, and a transformation $U = \e^{T}$ diagonalizing $H$, i.e. such that $\e^{-T}H\e^{T}$ is diagonal in the eigenbasis of $H_0$. Let's write $T$ as a power series: $T = \sum_{q=1}^{\infty}\epsilon^qT_q$. Let $\mathcal T$ denote the superoperator $[T, \cdot]$. Then we can expand $\e^{-T}H\e^{T} = \e^{\mathcal T}H$ in powers of $\epsilon$:
+\begin{align}
+    \e^{\mathcal T}H = H_0 + \sum_{q=1}^{\infty}\epsilon^q\mathcal T_qH_0 + V^{(q-1)}
+\end{align}
+where $V^{(q-1)}$ is Hermitian and a function of $T_{k < q}$ and $V$ (the specific form is not important). Clearly, if we choose $T_q$ such that $\mathcal T_qH_0 = -O(V^{(q-1)})$, where $O(V^{(q-1)})$ are the off-diagonal elements of $V^{(q-1)}$, then the transformed Hamiltonian will be diagonal at all orders. 
+
+At this point, we define the superoperator $\mathbb P^+$ which projects onto the lower-left-triangular part of a matrix, so that if $A$ is an operator, $\mathbb P^+A$ strictly raises the eigenvalue of $H_0$. Then we define the integral operator
+\begin{align}
+    I(A) = \int_0^\infty \e^{-H_0s}\mathbb P^+A \e^{H_0s}
+\end{align}
+Notice that the norm of $I(A)$ satisfies
+e\begin{align}
+    \Vert I(A) \Vert \leq \Vert \mathbb P^+ A\Vert\int_{0}^{\infty}\dd s\e^{-\Delta s} = \frac{\Vert \mathbb P^+ A\Vert}{\Delta}
+\end{align}
+where $\Delta$ is the minimum gap in the spectrum. We then
+notice that $I(A)$ satisfies the following property:
+\begin{align}
+    [H_0, I(A)] = \int_0^\infty \dd s [H_0, \e^{-H_0s}\mathbb P^+A\e^{H_0s}] = \sum_{j>i}(E_j-E_i)\bra{j}A\ket{i} \int \dd s \e^{-(E_j-E_i)s} = \sum_{j>i}\bra{j}A\ket{i}
+\end{align}
+Thus, defining $L(A) \equiv I(A) - [I(A)]^\dagger$, if $A$ is Hermitian, then
+\begin{align}
+    [H_0, L(A)] = O(A)
+\end{align}
+This is exactly what we wanted, and putting $T_q = L(V^{(q-1)})$, then if the series converges, it diagonalizes the Hamiltonian. So when does this series converge? In order to answer that, we need to estimate $\Vert\mathbb P^+ A\Vert$. 
+
+\section{Matrix truncation as averaging}
+In searching for an answer to this question, I came across a great article by
+Bhatia \cite{bhatia} (the same person who wrote the matrix bible \cite{bible}).
+Suppose that $\Vert \cdot \Vert$ is a unitary-invariant norm. The easiest way to
+estimate the norm of a super-operator is to describe it as an average over some set of unitary matrices. Let $U_{\theta} = \diag(1, \e^{-\ii\theta}, \e^{-2\ii \theta}, \dots, \e^{-d\ii\theta})$, where $d$ is the dimension of the space. Then we notice that $(U^\dagger A U)_{ij} = \e^{(i-j)\theta}A_{ij}$. Therefore the superoperator
+\begin{align}
+    A \mapsto \frac{1}{2\pi}\int_{0}^{2\pi}\dd \theta U_{\theta}^\dagger A U_{\theta}e^{\ii k \theta}
+\end{align}
+projects $A$ onto the $k^{\text{th}}$ diagonal, where $i-j = k$. Thus we can write the superoperator $\mathbb P^+$ as
+\begin{align}
+    \mathbb P^+ A = \frac{1}{2\pi}\sum_{k = 1}^d\int_{0}^{2\pi}\dd \theta U_{\theta}^\dagger A U_{\theta}e^{\ii k \theta}
+\end{align}
+Estimating the norm and using unitary invariance gives
+\begin{align}
+    \Vert\mathbb P^+ A\Vert = \frac{\Vert A \Vert}{2\pi}\int_{0}^{2\pi}\dd \theta \qty|\sum_{k = 1}^d e^{\ii k \theta}|
+\end{align}
+This looks very much like the $L_1$ norm of the Dirichlet kernel, and we can use a very similar strategy to bound its norm. First we have
+\begin{align}
+    \qty|\sum_{k = 1}^d e^{\ii k \theta}| = \qty|\frac{\e^{\ii \theta}-\e^{d\ii\theta}}{1- \e^{\ii\theta}}| = \qty|-\frac{2\ii\e^{\ii\theta/2}( 1 - \e^{(d-1)\ii\theta})}{\sin(\theta/2)}| = \qty|\frac{4\sin[2]([d-1]\theta/2)}{\sin(\theta/2)}|
+\end{align}
+On the interval $[0, \pi/(d-1)]$, we have
+\begin{align}
+    \frac{|\sin[2]([d-1]\theta/2)|}{|\sin(\theta/2)|} \leq (d-1)^2\theta
+\end{align}
+and on the interval $[\frac{\pi}{d-1}, \pi - \frac{\pi}{(d-1)})$ we have 
+\begin{align}
+    \frac{|\sin[2]([d-1]\theta/2)|}{|\sin(\theta/2)|} \leq \frac{4}{\theta}
+\end{align}
+Integrating these, we have
+\begin{align}
+    \int_0^{\frac{\pi}{d-1}}(d-1)^2\theta \dd \theta + \int_{\frac{\pi}{d-1}}^{\pi - \frac{\pi}{d-1}}\frac{4}{\theta} \leq \frac{\pi}{2} + 4\ln(d-2)
+\end{align}
+If we repeat this argument for the intervals $[\pi - \pi/(d-1), \pi +
+\pi/(d-1)), [\pi + \pi/(d-1), 2\pi - \pi/(d-1))$, and $[2\pi - \pi/(d-1), 2\pi]$,
+we obtain
+\begin{align}
+\int_{0}^{2\pi} \dd \theta \frac{\sin[2]([d-1]\theta/2)}{\sin(\theta/2)} \leq 2\pi + 8\ln(d-2)
+\end{align}
+Taken altogether, we have
+\begin{align}
+    \Vert\mathbb P^+ A\Vert \leq  \frac{\Vert A \Vert}{\pi}\qty[2+32\ln(d-2)] \leq 12\Vert A \Vert\ln(d)
+\end{align}
+where the last inequality holds when $d > 1$. Therefore we have a bound that
+grows very slowly with $d$, but is in fact unbounded as $d \to \infty$. The
+prefactor is not tight; it can be made as small as $\frac{1}{\pi}$ for large
+$d$.  It turns out
+that the form of the bound is tight; the Hilbert matrix, with entries $H_{ij} =
+(i-j)^{-1}$, has a norm bounded by $\pi$, but the norm of its lower-triangular
+truncation grows as $\frac{4}{5}\ln(d)$.
+
+For some applications, this is already good enough. In particular, if our
+system consists of a finite number of sites with a finite onsite Hilbert space
+dimension, then this bound grows linearly in the number of sites.
+\bibliography{refs}
+\bibliographystyle{plain}
+
+\end{document}

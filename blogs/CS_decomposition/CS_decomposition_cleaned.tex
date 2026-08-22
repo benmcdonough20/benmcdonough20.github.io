@@ -1,0 +1,197 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{eulervm}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{dsfont}
+\usepackage{blkarray}
+
+\newtheorem{defn}{Def}
+\newtheorem{rmk}{Remark}
+\newtheorem{prop}{Prop}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Cor}
+\newtheorem{thm}{Theorem}
+
+\newcommand{\diag}{\operatorname{diag}}
+
+\begin{document}
+\noindent\huge{Angles between subspaces} \\
+\normalsize\textbf{Blog Post \today}
+ 
+\section{Introduction}
+It is often desirable to measure the difference between two subspaces. The case where this often arises is in perturbation theory. For instance, let $H$ be Hermitian, and consider $H \oplus (\mathds 1 + \epsilon Z)$ and $H \oplus (\mathds 1 + \epsilon X)$. As $\epsilon \to 0$, it is clear that the eigenvalues of both matrices approach each other, but what about the eigenvectors? In the first case, the new eigenvectors are $\ket{0}, \ket{1}$, and in the second case they are $\ket{+}, \ket{-}$ for any finite value of $\epsilon$. The key realization is that the subspaces they span will become closer and closer. We can characterize the separation of 1D subspaces by an angle $\theta$, and this idea is generalized to multi-dimensional subspaces through the notion of principal angles.
+
+\section{Principal angles and the SVD}
+\begin{defn}
+    Given two (finite-dimensional) subspaces $F$ and $G$, let $\cos(\theta_1) = \langle \vec u, \vec v\rangle$, where $\mathbb B$ is the unit ball. Since $\mathbb B$ is compact in finite dimensions, we can choose $u_1, v_1$ that achieve the maximal $\theta_1$. With $\{u_1, \dots, u_k\}$ and $\{v_1, \dots, v_k\}$ constructed, we choose $u_{k+1}, v_{k+1}$ to maximize $\cos(\theta_k)$ subject to the constraint $\langle u_{k+1}, u_{i \leq k}\rangle = \langle v_{k+1}, v_{i \leq k}\rangle = 0$. The vectors $\{u_1, \dots, u_n\}$ and $\{v_1, \dots, v_n\}$ are called principal vectors, and $\{\theta_1, \dots, \theta_k\}$ are called principal angles.
+\end{defn}
+\begin{rmk}
+While the principal vectors are not unique, the principal angles are.
+\end{rmk}
+\begin{defn}
+    Let $M$ be a matrix. $\Vert M \Vert_2 = \max_{\vec v \in \mathbb B}\Vert M \vec v \Vert_2$ is called the Schatten $2-$norm.
+\end{defn}
+\begin{prop}
+$\Vert M \Vert_2$ is given by $\Vert M \Vert_2 = \max_{y \in \mathbb B}\max_{x \in \mathbb B}\langle y, Mx\rangle$. This follows from the singular value decomposition.
+\end{prop}
+\begin{prop}
+Let $P_F$ project onto $F$ and $P_G$ project onto $G$. Then the canonical angles are given by the singular values of $P_F^\dagger P_G$. 
+\end{prop}
+\begin{proof}
+    Simply note that the largest singular value is 
+    $$\max_{y \in \mathbb B}\max_{x \in \mathbb B}\langle P_F y, P_G x\rangle = \max_{y \in \mathbb B \cap F}\max_{x \in \mathbb B \cap G} \langle y,x\rangle = \theta_1$$
+    where $\theta_1$ is the largest principal angle. The iteration to the subsequent singular values is the same as the one used to find the principal angles.
+\end{proof}
+
+\section{The CS decomposition}
+
+\begin{prop}
+If $A$ is a submatrix of $M$, then the singular values of $A$ are bounded by the maximum singular value of $M$.
+\end{prop}
+\begin{proof}
+Put
+$$
+M = \begin{pmatrix}A & B \\ C & D\end{pmatrix}
+$$
+The maximum singular value of $M$ is given by $\Vert M \Vert_2$, which follows from the singular value decomposition. Then
+\begin{align}
+    \Vert M \Vert_2^2 \geq \Vert M \vec v\Vert_2^2 = \Vert A \vec v \Vert_2^2 + \Vert C \vec v \Vert_2^2 \geq \Vert A \vec v \Vert_2^2
+\end{align}
+Taking the supremum on both sides and using the definition $\Vert A \Vert_2 = \sup_{\vec v \in \mathbb B}\Vert A\vec v \Vert$ proves the claim.
+\end{proof}
+
+\begin{thm}[CS Decomposition (thin)]
+Let $M$ be a $2k \times 2k$ matrix with orthonormal columns. Then there exists a unitary $U = \diag(U_1, U_2)$ and $V$ such that
+\begin{align}
+    U^\dagger M V &= \begin{pmatrix}C \\ S\end{pmatrix}
+\end{align}
+where $C = \diag(\cos(\theta_1), \dots, \cos(\theta_k))$ and $S = \diag(\sin(\theta_1), \dots, \sin(\theta_k))$ for some angles $0 \leq \theta_1, \dots, \theta_k \leq 1$. 
+\end{thm}
+
+\begin{proof}
+Let $M = \begin{pmatrix}X \\ Y\end{pmatrix}$. Choose unitaries $U_1, V$ such that $U_1^\dagger X V = C$, where $C = \diag(c_1, \dots, c_k)$. Since $X$ is a submatrix of $M$ whose singular values are all 1, we have $c_i \leq 1$. Then
+$$
+\begin{pmatrix}U_1^\dagger & 0 \\ 0 & 1\end{pmatrix}\begin{pmatrix}X \\ Y\end{pmatrix}V = \begin{pmatrix}U_1^\dagger X V \\ YV\end{pmatrix} = \begin{pmatrix}C \\ YV\end{pmatrix}
+$$
+This transformation preserves the orthonormality of the columns of $M$. We have $M^\dagger M = C^2 + (YV)^\dagger (YV)  = 1$. This implies that the columns of $YV$ are orthogonal, and their norm is $\Vert y_i \Vert^2 = 1-c_i^2$. Thus we can find a unitary matrix $Q$ so that $Q^\dagger YV = S$, where $S = \diag(1-c_1^2, \dots, 1-c_k^2)$. Therefore
+$$
+\begin{pmatrix}U_1^\dagger & 0 \\ 0 & Q^\dagger\end{pmatrix}\begin{pmatrix}X \\ Y\end{pmatrix}V = \begin{pmatrix}U_1^\dagger X V \\ QYV\end{pmatrix} = \begin{pmatrix}C \\ S\end{pmatrix}
+$$
+This completes the proof.
+\end{proof}
+
+\begin{thm}[CS decomposition]
+Let
+\begin{align}
+    M = \begin{bmatrix}X & Y \\ Z & W\end{bmatrix}
+\end{align}
+be a unitary matrix with $k \times k$ blocks $X, Y, Z, W$. Then there exist unitaries $U = \diag(U_1, U_2)$, $V = \diag(V_1, V_2)$ such that
+$$
+U^\dagger M V = \begin{pmatrix}C & -S \\ S & C\end{pmatrix}
+$$
+where $C = \diag(\cos(\theta_1), \dots, \cos(\theta_k))$ and $S = \diag(\sin(\theta_1), \dots, \sin(\theta_k))$ with angles $\theta_1, \dots, \theta_k \leq \frac{\pi}{2}$.
+\end{thm}
+\begin{proof}
+    First, choose $U_1, V_1$ so that $U_1^\dagger X V_1 = C$. Since $X$ is a submatrix of $M$ whose singular values are all 1, we have $C = \diag(c_1, \dots, c_k)$ where $0 \leq c_i \leq 1$. Then we have
+    $$
+    \begin{pmatrix}U_1^\dagger & 0 \\ 0 & 1\end{pmatrix}\begin{pmatrix}X & Y \\ Z & W\end{pmatrix} \begin{pmatrix}V_1 & 0 \\ 0 & 1\end{pmatrix} = \begin{pmatrix}U_1^\dagger X V_1 & U_1^\dagger Y \\ ZV_1 & W\end{pmatrix} = \begin{pmatrix}C & Y' \\ Z' & W\end{pmatrix}
+    $$
+    This transformation preserves the orthonormality of the rows and columns. Therefore $\langle \vec z'_i, \vec z'_j \rangle = \delta_{ij}(1-c_i^2)$. This same equation is satisfied by the rows of $Y'$. Therefore we can find unitaries $R$ and $L$ such that $L^\dagger Z' = T$ and $Y'R = -S$, where $S = \diag(1-c_1^2, \dots, 1-c_k^2)$. As such,
+
+    $$
+    \begin{pmatrix}U_1^\dagger & 0 \\ 0 & L^\dagger\end{pmatrix}\begin{pmatrix}X & Y \\ Z & W\end{pmatrix} \begin{pmatrix}V_1 & 0 \\ 0 & R\end{pmatrix} = \begin{pmatrix}U_1^\dagger X V_1 & U^\dagger_1YR \\  L^\dagger ZV_1 & L^\dagger WR\end{pmatrix} = \begin{pmatrix}C & S \\ -S & W'\end{pmatrix}
+    $$
+    Writing $C = 1 \oplus C'$, where $C'$ consists of $c_i$ strictly less than 1, then we have
+$$
+    \begin{pmatrix}C & S \\ -S & W'\end{pmatrix} = \begin{pmatrix}\mqty{1 & 0 \\ 0 & C'}  & \mqty{0 & 0 \\ 0 & S'} \\ \mqty{0 & 0 \\ 0 & -S'} & \mqty{X_1 & X_2 \\ X_3 & X_4}\end{pmatrix}
+$$
+Taking the inner product of the last row with the second row gives $S'X_4^\dagger-S'C' = 0$, where the unitarity of $M$ guarantees that the inner product of rows is zero. Since $S'$ is invertible (because $1-c_i^2 > 0$), we have $X_4 = C'$, and by the orthonormality of the rows, $X_2 = X_3 = 0$. This then implies that $X_1 = 1$ by the same logic. Therefore we have
+$$
+    \begin{pmatrix}\mqty{1 & 0 \\ 0 & C'}  & \mqty{0 & 0 \\ 0 & S'} \\ \mqty{0 & 0 \\ 0 & -S'} & \mqty{X_1 & X_2 \\ X_3 & X_4}\end{pmatrix} = \begin{pmatrix}\mqty{1 & 0 \\ 0 & C'}  & \mqty{0 & 0 \\ 0 & S'} \\ \mqty{0 & 0 \\ 0 & -S'} & \mqty{1 & 0 \\ 0 & C'}\end{pmatrix} =\begin{pmatrix}C & -S \\ S & C\end{pmatrix}
+$$
+Since $0 \leq c_i \leq 1$, we can put $c_i \equiv \cos(\theta_i)$ for some $0 \leq \theta \leq \pi/2$, and $s_i = 1-c_i^2 = \sin(\theta_i)$. This completes the proof.
+\end{proof}
+
+\section{Halmos two-projections theorem}
+\begin{thm}[Halmos two-projection theorem (finite dimensions)]
+Suppose that $F, G \leq V$ are finite-dimensional subspaces of equal dimensions $k$ with $\dim V = 2k$ and $P_F, P_G$ are projectors onto these spaces. Put
+$$
+P(\theta) = \begin{pmatrix}\cos^{2}(\theta) & \sin(\theta)\cos(\theta) \\ \sin(\theta)\cos(\theta)  & \sin^{2}(\theta)\end{pmatrix}
+$$
+and
+$$
+P_0 = \begin{pmatrix}1 & 0 \\ 0 & 0\end{pmatrix}
+$$
+then there are angles $\theta_1, \dots, \theta_k$ and a basis in which
+\begin{align}
+    P_F &= \begin{pmatrix}P_0 & 0 & \dots & 0 \\ 0 & P_0 & \dots & 0 \\ 0 & 0 & \dots & P_0\end{pmatrix} \\
+    P_G &= \begin{pmatrix}P(\theta_1) & 0 & \dots & 0\\ 0 & P(\theta_2) & \dots & 0 \\ 0 & 0 & \dots & P(\theta_k)\end{pmatrix}
+\end{align}
+\end{thm}
+\begin{proof}
+    Let $X,X_\perp, Y, Y_{\perp}$ be matrices whose columns form a basis for $F,F^\perp, G, G^\perp$ respectively.  Then $(X, X_\perp)$ is unitary. Thus $M = (X, X_\perp)^\dagger Y$ has orthogonal columns. Therefore we can find $U_1, U_2, V$ such that
+$$
+U^\dagger M V = \begin{pmatrix}U_1^\dagger & 0 \\ 0 & U_2^\dagger\end{pmatrix}\begin{pmatrix}X^\dagger Y \\ X_\perp^\dagger Y\end{pmatrix}V = \begin{pmatrix}U_1^\dagger X^\dagger YV \\ U_2^\dagger X_\perp^\dagger YV\end{pmatrix} = \begin{pmatrix}C \\ S\end{pmatrix}
+$$
+Since $P_F = XX^\dagger$ and $P_G = YY^\dagger$, putting $U = (XU_1, X_{\perp} U_2)$, we have 
+$$
+U^\dagger P_F U = \begin{pmatrix}U_1^\dagger & 0 \\ 0 & U_2^\dagger\end{pmatrix}\begin{pmatrix}1 & 0 \\ 0 & 0\end{pmatrix} \begin{pmatrix}U_1^\dagger & 0 \\ 0 & U_2^\dagger\end{pmatrix} = \begin{pmatrix}1 & 0 \\ 0 & 0\end{pmatrix}
+$$
+$$
+U^\dagger P_G U = (U^\dagger Y V)(V^\dagger Y^\dagger U) = \begin{pmatrix}C \\ S\end{pmatrix} \begin{pmatrix}C & S\end{pmatrix} = \begin{pmatrix}C^2 & CS \\ CS & S^2\end{pmatrix}
+$$
+Row and column operations corresponding to unitary matrices can then be used to bring this into the desired form.
+\end{proof}
+There is also a slick proof using group representation theory:
+\begin{proof}[Proof using group representation theory]
+    Let $P_F, P_G$ be as before. Put $R_F = 1 - 2P_F$ and $R_G = 1-2P_G$ (these are reflections about the given subspaces). One can check that these are unitary operators. Putting $s = R_F$ and $r = R_FR_G$, we can see that $s^2 = (1-2P_F)(1-2P_F) = 1-4P_F + 4P_F^2 = 1$ and 
+    $$
+    srs = R_F^2R_G R_F  = R_GR_F = r^{-1}
+    $$
+    Thus, the group $G$ generated by $R_F, R_G$ is an infinite dihedral group, and $\langle r \rangle$ is a normal abelian subgroup. 
+
+    Now we classify the irreducible representations $V$ of $G$. Let $N$ be the group generated by $r$. There are two cosets in $G/N$, represented by $e$ and $s$. Let $W \leq V$ be an irreducible representation of $N$. Then $W + sW$ is an invariant subspace of $V$, so $V = W + sW$. By Shur's lemma, since $N$ is Abelian, $W$ is one-dimensional. This classifies all the irreps, and also gives us a way to construct them. We must have $r \mapsto e^{i\lambda}$ for some $\lambda$. Therefore $V$ is spanned by $v, sv$, and since $s^2 = 1$, we have $s \mapsto \begin{pmatrix}0 & 1\\ 1 & 0\end{pmatrix}$ in this basis. Since $rs = sr^{-1}$, we have $r = \diag(e^{i\lambda}, e^{-i\lambda})$, where $\lambda < \pi$ (this is because $\lambda > \pi$ is clearly isomorphic to a representation with $\lambda < \pi$). A basis transformation brings these operators into the form
+    \begin{align}
+        s &= \begin{pmatrix}-1 & 0 \\ 0 & 1\end{pmatrix} \\
+        r &= \begin{pmatrix}\cos(\lambda) & -\sin(\lambda) \\ \sin(\lambda) & \cos(\lambda)\end{pmatrix}
+    \end{align}
+Since all unitary representations are completely reducible, we can decompose $R_F, R_G$ into a block-diagonal form with blocks resembling the above. Then the blocks of the projectors are given by
+$$
+    P_F = \frac{1-s}{2} = \begin{pmatrix}1 & 0 \\ 0 & 0\end{pmatrix}
+$$
+$$
+    P_G = \frac{1-sr}{2} = \begin{pmatrix}\cos^{2}(\lambda/2) & \cos(\lambda/2)\sin(\lambda/2) \\ \cos(\lambda/2)\sin(\lambda/2) & \sin^{2}(\lambda/2)\end{pmatrix}
+$$
+Since we can take $\lambda/2 < \pi/2$, the conclusion is the same.
+\end{proof}
+
+\begin{prop}
+The angles in the two-projections theorem are the principal angles between the subspaces.
+\end{prop}
+
+\begin{proof}
+    Consider
+    $$
+    P_F^\dagger P_G \sim \begin{pmatrix}1 & 0 \\ 0 & 0\end{pmatrix} \begin{pmatrix}C^2 & CS \\ CS & S^2\end{pmatrix} = \begin{pmatrix}C^2 & CS \\ 0 & 0\end{pmatrix}
+    $$
+    Then the singular values of the above matrix are the square roots of the eigenvalues of
+    $$
+    \begin{pmatrix}C^2 & CS \\ 0 & 0\end{pmatrix} \begin{pmatrix}C^2 & CS \\ 0 & 0\end{pmatrix}^\dagger = \begin{pmatrix}C^2(C^2+S^2) & 0 \\ 0 & 0\end{pmatrix} = \begin{pmatrix}C^2 & 0 \\ 0 & 0\end{pmatrix}
+    $$
+    Therefore the eigenvalues are just the diagonal entries of $C$, which are $\cos(\theta_1), \dots, \cos(\theta_k)$. 
+\end{proof}
+
+\subsection{Connection to direct rotations}
+Note that the projectors $P_0$ and $P(\theta)$ are exactly the projection operators we would get if $F$ and $G$ were two dimensional subspaces spanned by $v_1$ and $\cos(\theta)v_1 + \sin(\theta)v_2$. This is made even clearer by the group-theoretic proof; the images of $s$ and $r$ in the irreps of the infinite dihedral group are just an Euler rotation matrix and a reflection. The action of $G$ is therefore always expressible as a action on a direct sum of two-dimensional subspaces. This gives a simple description of direct rotations between subspaces. Since a direct rotation between two 1D subspaces is always given by an Euler rotation matrix, a direct rotation more generally can be written as a sum of these direct rotations between two subspaces.
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

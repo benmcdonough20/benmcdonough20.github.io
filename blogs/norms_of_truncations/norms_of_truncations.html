@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Blog Post - Ben McDonough</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to your existing stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../../blog-styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+        
+        <!-- MathJax Script for rendering LaTeX math -->
+          <script>
+            window.MathJax = {
+              loader: {
+                load: ['[tex]/physics']
+              },
+              tex: {
+                packages: {'[+]': ['physics']}
+              }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+    <header>
+        <h1>Ben McDonough</h1>
+        <nav>
+            <a href="../../index.html#research">Research</a>
+            <a href="../../index.html#projects">Projects</a>
+            <a href="../../index.html#community">Community</a>
+            <a href="../../blog.html">Blog</a>
+        </nav>
+    </header>
+    
+    <!-- Your Blog Content Goes Here -->
+    <main class="card" style="margin-top: 40px; padding: 40px;">
+        <!-- PASTE PANDOC OUTPUT HERE -->
+        <p><span>The operator norm of matrix truncations</span><br />
+<strong>Blog Post 2026-08-14</strong></p>
+<h1 id="introduction">Introduction</h1>
+<p>An interesting question showed up the other day. First, consider a
+Hamiltonian <span class="math inline">\(H = H_0 + \epsilon V\)</span>
+where <span class="math inline">\(H_0\)</span> is degeneracy-free, and a
+transformation <span class="math inline">\(U = \mathrm e^{T}\)</span>
+diagonalizing <span class="math inline">\(H\)</span>, i.e. such that
+<span class="math inline">\(\mathrm e^{-T}H\mathrm e^{T}\)</span> is
+diagonal in the eigenbasis of <span class="math inline">\(H_0\)</span>.
+Let’s write <span class="math inline">\(T\)</span> as a power series:
+<span class="math inline">\(T =
+\sum_{q=1}^{\infty}\epsilon^qT_q\)</span>. Let <span
+class="math inline">\(\mathcal T\)</span> denote the superoperator <span
+class="math inline">\([T, \cdot]\)</span>. Then we can expand <span
+class="math inline">\(\mathrm e^{-T}H\mathrm e^{T} = \mathrm e^{\mathcal
+T}H\)</span> in powers of <span class="math inline">\(\epsilon\)</span>:
+<span class="math display">\[\begin{aligned}
+    \mathrm e^{\mathcal T}H = H_0 +
+\sum_{q=1}^{\infty}\epsilon^q\mathcal T_qH_0 + V^{(q-1)}
+\end{aligned}\]</span> where <span
+class="math inline">\(V^{(q-1)}\)</span> is Hermitian and a function of
+<span class="math inline">\(T_{k &lt; q}\)</span> and <span
+class="math inline">\(V\)</span> (the specific form is not important).
+Clearly, if we choose <span class="math inline">\(T_q\)</span> such that
+<span class="math inline">\(\mathcal T_qH_0 = -O(V^{(q-1)})\)</span>,
+where <span class="math inline">\(O(V^{(q-1)})\)</span> are the
+off-diagonal elements of <span class="math inline">\(V^{(q-1)}\)</span>,
+then the transformed Hamiltonian will be diagonal at all orders.</p>
+<p>At this point, we define the superoperator <span
+class="math inline">\(\mathbb P^+\)</span> which projects onto the
+lower-left-triangular part of a matrix, so that if <span
+class="math inline">\(A\)</span> is an operator, <span
+class="math inline">\(\mathbb P^+A\)</span> strictly raises the
+eigenvalue of <span class="math inline">\(H_0\)</span>. Then we define
+the integral operator <span class="math display">\[\begin{aligned}
+    I(A) = \int_0^\infty \mathrm e^{-H_0s}\mathbb P^+A \mathrm e^{H_0s}
+\end{aligned}\]</span> Notice that the norm of <span
+class="math inline">\(I(A)\)</span> satisfies e<span
+class="math display">\[\begin{aligned}
+    \Vert I(A) \Vert \leq \Vert \mathbb P^+ A\Vert\int_{0}^{\infty}\dd
+s\mathrm e^{-\Delta s} = \frac{\Vert \mathbb P^+ A\Vert}{\Delta}
+\end{aligned}\]</span> where <span class="math inline">\(\Delta\)</span>
+is the minimum gap in the spectrum. We then notice that <span
+class="math inline">\(I(A)\)</span> satisfies the following property:
+<span class="math display">\[\begin{aligned}
+    [H_0, I(A)] = \int_0^\infty \dd s [H_0, \mathrm e^{-H_0s}\mathbb
+P^+A\mathrm e^{H_0s}] = \sum_{j&gt;i}(E_j-E_i)\bra{j}A\ket{i} \int \dd s
+\mathrm e^{-(E_j-E_i)s} = \sum_{j&gt;i}\bra{j}A\ket{i}
+\end{aligned}\]</span> Thus, defining <span class="math inline">\(L(A)
+\equiv I(A) - [I(A)]^\dagger\)</span>, if <span
+class="math inline">\(A\)</span> is Hermitian, then <span
+class="math display">\[\begin{aligned}
+    [H_0, L(A)] = O(A)
+\end{aligned}\]</span> This is exactly what we wanted, and putting <span
+class="math inline">\(T_q = L(V^{(q-1)})\)</span>, then if the series
+converges, it diagonalizes the Hamiltonian. So when does this series
+converge? In order to answer that, we need to estimate <span
+class="math inline">\(\Vert\mathbb P^+ A\Vert\)</span>.</p>
+<h1 id="matrix-truncation-as-averaging">Matrix truncation as
+averaging</h1>
+<p>In searching for an answer to this question, I came across a great
+article by Bhatia <span class="citation" data-cites="bhatia"></span>
+(the same person who wrote the matrix bible <span class="citation"
+data-cites="bible"></span>). Suppose that <span
+class="math inline">\(\Vert \cdot \Vert\)</span> is a unitary-invariant
+norm. The easiest way to estimate the norm of a super-operator is to
+describe it as an average over some set of unitary matrices. Let <span
+class="math inline">\(U_{\theta} = \operatorname{diag}(1, \mathrm
+e^{-\mathrm i\theta}, \mathrm e^{-2\mathrm i\theta}, \dots, \mathrm
+e^{-d\mathrm i\theta})\)</span>, where <span
+class="math inline">\(d\)</span> is the dimension of the space. Then we
+notice that <span class="math inline">\((U^\dagger A U)_{ij} = \mathrm
+e^{(i-j)\theta}A_{ij}\)</span>. Therefore the superoperator <span
+class="math display">\[\begin{aligned}
+    A \mapsto \frac{1}{2\pi}\int_{0}^{2\pi}\dd \theta U_{\theta}^\dagger
+A U_{\theta}e^{\mathrm ik \theta}
+\end{aligned}\]</span> projects <span class="math inline">\(A\)</span>
+onto the <span class="math inline">\(k^{\text{th}}\)</span> diagonal,
+where <span class="math inline">\(i-j = k\)</span>. Thus we can write
+the superoperator <span class="math inline">\(\mathbb P^+\)</span> as
+<span class="math display">\[\begin{aligned}
+    \mathbb P^+ A = \frac{1}{2\pi}\sum_{k = 1}^d\int_{0}^{2\pi}\dd
+\theta U_{\theta}^\dagger A U_{\theta}e^{\mathrm ik \theta}
+\end{aligned}\]</span> Estimating the norm and using unitary invariance
+gives <span class="math display">\[\begin{aligned}
+    \Vert\mathbb P^+ A\Vert = \frac{\Vert A
+\Vert}{2\pi}\int_{0}^{2\pi}\dd \theta \left|\sum_{k = 1}^d e^{\mathrm ik
+\theta}\right|
+\end{aligned}\]</span> This looks very much like the <span
+class="math inline">\(L_1\)</span> norm of the Dirichlet kernel, and we
+can use a very similar strategy to bound its norm. First we have <span
+class="math display">\[\begin{aligned}
+    \left|\sum_{k = 1}^d e^{\mathrm ik \theta}\right| = \left|\frac{\mathrm
+e^{\mathrm i\theta}-\mathrm e^{d\mathrm i\theta}}{1- \mathrm e^{\mathrm
+i\theta}}\right| = \left|-\frac{2\mathrm i\mathrm e^{\mathrm i\theta/2}( 1 -
+\mathrm e^{(d-1)\mathrm i\theta})}{\sin(\theta/2)}\right| =
+\left|\frac{4\sin[2]([d-1]\theta/2)}{\sin(\theta/2)}\right|
+\end{aligned}\]</span> On the interval <span class="math inline">\([0,
+\pi/(d-1)]\)</span>, we have <span
+class="math display">\[\begin{aligned}
+    \frac{|\sin[2]([d-1]\theta/2)|}{|\sin(\theta/2)|} \leq (d-1)^2\theta
+\end{aligned}\]</span> and on the interval <span
+class="math inline">\([\frac{\pi}{d-1}, \pi -
+\frac{\pi}{(d-1)})\)</span> we have <span
+class="math display">\[\begin{aligned}
+    \frac{|\sin[2]([d-1]\theta/2)|}{|\sin(\theta/2)|} \leq
+\frac{4}{\theta}
+\end{aligned}\]</span> Integrating these, we have <span
+class="math display">\[\begin{aligned}
+    \int_0^{\frac{\pi}{d-1}}(d-1)^2\theta \dd \theta +
+\int_{\frac{\pi}{d-1}}^{\pi - \frac{\pi}{d-1}}\frac{4}{\theta} \leq
+\frac{\pi}{2} + 4\ln(d-2)
+\end{aligned}\]</span> If we repeat this argument for the intervals
+<span class="math inline">\([\pi - \pi/(d-1), \pi +
+\pi/(d-1)), [\pi + \pi/(d-1), 2\pi - \pi/(d-1))\)</span>, and <span
+class="math inline">\([2\pi - \pi/(d-1), 2\pi]\)</span>, we obtain <span
+class="math display">\[\begin{aligned}
+\int_{0}^{2\pi} \dd \theta \frac{\sin[2]([d-1]\theta/2)}{\sin(\theta/2)}
+\leq 2\pi + 8\ln(d-2)
+\end{aligned}\]</span> Taken altogether, we have <span
+class="math display">\[\begin{aligned}
+    \Vert\mathbb P^+ A\Vert \leq  \frac{\Vert A
+\Vert}{\pi}\qty[2+32\ln(d-2)] \leq 12\Vert A \Vert\ln(d)
+\end{aligned}\]</span> where the last inequality holds when <span
+class="math inline">\(d &gt; 1\)</span>. Therefore we have a bound that
+grows very slowly with <span class="math inline">\(d\)</span>, but is in
+fact unbounded as <span class="math inline">\(d \to \infty\)</span>. The
+prefactor is not tight; it can be made as small as <span
+class="math inline">\(\frac{1}{\pi}\)</span> for large <span
+class="math inline">\(d\)</span>. It turns out that the form of the
+bound is tight; the Hilbert matrix, with entries <span
+class="math inline">\(H_{ij} =
+(i-j)^{-1}\)</span>, has a norm bounded by <span
+class="math inline">\(\pi\)</span>, but the norm of its lower-triangular
+truncation grows as <span
+class="math inline">\(\frac{4}{5}\ln(d)\)</span>.</p>
+<p>For some applications, this is already good enough. In particular, if
+our system consists of a finite number of sites with a finite onsite
+Hilbert space dimension, then this bound grows linearly in the number of
+sites.</p>
+    </main>
+    </body>
+</html>

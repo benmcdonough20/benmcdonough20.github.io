@@ -1,0 +1,281 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{eulervm}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+
+\newtheorem{defn}{Def}
+\newtheorem{prop}{Prop}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Cor}
+
+\newcommand{\spec}{\operatorname{spec}}
+
+\begin{document}
+\noindent\huge{The Schrieffer Wolff Transformation} \\
+\normalsize\textbf{Blog Post \today}
+\section{Introduction}
+Systems in many-body physics frequently involve a weak perturbation $\epsilon V$ to a decoupled system $H_0$ which mixes these systems. It is common to call the uncoupled system the ``bare" system and the inclusion of the weak perturbation the ``dressed" system, with bare/dressed eigenstates and energy levels respectively. Examples of systems where this situation arises include Rydberg atoms, with the Hamiltonian \cite{bernien2017probing}
+\begin{align}
+    H = -\Delta\sum_{i}n_i + \frac{C}{2}\sum_{i,j}\frac{n_in_j}{r_{ij}^6} + \frac{\Omega}{2} \sum_i \sigma^x_i
+\end{align}
+This describes an array of neutral atoms at positions $r_i$ which interact via the $\sim \frac{1}{r^6}$ Van der Waals force, where $\Omega$ is the laser power and $\Delta$ is the laser detuning from resonance. If $\Omega$ is small compared to $\frac{C}{r^6}$, then this leads to the Rydberg blockade effect, where the subspace of states with no adjacent excitations is separated from the rest of the spectrum by a gap and weakly coupled by $\Omega$. Another relevant situation is the interaction between a multilevel atom and a resonant cavity \cite{blais2021circuit}:
+\begin{align}
+    H = \sum_{j}\omega_j\ketbra{j}{j} + \omega_r a^\dagger a + \sum_{ij}g_{ij}\ketbra{i}{j}a^\dagger + \text{h.c.}
+\end{align}
+Although formally the coupling is unbounded, for small enough excitation numbers these couplings can be treated as small with respect to the bare system (see Appendix B of \cite{blais2021circuit}). Lastly, the original use of Schrieffer and Wolff was to relate the Kondo and Anderson model Hamiltonians \cite{schrieffer1966relation}. The Anderson model Hamiltonian for a single localized $d$ orbital is
+\begin{align}
+H = \sum_{ks}\epsilon_k n_{ks} + \sum_s \epsilon_d n_{ds} + U n_{d\uparrow} n_{d\downarrow} + \sum_{ks}V_{kd} c_{ks}^\dagger c_{ds} + \text{h.c.}
+\end{align}
+where $\epsilon_k$ and $\epsilon_d$ are the single-particle energies of the localized and conduction orbitals respectively. The potential $V$ mixes these states, and $U$ is the Coulomb repulsion between two $d$-orbital electrons. The idea of the Schrieffer-Wolff transformation is to construct a Hamiltonian $H_{\text{eff}}$ which acts on the low-energy subspace of $H_0$ but reproduces the eigenvalues of $H = H_0 + \epsilon V$, obtaining an effective interaction between the bare states.
+
+\section{Direct rotations}
+The essence is to define a canonical rotation between two subspaces, which will be the low-energy subspaces of the unperturbed and perturbed Hamiltonian respectively. This canonical rotation is called a ``direct rotation," which we will define in the following section.
+\begin{defn}
+Given two subspaces $P_0, P_1$ of the same dimension, the unitary $U$ closest to the identity that maps $P_0 \to P_1$ is called the direct rotation relating the two subspaces. 
+\end{defn}
+\begin{defn}
+Given a subspace $P_0$, we define a reflection $R_0$ about that subspace via $R_0 = 2\pi_0-1$, where $\pi_0$ is a projector onto $P_0$.
+\end{defn}
+\begin{lem}
+$\Vert \pi_1 - \pi_0 \Vert < 1$ iff no vector in $P_0$ is orthogonal to $P_1$ and vice versa. 
+\end{lem}
+\begin{proof}
+    For the forward direction, suppose the contrary. Then WLOG $v \in P_1 \perp P_0$, so $\Vert(\pi_1 - \pi_0)v\Vert = 1$, which is a contradiction. For the reverse direction, again suppose the contrary. Then the maximum eigenvalue of $\pi_1 - \pi_0$ is $\pm 1$, so there exists $v$ such that $(\pi_1 - \pi_0)v = \pm v$. This is possible only if $\pi_0v = 0$ or $\pi_1v = 0$, which completes the proof.
+\end{proof}
+\begin{lem}
+We may block-diagonalize $R_1$ and $R_0$ with blocks of size less than or equal to two on the diagonal.
+\end{lem}
+\begin{proof}
+TBD.
+\end{proof}
+\begin{lem}
+Suppose that $P_0$ and $P_1$ are subspaces and $\Vert \pi_1 - \pi_0 \Vert < 1$. Then $T = \pi_1 - \pi_0$ satisfies $\Vert T \Vert = \Vert \pi_0 \pi_1^\perp \Vert = \Vert \pi_0^\perp \pi_1\Vert$.
+\end{lem}
+\begin{proof}
+    Considering again the block-diagonal form, we need only prove the claim for each block. We have $T^\dagger T = \pi_0 + \pi_1 - \pi_0\pi_1 - \pi_1\pi_0$, and thus $\pi_0^\perp T^\dagger T \pi_0  = 0$, so $T^\dagger T$ is block-diagonal with respect to $\pi_0$. Thus the largest eigenvalue of $T^\dagger T$ is the largest eigenvalue of either $\pi_0 T^\dagger T \pi_0 = \pi_0 \pi_1^\perp \pi_0$ or $\pi_0^\perp T^\dagger T \pi_0^\perp = \pi_0^\perp \pi_1 \pi_0^\perp$, which is either $\Vert \pi_0 \pi_1^\perp\Vert$ or $\Vert \pi_0^\perp\pi_1 \Vert$. Since $P_0, P_0^\perp, P_1,P_1^\perp$ are all one-dimensional subspaces, it is clear that $\Vert \pi_0^\perp \pi_1 \Vert = \Vert \pi_0 \pi_1^\perp \Vert$.
+\end{proof}
+\begin{prop}
+    If $\Vert \pi_1 - \pi_0 \Vert < 1$, then the unitary $U_{01}$ given by $\sqrt{R_1R_0}$ maps $P_0$ to $P_1$, where this is well-defined when the branch cut of the square root is taken along $\mathbb R^{<0}$. 
+\end{prop}
+\begin{proof}
+    Since $P_0$ and $P_1$ may not contain any subspaces orthogonal to the other, we focus on the $2\times 2$ blocks. Then $P_0$ is spanned by $\ket{0}$ and $P_1$ is spanned by $\cos(\theta)\ket{0} + \sin(\theta)\ket{1}$, where $\ket{0}, \ket{1}$ are normalized kets spanning the block in question. Explicitly, we have $R_0 = \sigma^z$ and 
+\begin{align}
+    R_1 &= 2(\cos(\theta)\ket{0} + \sin(\theta)\ket{1})(\cos(\theta)\bra{0} + \sin(\theta)\bra{1}) - 1 \\
+        &= 2\cos^{2}(\theta)\ketbra{0}{0} + 2\sin^{2}(\theta)\ketbra{1}{1} + 2\sin(\theta)\cos(\theta)\sigma^x-1 \\
+        &= 2\ketbra{1}{1}  + 2\cos^{2}(\theta)\sigma^z + \sin(2\theta)\sigma^x-1 \\
+        &= 2\ketbra{1}{1}  +\cos(2\theta)\sigma^z + \sigma^z + \sin(2\theta)\sigma^x-1 \\
+        &= \cos(2\theta)\sigma^z + \sin(2\theta)\sigma^x
+\end{align}
+Therefore
+\begin{align}
+    R_1R_0 &= \exp(-2i\theta \sigma^y)
+\end{align}
+This shows that $U_{01} = \exp(-i\theta \sigma^y)$, and therefore performs the desired rotation. Furthermore, since $\theta < \pi/2$, the square root is well-defined.
+\end{proof}
+\begin{cor}
+    $U_{01}$ satisfies $U_{01}P_1 U_{01}^\dagger = P_0$. 
+\end{cor}
+It is more useful later on to work directly with the generator, whose properties we address in the following lemma:
+\begin{lem}
+    The generator $S$ of $U_{01}$ is block-off-diagonal with respect to $P_0$, satisfies $\exp(S)P_1\exp(-S) = P_0$ and $\Vert S \Vert < \frac{\pi}{2}$. Furthermore, $S$ satisfying these properties is unique.
+\end{lem}
+\begin{proof}
+    We will not prove uniqueness. The properties follow from the previous proof.
+\end{proof}
+With uniqueness, we can formally identify the construction above with the initial definition of a direct rotation.
+
+\section{The Schrieffer-Wolff transformation}
+The Schrieffer-Wolff transformation is a second-order perturbation theory technique to block-diagonalize a Hamiltonian into low-energy and high-energy subspaces. Given a bare Hamiltonian $H_0$ and eigenspaces $V_{<}, V_{>}$, let $H = H_0 + \epsilon V$ be the system Hamiltonian, where $V$ does not preserve the decomposition $V_{<}\oplus V_{>}$. Then we wish to find a unitary transformation $U$, called the Schrieffer-Wolff transformation, such that $UHU^\dagger$ reproduces the spectrum of $H$ when restricted to $V_{<}$. This will be the direct rotation relating the low-energy subspaces of $H$ and $H_0$. We say that $H_0$ has a spectral gap $\Delta$ if there exists an interval $I_0$ such that any eigenvalue of $H_0$ in $I_0$ is separated from the rest of the spectrum by at least $\Delta$. Define $P_0$ to be the space spanned by eiegenvalues of $H_0$ within $I_0$. Then let $I$ be the interval obtained by thickening $I_0$ by $\Delta/2$. Define $P_1$ to be the subspace spanned by eigenvectors of $H$ within $I$. Intuitively, the perturbation $\epsilon V$ can shift the spectrum by at most $\epsilon$, so for $\epsilon < \Delta/2$, all of the eigenvalues of $H_0$ within $I_0$ will correspond to eigenvalues of $H$ within $I$. This is expressed in the following lemma:
+\begin{lem}
+Suppose $\Vert V \Vert = 1$ and $\epsilon < \Delta /2$. Then $\Vert \pi_1 - \pi_0 \Vert \leq 2\epsilon/\Delta < 1$
+\end{lem}
+\begin{proof}
+    Put $T = \pi_1 - \pi_0$. By a proposition in the previous section, we have $\Vert T \Vert = \Vert \pi_0  \pi_1^\perp \Vert$. Then we observe that
+    \begin{align}
+        (\pi_0 H_0 \pi_0)(\pi_0 \pi_1^\perp) - (\pi_0 \pi_1^\perp)(\pi_1^\perp H \pi_1^\perp) = \pi_0(H_0 - H)\pi_1^\perp = -\epsilon \pi_0 V \pi_1^\perp
+    \end{align}
+    We freely subtract a constant from $H_0$ so that $I_0$ is centered at zero. Since the spectrum of $(\pi_0 H_0 \pi_0)$ is separated from the spectrum of $(\pi_1^\perp H \pi_1^\perp)$ by at least $\Delta/2$, by the lemma that follows we have $\Vert \pi_0 \pi_1^\perp \Vert \leq \frac{2\epsilon}{\Delta}$. 
+\end{proof}
+
+\begin{lem}
+    Let $A, B$ be normal operators such that $\spec(A) \subseteq D_\rho$ and $\spec(B) \subseteq D_{\rho+\delta}^c$.  Then the solution of the equation $BX - XA = Y$ (called a Sylvester equation) satisfies $\Vert X \Vert  \leq \frac{1}{\delta}\Vert Y \Vert$.
+\end{lem}
+\begin{proof}
+First, observe that 
+\begin{align}
+    X = \sum_{n=0}^\infty B^{-n-1}YA^n
+\end{align}
+Satisfies the given equation. Furthermore, the operator norm is submultiplicative, so
+\begin{align}
+    \Vert X \Vert &\leq \sum_{n=0}^\infty \Vert B^{-1} \Vert^{n+1} \Vert Y \Vert \Vert B \Vert^n \\
+                  &\leq \frac{\Vert Y \Vert}{\rho + \delta} \sum_{n=0}^\infty \qty(\frac{\rho}{\rho + \delta})^n \\
+                  &= \frac{1}{\delta}\Vert Y \Vert
+\end{align}
+\end{proof}
+\begin{defn}
+    The direct rotation relating $P_0$ and $P_1$ (as defined at the beginning of the section) is called the Schrieffer-Wolff transformation, and the operator $H_{\text{eff}} = \pi_0U_{01}H U_{01}^\dagger \pi_0$ is called an effective Hamiltonian.
+\end{defn}
+
+\section{Perturbation Theory}
+Without diagonalizing both Hamiltonians, it is difficult to construct the transformation directly. Instead, we can use the fact (proved in the last section) that $S$ is off-diagonal in $\pi_0$ and $H$ is block-diagonal in $\pi_0$. 
+\begin{defn}
+    Define the super-operators $\mathcal O$ and $\mathcal D$ as projecting onto the off-diagonal and diagonal blocks respectively with respect to $\pi_0$. Let $\mathcal L$ be a superoperator defined by $\mathcal L(\ketbra{i}{j}) = \mathcal O(\ketbra{i}{j})/(E_i - E_j)$, where $H_0\ket{i} = E_i\ket{i}$. 
+\end{defn}
+\begin{prop}
+    If $X$ is an operator, then
+    \begin{align}
+        \mathcal L([H_0, X]) = [H_0, \mathcal L(X)] = \mathcal O(X)
+    \end{align}
+\end{prop}
+\begin{proof}
+    \begin{align}
+        \mathcal L([H_0, X]) &= \sum_{i,j}\frac{\bra{i}\mathcal O([H_0, X])\ket{j}}{E_i - E_j}\ketbra{i}{j} \\
+                             &= \sum_{i,j}\frac{\bra{i}H_0\mathcal O(X) - \mathcal O(X) H_0)\ket{j}}{E_i - E_j}\ketbra{i}{j} \\
+                             &=\sum_{i,j}\frac{(E_i-E_j)\bra{i}\mathcal O(X)\ket{j}}{E_i - E_j}\ketbra{i}{j} = \sum_{i,j}\bra{i}\mathcal O(X)\ket{j}\ketbra{i}{j}  = \mathcal O(X)
+    \end{align}
+\end{proof}
+\begin{lem}
+    $S$ satisfies the equation $S = \epsilon \qty[(\mathcal D(V)) + \hat S \coth(\hat S)\mathcal O(V)]$
+\end{lem}
+\begin{proof}
+    Write $\hat S$ for the superoperator action of $S$ by the commutator. Then we may write $H_{\text{eff}} = UHU^\dagger = \exp(S)H\exp(-S) = \exp(\hat S)H$, which is block-diagonal with respect to $\pi_0$ as shown previously. Then
+\begin{align}
+    \mathcal O(\exp(\hat S)H) = \sinh(\hat S)\mathcal D(H) + \cosh(\hat S)\mathcal O(H) = \sinh(\hat S)\mathcal D(H) + \epsilon\cosh(\hat S)\mathcal O(V) = 0
+\end{align}
+Since $S$ is block-off-diagonal,
+\begin{align}
+    S = \mathcal O(S) = \mathcal L([H_0, S]) = -\mathcal L(\hat S H_0)
+\end{align}
+Assuming that $\epsilon$ is sufficiently small such that $\sinh(\hat S)$ is invertible, we have $\mathcal D(H) = H_0 + \epsilon \mathcal D(V) = -\epsilon \coth(\hat S)\mathcal O(V)$ from before, so
+\begin{align}
+\mathcal L(\hat S H_0) = -\epsilon\mathcal L(\hat S\mathcal D(V) - \hat S\coth(\hat S)\mathcal O(V))
+\end{align}
+\end{proof}
+
+\begin{lem}
+    If $S = \sum_{n=0}^\infty\epsilon^n S_n$ is the Taylor series expansion of $S$, then $S_n$ satisfies $S_{n+1} = \mathcal L \hat S_n \mathcal D(V) + \sum_{j=1}^\infty a_{2j}\mathcal L(\hat S^{2j}_{n-1}\mathcal O(V))$, where we define the symbol
+    \begin{align}
+        \hat S^k_m = \sum_{\substack{n_1, \dots, n_k=1 \\ n_1 + \dots + n_k = m}}\hat S_{n_1}\dots \hat S_{n_k}
+    \end{align}
+    and $a_m$ are the coefficients in the Taylor series expansion of $x\coth(x)$. 
+\end{lem}
+
+\begin{proof}
+    We solve the equation from the previous lemma with $S = \sum_{n=0}^\infty \epsilon^n S_n$:
+\begin{align}
+        \sum_{n=0}^\infty\epsilon^n S_n &=
+        \sum_{n=0}^\infty \epsilon^{n+1}\mathcal L\hat S_n \mathcal D(V) + \epsilon\mathcal L \sum_{m=0}^\infty a_mS^m\mathcal O(V) \\
+                                        &= \sum_{n=0}^\infty \epsilon^{n+1}\mathcal L\hat S_n \mathcal D(V) + \epsilon\mathcal L \sum_{m=0}^\infty a_m\qty(\sum_{n}\epsilon^n \hat S_n)^m\mathcal O(V) \\
+                                        &= \sum_{n=0}^\infty \epsilon^{n+1}\mathcal L\qty[\hat S_n \mathcal D(V) + \sum_{m=0}^\infty a_m\hat S_k^n\mathcal O(V)]
+\end{align}
+Equating powers of $\epsilon$ on each side gives the desired result.
+\end{proof}
+
+\begin{lem}
+    The effective Hamiltonian is given by 
+    \begin{align}
+        H_{eff} = P_0HP_0 + P_0\sum_{n=2}^\infty\epsilon_n\qty[\sum_{j = 1}^\infty b_{2j-1}\hat S^{2j-1}_{n-1}\mathcal O(V)]P_0
+    \end{align}
+    Where $b_m$ are the coefficients in the Taylor series of $\tanh(x/2)$. 
+\end{lem}
+\begin{proof}
+Assuming $\cosh(\hat S)$ is invertible, which holds for sufficiently small $S$, we have $\tanh(\hat S)\mathcal D(H) = -\epsilon \mathcal O(V)$. Then the transformed Hamiltonian can be rewritten as
+\begin{align}
+    \exp(\hat S)H = \mathcal D(\exp(\hat S)H) &= \cosh(\hat S)\mathcal D(H) + \sinh(\hat S)\mathcal O(H) \\
+                                              &= \mathcal D(H) +\frac{\cosh(\hat S)-1}{\tanh(\hat S)}\tanh(\hat S)\mathcal D(H) + \epsilon\sinh(\hat S)\mathcal O(V) \\
+                                              &= \mathcal D(H) + \epsilon\qty[\sinh(\hat S) - \frac{\cosh(\hat S)-1}{\tanh(\hat S)}]\mathcal O(V)  \\
+                                              &= \mathcal D(H) + \epsilon\tanh(\hat S/2)\mathcal O(V) 
+\end{align}
+Combining this with the series expression for $S$ from the previous lemma gives the desired result.
+\end{proof}
+
+\section{Locality bounds}
+For the remainder of this section, consider a bipartition of the system into subsystems $A$ and $B$, and let $O^A$ denote an operator that acts nontrivially only on subsystem $A$.
+\begin{lem}
+    If $\Vert \pi^A_1 - \pi^A_0\Vert < 1$ and $\Vert \pi^B_1 - \pi^B_0 \Vert < 1$, then this implies $\Vert \pi^A_1 \otimes \pi^B_1 -\pi^A_0 \otimes \pi^B_0\Vert < 1$.
+\end{lem}
+\begin{proof}
+   By assumption, we have $\pi^A_1 - \pi^A_0 \leq (1-\alpha)I$ and $\pi^B_1 - \pi^B_0 \leq (1-\beta)I$ for $\alpha, \beta > 0$ (We interpret $M \geq N$ as saying that $M-N$ is positive semi-definite). Rearranging, we find $\pi^A_1\pi^A_0 \pi^A_1 \geq \alpha \pi^A_1$ and $\pi^B_1 \pi^B_0 \pi^B_1 \geq \beta \pi^B_1$, which implies that
+\begin{align}
+    (\pi^A_1 \otimes \pi^B_1)(\pi^A_0 \otimes \pi^B_0)(\pi^A_1 \otimes \pi^B_1) \geq \alpha \beta \pi^A_1 \otimes \pi^B_1
+\end{align}
+where we use the fact that the tensor product preserve positive semi-definiteness. However proceeding by contradiction, if $\Vert \pi^A_1 \otimes \pi^B_1 -\pi^A_0 \otimes \pi^B_0\Vert = 1$, then there is a vector $v$ such that $\pi^A_1\otimes \pi^B_1 v =  v$ (or likewise for $0$) and $\pi^A_0 \otimes \pi^B_0v = 0$. However applying the equation above to $v$ gives $0 \geq \alpha \beta$, which is a contradiction.
+\end{proof}
+
+\begin{lem}
+    \begin{align}
+        (U^{AB})^\dagger (\pi^A_1 \otimes \pi^B_1) = (U^A \otimes U^B)^\dagger(\pi^A_1 \otimes \pi^B_1)
+    \end{align}
+\end{lem}
+\begin{proof}
+    The above lemma implies that we can block-diagonalize the projectors $\pi^A_1, \pi^A_0$, and $\pi^B_1, \pi^B_1$, we only need to prove it for a $2\times 2$ block. However, this follows quickly from the fact that each block is a projector onto a one-dimensional subspace, i.e. $(U^A)^\dagger\ket{\psi^A_1} = \ket{\psi^A_0}$ and $(U^B)^\dagger\ket{\psi^B_1} = \ket{\psi^B_0}$ implies that $(U^A \otimes U^B)^\dagger\ket{\psi^A_1}\otimes \ket{\psi^B_1} = \ket{\psi^A_0} \otimes \ket{\psi^B_0}$.
+\end{proof}
+\begin{lem}
+    Let $H_0 = H_0^A + H_0^B$ and $V = V^A + V^B$. Then
+    \begin{align}
+        H_{eff} = H_{eff}^A + H_{eff}^B
+    \end{align}
+    where $H_{eff}^A$ is the SW transformation obtained for $H_0^A$ to $H_0^A + \epsilon V^A$ and similarly for $B$.
+\end{lem}
+\begin{proof}
+Now we have
+\begin{align}
+    H^{AB}_{eff} &= (\pi^A_0 \otimes \pi^B_0) U^{AB}H(U^{AB})^\dagger(\pi^A_0 \otimes \pi^B_0) \\
+                 &=  (\pi^A_0 \otimes \pi^B_0) (U^A \otimes U^B)H(U^{A}\otimes U^B)^\dagger(\pi^A_0 \otimes \pi^B_0) \\
+                 &= H_{eff}^A + H_{eff}^B
+\end{align}
+\end{proof}
+
+\begin{defn}
+    Consider an interaction graph $(\Lambda, E)$. Expand $V = \sum_{e \in E}\epsilon_e V^e$, where $e \in E$ indexes the terms $\epsilon_e$ and $V^e$. Then we can expand
+    \begin{align}
+        H_{eff} = \sum_{n = 0}^\infty\sum_{C \subset E}^\infty K_n^C
+    \end{align}
+    where $K^C_n \equiv \sum_{m_1 + m_2 + \dots + m_n = n}\prod_{e_i \in C}\epsilon_{e_i}^{m_i}K^C_{m_1, \dots, m_n}$
+ for some operators $K^C_{m_1, \dots, m_n}$
+\end{defn}
+\begin{prop}
+    $K^C_n$ acts only on $C$ and $K_n^C = 0$ unless $C$ is a connected set and $|C| \leq n$.
+\end{prop}
+\begin{proof}
+    Since $K_n^C$ does not depend on $\epsilon_e$ for $e \notin C$, we can freely take these to be zero. Then the system factorizes into $\Lambda(C)$ and its compliment, so the additivity property shows that $K_n^C$ only acts on $\Lambda(e) \in C$. For the second claim, suppose $C = C_1 \sqcap C_2$. Then in a similar method, we set $\epsilon_e = 0$ for any $e \notin C$, and the system factorizes into a product of $C_1$ and $C_2$. Thus $H_{eff} = H_{eff}^A + H_{eff}^B$, which an affords an expansion in which no term contains variables $\epsilon^e$ from both $C_1$ and $C_2$. The claim that $K_n^C = 0$ for $|C| > n$ is just by definition.
+\end{proof}
+Note that the above proof is very general, and only relies on the additivity property of the transformation.
+
+
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
+\section{Applications}
+\subsection{Effective Hamiltonian for QED}
+The Hamiltonian for the interaction between a multilevel atom and a single mode oscillator is 
+\begin{align}
+    H = \omega_r a^\dagger a + \sum_j \omega_j \ketbra{j}{j} + \sum_{ij}g_{ij}\ketbra{i}{j}a^\dagger + \text{h.c.}
+\end{align}
+We want to obtain the effective Hamiltonian for the low-energy subspace consisting of $\ket{0}, \ket{1}$, which are the computational basis states for a circuit-QED platform. Explicitly, taking $S = \epsilon S^{(1)} + \epsilon^2 S^{(2)}$ and $H = H_0 + \epsilon V$, to second order we have
+\begin{align}
+    \exp(S)H\exp(S) \approx H_0 + \epsilon V + \epsilon [S^{(1)}, H_0] + \epsilon^2[S^{(1)}, V] + \epsilon^2[S^{(2)}, H_0] + \frac{1}{2}\epsilon^2[S^{(1)}, [S^{(1)}, H_0]]]
+\end{align}
+$S$ is block-off-diagonal at each order and the LHS is required to be block-diagonal at each order. At order $\epsilon$, must have $V = -[S^{(1)}, H_0]$, which gives
+\begin{align}
+    \bra{m}V\ket{n} = -\bra{m}S^{(1)}H_0 - H_0 S^{(1)}\ket{n} = -(E_n - E_m)\bra{m}S^{(1)}\ket{n}
+\end{align}
+where $\ket{n}$ is the bare eigenbasis of the atom.
+Then at second-order, the off-diagonal term is $[S^{(2)}, H_0]$, so this must vanish.
+We take $\epsilon = 1$ (under the assumption that $\sup_{n} \Vert V\ket{n}\Vert$ is sufficiently small when restricted to low excitation numbers\footnote{Needs clarification}. We are left with
+\begin{align}
+    H_{eff} = P_0 \exp(S) H \exp(S)P_0 \approx P_0H_0P_0 + P_0[S^{(1)}, V] P_0+ \frac{1}{2}  P_0[S^{(1)}, [S^{(1)}, H_0]]P_0
+\end{align}
+Computing explicitly, we have
+
+\subsection{Anderson and Kondo models}
+

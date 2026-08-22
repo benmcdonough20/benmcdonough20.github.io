@@ -1,0 +1,234 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+\usepackage{eulervm}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{dsfont}
+
+\newtheorem{defn}{Def}
+\newtheorem{prop}{Prop}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Cor}
+\newtheorem{thm}{Theorem}
+
+\theoremstyle{remark}
+\newtheorem*{rmk}{Remark}
+
+\newcommand{\catname}[1]{{\normalfont\textbf{#1}}}
+\newcommand{\e}{\mathrm{e}}
+
+\begin{document}
+\noindent\huge{The maximum entropy principle} \\
+\normalsize\textbf{Blog Post \today} \\
+
+Something that fascinated me in undergrad stat mech was that the Shannon entropy
+falls out of the canonical ensemble upon some relatively reasonable assumptions.
+Here, we will go both ways; First, we will explore the natural properties of the
+Shannon entropy from the perspective of \cite{baez}, and then use the method of Lagrange multipliers to derive the canonical
+ensemble from the maximum entropy principle. Then, we will go the other way
+following \cite{reif}, and
+show that the Shannon (or Von Neumann) entropy comes out of the canonical ensemble.
+
+\section{Shannon entropy}
+The Shannon entropy is natural in the sense that it satisfies the following
+properties, formalized by Faddeev \cite{faddeev}:
+\begin{thm}
+  Suppose that $H: p \to \mathbb R$, where $p$ is a discrete probability measure and $H$
+  satisfies the following axioms:
+\begin{itemize}
+\item Permutation invariance: $H(p) = H({}^{\sigma}p)$ for any $\sigma \in S_n$ denoting a permutation
+  ${}^{\sigma}p(i) = p(\sigma(i))$
+\item $H(p, 1-p)$ is a continuous function of $p$.
+\item $H(\ast) = 0$, where $\ast$ is the measure space consisting of a single element.
+\item Recursivity: $H(\lambda p_1, (1-\lambda)p_1, p_2, \dots, p_n) = p_1 H(\lambda, 1-\lambda) + H(p)$.
+\end{itemize}
+Then $H = -c \sum_{i}p(i)\log(p(i))$, where $c$ is some positive constant.
+\end{thm}
+
+The first condition is eminently reasonable; Since $H$ is a measure of
+information assigned to a distribution, permuting the outcomes should have no effect.
+The continuity condition says that changing the distribution by a small amount should
+not greatly affect the entropy. The third condition holds that there is no
+information in a non-random outcome.
+
+The last condition is arguably the most important; define $\phi(p) = H(\{p\})$.
+By iterating condition 3, we may find that $\phi(pq) = \phi(p) + \phi(q)$. It is
+tedious to show due to the fact that $p,q$ are inverses of integers, but the
+unique $\phi$ satisfying this requirement is $\phi(p) \propto \log(p)$. This
+last condition, known as the grouping property or recursivity, seems more difficult to interpret than the previous ones---we
+will follow \cite{baez}, which shows that the entropy difference satisfies nice
+properties and illuminates this third requirement.
+
+Define \catname{FinProb} to be the category of probability measures on finite
+spaces. The morphisms of \catname{FinProb} are defined to be measure-preserving
+maps. A map $T: (X, p) \to (Y, q)$ is said to be measure-preserving if $T_\ast
+p(A) = q(T^{-1}(A)) = p(A)$, where $A \subseteq X$.
+Importantly, given $(X, p), (Y,q)$ and $\lambda \in [0,1]$, we can construct a probability measure $\lambda p
+\oplus (1-\lambda)q$ on $X \sqcup Y$, which intuitively represents sampling from
+$p$ with probability $\lambda$ and from $q$ with probability $1-\lambda$. If $T_1 : (X_1, p_1) \to (X_2, p_2)$ and
+$T_2:(Y_1, q_1) \to (Y_2, q_2)$ are measure-preserving maps, then $T_1 \oplus T_2$ is a measure-preserving map $(X_1\sqcup X_2, \lambda p_1
+\oplus (1-\lambda)p_2) \to (Y_1 \sqcup Y_2, \lambda q_1 + (1-\lambda)q_2)$. 
+Instead of $H$, we will define a functor $F:\catname{FinProb} \to \mathbb [0, \infty)$
+called the \emph{entropy loss}:
+
+\begin{defn}
+  Let $F: \catname{FinProb} \to \mathbb [0, \infty]$ satisfy the following axioms:
+  \begin{itemize}
+  \item Functoriality: $F(T_1 \circ T_2) = F(T_1) + F(T_2)$
+    \item Convex-linear: $F(T_1 \oplus T_2) = \lambda F(T_1) +
+      (1-\lambda)F(T_2)$ if $T_1 \oplus T_2$ is a map on $\lambda p \oplus (1-\lambda)q$
+     \item Continuity: We say that a sequence
+     $T_n : (X_n, p_n) \to (Y_n, q_n)$ converges to $T: (X, p) \to (Y, q)$ if
+     $T_n = T$, $X_n= X$, and $Y_n = Y$ for large enough $n$ and $p_n,q_n \to p,
+     q$ in the pointwise sense, and $F$ is continuous if $F(T_n) \to F(T)$.
+
+     \end{itemize}
+     \end{defn}
+
+The interpretation of the first condition is obvious; if we perform processes
+$T_1$ and $T_2$ in sequence, we lose $F(T_1)$ of information at the first step
+and $F(T_2)$ information at the second step, so we want to say that $F(T_1) +
+F(T_2)$ information is lost overall. The second condition amounts to saying that
+if we perform process $T_1$ with probability $\lambda$ and $T_2$ with probability
+$1-\lambda$, then our information loss is the average loss between both
+processes. Our main goal will be to show that these conditions are equivalent to
+the recursivity condition of Faddeev. It was recognized by Renyi that this averaging
+condition is stronger than one might like: Replacing this condition with a more
+general one leads to the Renyi entropies \cite{renyi}.
+
+\begin{thm}
+  If $(X,p), (Y,q)$ are discrete measure spaces and $T: X \to Y$ is a
+  measure-preserving map, then $F(T) = c(H(p) - H(q))$, where $H$ is the Shannon
+  entropy and $c > 0$ is a constant.
+\end{thm}
+
+\begin{proof}
+First, define the ``crunch map'' $!_q: (X, q) \to \{\ast\}$ via
+$!_q(x) = \ast$. Put $H(q) = F(!_q)$ to be the entropy of $q$, and we will show
+that $H$ satisfies the hypotheses of Faddeev's theorem. First, for any $T: (X,
+p) \to (Y,q)$, we have $!_p
+= !_q \circ T$, so $H(p) = F(!_p) = F(!_q) + F(T) = H(q) + F(T)$. This shows
+that $F(T) = H(p) - H(q)$.
+
+Lastly, we can show why the convex-linearity
+condition is equivalent to the additivity condition. Given spaces $(X_1, p_1), \dots,
+(X_n, p_n)$ and a measure $p$ on $[n]$, we obtain a measure on $\hat X = \sqcup_{i=1}^n
+X_i$ via $\hat p(x_i) = p(i)p_i(x_i)$. We can then form the map $\pi : \hat X
+\to [n]$ via $x_i \mapsto i$. Convex-linearity then requires that
+\begin{align}
+F(\pi) = F(\bigoplus_{i} !_{p_i}) = \sum_i p(i)F(!_{p_i}) = \sum_i p(i)H(p_i)
+\end{align}
+But we also have $F(f) = H(\hat p) - H(p)$. This implies condition 3.
+\end{proof}
+What we have proven is in fact stronger than recursivity, and it
+is frequently referred to as strong additivity. \\
+
+For a physicist, it is nice to see how one might stumble upon the Shannon
+entropy without a lengthy derivation. The quick and dirty answer is this; If all
+messages are sent with probability $p$, then the message contains $\log_2(1/p)$
+bits. Therefore if one receives a message with probability $p$, one learns
+$\log_2(1/p)$ bits of information. This quantity is known as the `surprisal',
+and the entropy is just the average amount of surprisal. 
+
+\section{Canonical ensemble from Lagrange multipliers}
+Consider a statistical ensemble taking on any one of a number of discrete states
+$r$ with probability $p_r$ and energy $E_r$. Let $S = -\sum_{r}p_r\ln(p_r)$ be
+the entropy. Suppose that we know the average energy $\overline E = \sum_r E_r
+p_r$. We assume that in equilibrium, the system is equally likely to occupy any
+state consistent with the average energy, which equates to positing that $S$ is
+maximal with respect to the constraint $\sum_r E_r p_r = \overline E$. We
+additionally have the constraint $\sum_r p_r = 1$, so we
+introduce two Lagrange multipliers $\beta, \gamma$:
+\begin{align}
+  \pdv{p_r}S + \beta \pdv{p_r}\overline E + \gamma \pdv{p_r}\sum_{r}p_r &= 0 \\
+  \ln(p_r) + 1 - \beta E_r + \gamma = 0 \\
+  p_r & \frac{\e^{-\beta E_r}}{Z}
+\end{align}
+Where $Z = \sum_r \e^{-\beta E_r}$ is the partition function. Similarly, if the number $\overline N = \sum_r N_r p_r$ is allowed to vary as
+well, we have
+\begin{align}
+  \pdv{p_r}S + \beta \pdv{p_r}\overline E + \alpha \pdv{p_r}\overline N + \gamma \pdv{p_r}\sum_r p_r &= 0 \\
+  \ln(p_r) + 1 + \beta E_r + \alpha N_r+ \gamma = 0 \\
+  p_r = \frac{\e^{-\beta E_r - \alpha N_r}}{\mathcal Z}
+\end{align}
+which gives us the grand canonical ensemble. Sticking with the canonical
+ensemble for simplicity, we have
+\begin{align}
+  S &= -\sum_r p_r \ln p_r = \sum_r p_r (\beta E_r + \ln Z) = \beta \overline E + \ln Z
+\end{align}
+From this, we can
+derive all of the typical relationships of statistical mechanics. Of particular
+interest is the following:
+\begin{align}
+  \dd S &= \dd (\beta \overline E + \ln Z)\\
+  &= \dd \beta \overline E + \beta \dd \overline E + \pdv{\ln Z}{x}\Big|_\beta\dd x + \pdv{\ln
+    Z}{\beta}\Big|_x\dd \beta
+\end{align}
+This is from the fact that $E$ is a function of some external parameters $x$
+(like volume or trap depth, for instance), and thus $Z$ is a function of $x$ and
+$\beta$.
+Then we notice that
+\begin{align}
+\pdv{\ln Z}{\beta} = \frac{1}{Z}\pdv{Z}{\beta} = \frac{-\beta}{Z}\sum_r E_r \e^{-\beta E_r} = -\beta \overline E
+\end{align}
+Next, we have
+\begin{align}
+\pdv{\ln Z}{x}\Big|_{\beta}\dd x = \frac{1}{Z}\pdv{Z}{x}\Big|_\beta\dd x = \frac{-\beta}{Z}\sum_r E_r \pdv{E_r}{x}\Big|_\beta\e^{-\beta E_r} \dd x = -\beta \dd \overline W
+\end{align}
+where we identify $\pdv{E_r}{x}\Big|_{\beta}\dd x = \dd W_r$ as the work done by
+the system.
+Plugging this in, we now have
+\begin{align}
+\dd S = \dd \beta \overline E + \beta \dd \overline E - \beta\dd \overline W - \beta \overline E \dd \beta = \beta(\dd \overline E - \dd \overline W) = \beta \dd Q = \frac{\dd Q}{T}
+\end{align}
+where we defined $\dd Q = \dd \overline E - \dd \overline W$ to be the change in
+energy of the system \emph{not} caused by changing external parameters, i.e.,
+the change in heat. Thus, we have $\dd \overline E = \dd Q + \dd W = T\dd S - p
+\dd V$. This is enough to give us all our normal thermodynamic equations, e.g.
+$\pdv{\overline E}{S}\Big|_V = T$.
+
+\section{Canonical ensemble from interaction with a heat bath}
+In the above derivation, no reference was made to the interaction with a heat
+bath or the number of accessible microstates. To furnish this picture, assume a
+system $A$ is interacting with a much larger heat bath $A'$. The maximum entropy
+principle is equivalent to requiring that the probability $p_r$ of a microstate
+$r$ for the system $A$ is equivalent to $\frac{\Omega'(E_0-E)}{\Omega_0(E_0)}$,
+where $E_0 = E + E'$ is the total energy of the system, and $\Omega_0, \Omega,
+\Omega'$ are the number of microstates available to each system at a given
+energy. The entropy is maximized by a uniform distribution. If system $A$ is in
+the state $r$ with energy $E_r$, then the \emph{bath} is equally likely to
+occupy any state
+$r'$ with $E_{r'}' = E_0-E$ Since $E \ll E_0$ when $A$ is much smaller than
+$A'$, we have
+\begin{align}
+  p_r &= \frac{\Omega'(E_0-E_r)}{\Omega_0(E_0)} \\
+  \ln p_r &= C + \ln(\Omega' (E_0-E_r)) \approx C + \ln(\Omega'(E_0)) - \pdv{\Omega'(E_0)}{E}E_r \equiv C' - \beta' E_r \\
+  p_r &\propto \e^{-\beta' E_r}
+\end{align}
+Next, we again appeal to the maximum entropy principle: We have $\Omega_0(E_0) =
+\Omega'(E_0-E)\Omega(E)$, and so $\ln \Omega(E_0) = \ln \Omega'(E_0-E) + \ln
+\Omega'(E)$. Since $E$ will be such that $\Omega_0(E_0)$ is maximized, we will have
+\begin{align}
+\pdv{E} \ln \Omega_0(E_0) = \pdv{\ln \Omega(E)}{E} - \pdv{\ln \Omega'(E_0 -E)}{E} = \beta - \beta' = 0
+\end{align}
+Now we can identify $p_r \propto \e^{-\beta E_r}$, the canonical ensemble. In particular,
+with volume fixed, we have $\dd E = \dd Q$, and 
+\begin{align}
+\dd\ln \Omega(E) = \ln \Omega(E+\dd Q) - \ln \Omega(E) \approx \pdv{\ln \Omega(E)}{E}\dd Q = \beta \dd Q
+\end{align}
+From before, we have $\beta \dd Q = \dd S$, so $S = \ln \Omega(E)$. All the steps we
+did previously are reversible; Assuming that $S = \ln \Omega(E)$, we then find
+$\dd S = \beta \dd Q$. It follows that $S = \beta \overline E + \ln Z$,
+and then from there we find $S = \sum_{r}p_r \ln p_r$.
+
+\bibliography{refs}
+\bibliographystyle{plain}
+
+\end{document}
+
+

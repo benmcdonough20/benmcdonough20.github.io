@@ -1,0 +1,451 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{svg}
+\usepackage{url}
+
+\usepackage{xcolor}
+\definecolor{mycolor}{rgb}{0.0, .15, .6}
+\usepackage[colorlinks = true,
+linkcolor = mycolor,
+citecolor = mycolor,
+urlcolor = mycolor]{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Def}
+\newtheorem{prop}{Prop}
+\newtheorem{thm}{Thm}
+
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\diam}{\operatorname{diam}}
+
+\begin{document}
+\noindent\Large{\textbf{Quantum error correction and the torsor-cocycle correspondence}} \\
+\normalsize{\textbf{Ben McDonough}}\\\
+\normalsize{\today}
+
+\tableofcontents
+
+\section{Introduction}
+A fundamental result in algebraic topology is the monodromy theorem, which says
+that the Betti moduli space $\Hom(\pi_1(X), G)/G$ classifies $G$-principal
+bundles (when $G$ is a discrete group). The
+Reimann-Hilbert correspondence also establishes a connection between monodromy
+representations and flat connections. This correspondence is particularly
+apparent in quantum double codes---discretizations of non-anomalous TQFTs with a
+finite gauge group---where it is easy to show explicitly the
+correspondence between codewords and monodromy representations \cite{mcdonough, cui}.
+
+We will explain the monodromy theorem through the correspondence between torsors
+and \v{C}ech cocycles \cite{gallego}, and then see how this correspondence is a new and beautiful way to view
+the codewords of a quantum double model.
+
+\section{Torsors, principal bundles, and \v{C}ech cohomology}
+\begin{defn}
+Let $G$ be a discrete group, and let $\mathcal G(G)$ be the sheaf of continuous 
+functions $G \to X$.
+\end{defn}
+
+\begin{defn}
+ If $\mathcal G$ is a sheaf of groups, then a $\mathcal G$-torsor is a sheaf
+ $\mathcal F$ with nonempty stalks equipped with a free and transitive action
+ $\mathcal G(U) \times \mathcal F(U) \to \mathcal F(U)$.
+\end{defn}
+
+\begin{defn}
+Given an open cover $\mathfrak U$ indexed by a totally ordered set $I$ and a
+sheaf $\mathcal F$ of groups, the Cech cocycles of $\mathfrak U$ with
+coefficients in $\mathcal F$ are defined as
+\begin{align}
+  C^0(\mathfrak U, \mathcal F) &\equiv \prod_{i}\mathcal F(U_i) & C^1(\mathfrak U, \mathcal F) & \equiv \prod_{i < j}\mathcal F(U_i \cap U_j) & C^2(\mathfrak U, \mathcal F) &\equiv \prod_{i < j < k}\mathcal F(U_i \cap U_j \cap U_k)
+\end{align}
+With the coboundary maps
+\begin{align}
+  d^0 : f \in \mathcal F(U) &\mapsto (f|_{U_i})_{i \in I} & d^1:(f_i)_{i \in I} &\mapsto (f_i|_{U_j}f_j|_{U_i}^{-1})_{i < j} & d^2: (f_{ij})_{i < j} &\mapsto (f_{ij}|_{U_k} f_{jk}|_{U_i}f_{ik}|_{U_k}^{-1})_{i < j < k}
+\end{align}
+creating a chain complex
+\begin{align}
+\mathcal F(X) \xrightarrow{d} C^0(\mathfrak U, \mathcal F) \xrightarrow{d} C^1(\mathfrak U, \mathcal F) \xrightarrow{d} C^2(\mathfrak U, \mathcal F)
+\end{align}
+which defines the Cech cohomology of $\mathfrak U$ with coefficients in
+$\mathcal F$. To obtain the Cech cohomology of $X$ with coefficients in
+$\mathcal F$, the direct limit is taken over $\mathfrak U$ with respect to
+refinement. Thus,
+\begin{align}
+H^i(X, \mathcal F) \equiv \{[(\mathfrak U, f)]\} : (\mathfrak U, f) \sim (\mathfrak V, g) \text{ if $\mathfrak U$ and $\mathfrak V$ have a common refinement in which $f,g$ agree.}
+\end{align}
+\end{defn}
+
+\begin{defn}
+  A $G$-covering space is a cover $\pi:E \to X$ with an action of $G$ by
+  homeomorphisms which (1) acts on the fibers, i.e. $\pi \circ g = \pi$, and (2)
+  the action of $G$ on $\pi^{-1}(x)$ is free and transitive. From this
+  definition, it is apparent that $\mathcal G(G)$-torsors correspond to both
+  $G$-covering spaces and $G$-principal bundles when $G$ is discrete. The
+  covering is called $\mathfrak U$-based if $\mathfrak U$ locally trivializes
+  the cover.
+\end{defn}
+
+\section{Torsor-cocycle correspondence}
+
+\begin{prop}
+  A Cech cohomology class $g_{ij} \in H^1(\mathfrak U, \mathcal G)$ can be
+  constructed from a $\mathfrak U$-based $G$-covering space.
+\end{prop}
+
+\begin{proof}
+For each $U_i$, choose a local section $s_i: U_i \to \pi^{-1}(U_i)$. By the
+transitivity of the $G$-action, for any $U_i,U_j$ there function $g_{ij}:U_i \cap
+U_j \to G$ such that
+\begin{align}
+s_i|_{U_j} = g_{ij}s_j|_{U_i}
+\end{align}
+which defines a transition function.
+(Note that $g_{ij}$ is constant on connected components of $U_i \cap U_j$
+because $G$ is discrete. If all intersections $U_i \cap U_j$ are connected, then
+$g_{ij}(x) = g_{ij}$ is a constant.)
+Then
+\begin{align}
+  s_{i}|_{U_j \cap U_k} = g_{ij}s_j|_{U_i \cap U_k} = g_{ij}g_{jk}s_k|_{U_i \cap U_j} = g_{ij}g_{jk}g_{ik}^{-1}s_i|_{U_j \cap U_k}
+\end{align}
+by the freeness of the action, this implies
+\begin{align}
+  (g_{ij})_{i < j} \in C^1(\mathfrak U, \mathcal G)
+\end{align}
+The choice of section was arbitrary, so we need to confirm that the cohomology
+class does not depend on the choice of section. Suppose we had instead chosen
+another set of local sections $s'_i$. By the transitivity of the $G$-action, we
+have $s'_i = h_i s_i$ for some $h_i :U_i \cap
+U_j \to U_i \to G$. Then 
+\begin{align}
+s_i'|_{U_j} = h_i s_i|_{U_j} = h_i g_{ij} s_j|_{U_i} = h_i g_{ij} h_j^{-1} s_{j}|_{U_j}'
+\end{align}
+so again by freeness of the action, we find
+\begin{align}
+g_{ij}' = h_i g_{ij} h_j^{-1}
+\end{align}
+So the cocycles $(g_{ij})_{i < j}$ and $(g_{ij}')_{i < j}$ differ by a
+coboundary $(h_i)_{i \in I} \in B^0(\mathfrak U, \mathcal G)$.
+\end{proof}
+
+\begin{prop}
+  A Cech cocycle can be used to specify the transition functions of a
+  $G$-covering space. Furthermore, a cohomology class specifies an isomorphism
+  class of $G$-covering spaces.
+\end{prop}
+
+\begin{proof}
+Let $(g_{ij})_{i < j} \in
+C^1(\mathfrak U, \mathcal G)$, and consider the space
+\begin{align}
+X_g \equiv \prod_{i} U_i \times G / \sim
+\end{align}
+where the equivalence relation is
+\begin{align}
+(u_i, g) \sim (u_j, h) \text{ if } u_j, u_i \in U_i\cap U_j \text{ and $h(u_j) = g_{ij}(u_i)g(u_i)$}.
+\end{align}
+We have literally taken the stack of pancakes above each open set and glued them
+together according to the given transition functions. The transitivity and
+reflexivity of this relation follow from the cocycle condition.
+
+Furthermore, if $\mathfrak U$ is a normal cover of the space, then we can show that every
+$G$-cover is isomorphic to a cover of this form. Let $\pi : E \to X$ be a
+$G$-cover. Then
+\begin{align}
+E \cong \prod_{i}\pi^{-1}(U_i) / \sim
+\end{align}
+where this time $\sim$ is just equality in $E$. We have $\pi^{-1}(U_i) \sim U_i \times G$ because the cover is
+normal, but this identification is non-canonical.
+This identification is equivalent to a choice of section $s_i : U_i \to
+\pi^{-1}(U_i)$ to identify with $U_i \times \{1_G\}$. The action of $G$ is free
+and transitive, so $s_i = g_{ij}s_j$ for some $g_{ij} \in G$, which defines the
+transition functions.
+
+ A change of sections to $s_i'$ corresponds to permuting the stack of pancakes
+ in each $\pi^{-1}(U_i)$, so $s_i' = f_i s_i$, and therefore $g_{ij}' = f_i
+ g_{ij}f_{j}^{-1}$. This identifies each cover not with a particular cocycle,
+ but with a cohomology class. An isomorphism of covers $\pi : E \to E'$ has a
+ set of sections $\psi(s_i)$, which is similarly related to the sections $s_i'$
+ of $E'$ by $\psi(s_i) = f_i s_i'$. Therefore cohomology classes are in
+ correspondence with isomorphism classes of $G$-covers.
+\end{proof}
+
+\section{The monodromy theorem}
+
+\begin{prop}
+  Suppose that $X$ is connected and semilocally simply connected. Then an
+  element of the Betti moduli space specifies a \v{C}ech cohomology class.
+\end{prop}
+\begin{proof}
+  Choose a basepoint $x_0$. Let
+\begin{align}
+\psi \in \Hom(\pi_1(X, x_0), G) \text{ represent } [\psi] \in \Hom(\pi_1(X, x_0), G)/G
+\end{align}
+Let $\mathcal U = \{U_i\}$ be an open cover such that the fundamental group of
+each open set includes trivially into the fundamental group of $X$. Associate a point $x_i \in U_i$ for
+each $i$, and a basepoint $x_0 \in U_0$. For each $i$, let $\gamma_i$ be a
+selected path from $x_0$ to $x_i$. 
+Given $x \in U_i \cap U_j$, Define a path $\alpha_i(x) : x_i \to x$ contained in
+$U_i$ and $\alpha_j(x) : x_j \to x$ contained in $U_j$. Then the transition function
+$g_{ij}:U_i \cap U_j \to G$  will be defined by
+\begin{align}
+g_{ij}(x) = \psi([\gamma_i * \alpha_i(x) * \overline \alpha_j(x) * \overline \gamma_j])
+\end{align}
+First, we need to verify the cocycle condition:
+\begin{align}
+g_{ij} g_{jk}g_{ik}^{-1} &= 
+\psi([\gamma_i * \alpha_i(x) * \overline \alpha_j(x) * \overline \gamma_j])
+\psi([\gamma_j * \alpha_j(x) * \overline \alpha_k(x) * \overline \gamma_j])
+\psi([\gamma_k * \alpha_k(x) * \overline \alpha_i(x) * \overline \gamma_i]) \\
+                           &=
+\psi([\gamma_i * \alpha_i(x) * \overline \alpha_j(x) * \alpha_j(x) * \overline \alpha_k(x) * \alpha_k(x) * \overline \alpha_i(x) * \overline \gamma_i]) = 1
+\end{align}
+Clearly, this is just the constant path. Now, we need to verify
+well-definedness, or in other words, check that the choices of points $x_i$
+(including the basepoint) and families of paths $\alpha_i(x)$ did not determine
+the mapping. First, since $\pi_1(U_i) \hookrightarrow \pi_1(X)$ trivially,
+clearly the choice of $\alpha_i$ did not matter. Similarly, the choice of $x_i$
+does not change the homotopy class of any of the paths. However, the choice of
+$\gamma_i$ may have a nontrivial effect, because perhaps $\gamma_i$ could wind
+around a hole in $X$. If we have another set of paths $\gamma_i'$, then the new
+transition functions are
+\begin{align}
+g_{ij}'(x) &= \psi([\gamma_i' * \alpha_i(x) * \overline \alpha_j(x) * \overline \gamma_j']) \\
+&= \psi([\gamma_i' * \overline \gamma_i * \gamma_i * \alpha_i(x) * \overline \alpha_j(x) * \overline \gamma_j * \gamma_j * \overline \gamma_j']) \\
+&= \psi([\gamma_i' * \overline \gamma_i])\psi([\gamma_i * \alpha_i(x) * \overline \alpha_j(x) * \overline \gamma_j])\psi([\gamma_j * \overline \gamma_j'])
+\end{align}
+Therefore the cocycle is unique up to the coboundary $f_i \equiv \psi([\gamma_i'
+* \overline \gamma_i])$. Lastly, if $\psi'$ is another representative of $\psi$,
+then $\psi'  = g\psi g^{-1}$ for some $G$, so the cocycle is again determined up
+to a coboundary. The same is true if the basepoint $x_0$ is changed.
+
+Lastly, we can see that the mapping was independent of the choice of open cover,
+precisely because of the semilocally simply connected condition. This property
+is stable under refinement, so this set of covers is cofinal, and therefore we
+can pass to the direct limit.
+\end{proof}
+
+\begin{prop}
+Every Cech cohomology class is associated to a monodromy representation.
+\end{prop}
+
+\begin{proof}
+Take an open cover $\mathfrak U$ which satisfies the semilocal simply connected
+condition and a Cech cocycle $(g_{ij})_{i < j}$. For a given loop $\gamma$, we
+will take a Lebesgue partition $[0,1] = \bigcup_i[t_i, t_{i+1}]$ such that
+$\gamma([t_i, t_{i+1}]) \subset U_i$. Then we put
+\begin{align}
+\psi([\gamma]) \equiv \prod_{i} g_{i,i+1}(\gamma(t_{i+1}))
+\end{align}
+Since $\mathcal G$ is a sheaf of locally constant functions, we can choose a
+refinement of $\mathfrak U$ such that $g_{i, i+1}$ is constant on $U_i$, and
+thus the map is independent of the particular Lebesgue partition. To prove that
+the map is independent of the cover, consider a refinement of $\mathfrak U$
+such that $t_i, t_{i'} \in U_{i'}$ and $t_{i'}, t_{i+1} \in U_{i+1}$. Then by
+the cocycle condition, since $\gamma(t_{i'}) \in U_{i}\cap U_{i'} \cap U_{i+1}$, we have $g_{i, i'} g_{i',i+1} = g_{i, i+1}$, so the mapping is
+unchanged. Then given any two covers, we can pass to a common refinement. To prove homotopy invariance, we consider that the map is unchanged
+under any small perturbation to the path since the sections of $\mathcal G$ are locally constant.
+\end{proof} 
+
+\section{Quantum double codewords as \v{C}ech cocycles}
+
+\begin{defn}
+Given a triangulation of an orientable manifold $M$, let $\epsilon_v(e)$ denote
+the orientation of an edge with respect to a vertex (incoming or outgoing) and
+$\epsilon_p(e)$ denote the orientation of an edge with respect to a
+plaquette. Let $S^X$ denote the group of gauge transformations, which is
+generated by the operators
+\begin{align}
+  A_v(g) \equiv \prod_{e \ni v}X_e^{\epsilon_v(e)}(g^{-1})
+\end{align}
+where $X_e^{\pm 1}(g)$ acts on edge $e$ by left(right) multiplication by $g$.
+Then the associated quantum double codewords are given by
+\begin{align}
+\prod_v \sum_{g \in G}A_v(g)\ket{\vb g_L} = \sum_{\vb g \in G^{|V|}}A_v(g_v)\ket{\vb g_L}
+\end{align}
+and $\ket{\vb g_L}$ is any flux-free state, i.e one that satisfies
+\begin{align}
+\overrightarrow\prod_{e \in \partial p} (\vb g_L)_v^{\epsilon_{p}(e)} = 1_G
+\end{align}
+Thus each codeword can be represented by a class $[\vb g_L] \in
+G^{|E|}/\mathcal X$ corresponding to a set of states
+\begin{align}
+\left\{\prod_vA_v(g_v)\ket{\vb g_L}\right\}_{\vb g \in G^{|V|}}
+\end{align}
+in the same equivalence class.
+\end{defn}
+
+We will recap the proof quickly:
+\begin{prop}
+  The QD codewords correspond to elements of the Betti moduli space.
+\end{prop}
+
+\begin{proof}
+  Fix a basepoint $x_0$. Given any codeword $\vb g_L$, taking the holonomy
+  around any loop gives a map $\vb g_L \mapsto \psi \in \Hom(\pi_1(M), G)$. The
+  map $\psi$ is well-defined on homotopy classes of loops because of the
+  flux-free condition. $A_{v}$ commutes with the holonomy operator unless
+  $v = x_0$, and the effect of $A_{x_0}(g)$ is $\psi \mapsto g^{-1}\psi g$, so this
+  map is well-defined on equivalence classes of states.
+
+  For the other direction, fix a spanning tree $T$. Given $[\psi] \in
+    \Hom(\pi_1(M), G)/G$, take a representative $\psi$, and construct a logical representative $\ket{\vb g_L}$ by decorating each
+   edge $e$ outside of $T$ with $\psi(\gamma_e)$, where $\gamma_e$ is a loop through
+  the basepoint passing through $e$. The flux-free condition on $\ket{\vb g_L}$
+  is ensured by the fact that $\psi$ is constant on homotopy
+  classes of loops. Taking
+  the orbit under $S^X$ leaves holonomies unchanged, except for $A_{x_0}(g) \in
+  S^X$ which conjugates them by $g$, equivalent to choosing another
+  representative of $\psi$. These two maps are mutually inverse.
+\end{proof}
+
+What is less obvious, then, is that we can construct a \v{C}ech cocycle from a
+codeword. The idea is very general: every codeword is locally a product of
+stabilizers because the code has a large distance. The difference in this local
+representation on overlapping neighborhoods gives the transition functions of a
+principal bundle. This idea is illustrated in Fig.~\ref{fig:transition_function_example}.
+\begin{figure}
+    \centering
+    \includesvg[width = .7\textwidth]{codewords_transition_functions.svg}
+    \caption{Example showing how codewords get associated to transition
+      functions. The black and gray grids show two overlapping open sets $U_i,
+      U_j$. A cocycle passes through the top layer in a logical codeword.
+      Locally, this codeword is the product of stabilizers, shown by blue dots.
+    The redundancy in this representation corresponds
+    to the different sheets of the cover.
+      Since the cocycle is not supported on $U_j$, this leads to a difference in
+    the product of stabilizers on $U_i$ and $U_j$ used to represent the
+    codeword, which leads to a transition function illustrated by the blue lines
+  connecting the two layers.}
+    \label{fig:transition_function_example}
+  \end{figure}
+
+
+\begin{prop}
+  Every codeword of a quantum double corresponds uniquely to a \v{C}ech
+  cohomology class.
+\end{prop}
+
+\begin{proof}
+  Consider a codeword
+  \begin{align}
+    \left \{\prod_v A_v(g_v)\ket{\vb g_L}\right \}_{\vb g \in G^{|V|}}
+  \end{align}
+  with a chosen representative $\vb g_L$. Let $\mathfrak U = \{U_i\}_{i \in I}$
+  be a good open cover, i.e. where the sets $U_i$ are contractible. Consider $A$ as
+  an opposite morphism, i.e.
+  \begin{align}
+    A(\vb g) &\equiv \prod_{v} A_v(g_v) & A(\vb g \vb h) &= A(\vb h)A(\vb g)
+  \end{align}
+  This will be a helpful convention to respect path ordering.
+  Then we can define a restriction map on states
+  \begin{align}
+    \ket{\vb g}|_{U_i} \equiv \bigotimes_{v \in U_i}\ket{g_v}_v
+  \end{align}
+  Because $U_i$ are contractible, this means that there is a unique codeword on each
+  $U_i$, and thus
+  \begin{align}
+    \ket{\vb g_L}|_{U_i} = A(\vb g_i)\ket{0}|_{U_i}
+  \end{align}
+  for a particular $\vb g_i \in G^{|U_i|}$. This representative is unique up to
+  \begin{align}
+    \ket{\vb g_L}|_{U_i} = A(\vb g_i)\ket{0}|_{U_i} = A(\vb g_i)\prod_{v \in U_i}A_v(g)\ket{0}|_{U_i} = A(g\vb g_i)\ket{0}|_{U_i}
+  \end{align}
+  for each $g \in G$, corresponding to $\vb g_i \mapsto g\vb g_i$. The choices
+  of how to represent $\vb g_L$ as a product of stabilizers
+  define the different sheets of the $G$-cover. The free and
+  transitive action of $G$ on these sheets is by left translation: $\vb g_i \mapsto
+  g\vb g_i$. The choice of a particular representative $\vb g_i$
+  corresponds to a choice of section of the covering map for each $U_i$.
+
+  Now we will define the transition maps
+  \begin{align}
+    \vb g_{ij} = \vb g_i\vb g_j^{-1}|_{U_i \cap U_j}
+  \end{align}
+  associated to any intersection $U_i \cap U_j$. 
+  First, we need to show that
+  $\vb g_{ij} = g_{ij}$ is constant. Importantly, $\vb g_i$ and $\vb g_j$ will
+  not be constant on all of $U_i$ and $U_j$, otherwise the transition maps would
+  simply be coboundaries. Since
+  \begin{align}
+    A(\vb g_i)\ket{0}|_{U_i\cap U_j} = 
+    A(\vb g_j)\ket{0}|_{U_j\cap U_i}
+  \end{align}
+  This means that 
+  \begin{align}
+    A(\vb g_j^{-1})A(\vb g_i)\ket{0}|_{U_i\cap U_j} = A(\vb g_i \vb g_j^{-1})\ket{0}|_{U_i \cap U_j}
+= A(\vb g_{ij})\ket{0}|_{U_i \cap U_j}
+    = \ket{0}|_{U_i \cap U_j}
+  \end{align}
+  and since the only stabilizer redundancy is global multiplication (i.e. the
+  kernel of $A$ is the diagonal subgroup of $G^{V}$), we see that $\vb g_{ij}$
+  is a member of the diagonal subgroup. The cocycle condition follows
+  automatically from the definition, because
+  \begin{align}
+    g_{ij}g_{jk}g_{ik}^{-1} = \vb g_i \vb g_j^{-1} \vb g_j \vb g_k^{-1} \vb g_k \vb g_i^{-1}|_{U_i \cap U_j \cap U_k} = 1
+  \end{align}
+  We can see that another choice of sections $\{\vb g_i\} \mapsto \{f_i \vb
+  g_i\}$ adjusts the transition functions by a coboundary.
+
+  Lastly, if we
+  choose a different representative $\ket{\vb g_L'} = A(\vb h)\ket{\vb g_L}$,
+  then
+  \begin{align}
+    \ket{\vb g_L'}|_{U_i} = A(\vb h)\ket{\vb g_L}|_{U_i} = A(\vb h)A(\vb g_i)\ket{0}|_{U_i} = A(\vb g_i \vb h)\ket{0}|_{U_i}
+  \end{align}
+ thus the transition functions are unchanged:
+ \begin{align}
+   g_{ij}' = \vb g_i \vb h_i (\vb g_j\vb h)^{-1} = \vb g_i \vb h_i \vb h_j^{-1} \vb g_j^{-1} = \vb g_i \vb g_j^{-1} = g_{ij}
+ \end{align}
+This shows that each codeword is associated to a Cech cocycle $g_{ij} \in
+H(\mathcal U, \mathcal G)$, and clearly, this association is stable under
+refinement of the cover.
+
+In order to complete the correspondence, suppose we have a good cover $\mathfrak
+U$ (this is fine since good covers are cofinal) and a Cech cocycle $g_{ij} \in
+H(\mathfrak U, \mathcal G)$. Put a total ordering on the set $I$. First, we
+construct $\vb g_i$ inductively by assuming that $\vb g_j$ have already been
+constructed for $j < i$. Then if $U_i$ intersects with $U_j$ for any $j < i$, we
+define
+\begin{align}
+\vb g_i|_{U_i \cap U_j} = g_{ij}\vb g_j
+\end{align}
+with $\vb g_j = 1$ elsewhere. Because of the triple intersection condition, $\vb
+g_{i}$ is well-defined. Next, put
+\begin{align}
+ \ket{\vb g_L}|_{U_i} \equiv A(\vb g_i)\ket{0}|_{U_i}
+\end{align}
+this does not literally represent $\ket{\vb g_L}$ as a product of stabilizers
+because the restriction map deletes edges from $A(\vb g_i)$ on the boundary of
+$U_i$. An example is shown in Fig.~\ref{fig:construct_cocycle}.
+\begin{figure}
+  \centering
+  \includesvg[width = .5\textwidth]{reconstructing_cocycle.svg}
+  \caption{Illustration of reconstructing a representative of a QD codeword from
+  a \v{C}ech cocycle. The stabilizers $A_v(g_{ij})$ are applied to $U_j$ for
+  every $v \in U_i \cap U_j$, leading to a simplicial cocycle which hugs the
+  boundary of the intersection.}
+\label{fig:construct_cocycle}
+\end{figure}
+To prove that this state is well-defined, we must ensure that it agrees on
+overlaps. We see that
+\begin{align}
+A(\vb g_i)\ket{0}|_{U_i \cap U_j} = A(g_{ij}\vb g_j)\ket{0}|_{U_i \cap U_j} = A(\vb g_j) \ket{0}|_{U_i \cap U_j}
+\end{align}
+because $A(g_{ij})\ket{0} = \ket{0}$. Thus this map is an inverse to the
+previous one, which identifies codewords with Cech cocycles.
+\end{proof}
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
+
+
+

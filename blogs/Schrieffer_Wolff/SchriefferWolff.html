@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Blog Post - Ben McDonough</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to your existing stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../../blog-styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+        
+        <!-- MathJax Script for rendering LaTeX math -->
+          <script>
+            window.MathJax = {
+              loader: {
+                load: ['[tex]/physics']
+              },
+              tex: {
+                packages: {'[+]': ['physics']}
+              }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+    <header>
+        <h1>Ben McDonough</h1>
+        <nav>
+            <a href="../../index.html#research">Research</a>
+            <a href="../../index.html#projects">Projects</a>
+            <a href="../../index.html#community">Community</a>
+            <a href="../../blog.html">Blog</a>
+        </nav>
+    </header>
+    
+    <!-- Your Blog Content Goes Here -->
+    <main class="card" style="margin-top: 40px; padding: 40px;">
+        <!-- PASTE PANDOC OUTPUT HERE -->
+        <p><span>The Schrieffer Wolff Transformation</span><br />
+<strong>Blog Post 1-19-25</strong></p>
+<h1 id="introduction">Introduction</h1>
+<p>Systems in many-body physics frequently involve a weak perturbation
+<span class="math inline">\(\epsilon V\)</span> to a decoupled system
+<span class="math inline">\(H_0\)</span> which mixes these systems. It
+is common to call the uncoupled system the “bare" system and the
+inclusion of the weak perturbation the “dressed" system, with
+bare/dressed eigenstates and energy levels respectively. Examples of
+systems where this situation arises include Rydberg atoms, with the
+Hamiltonian <span class="citation" data-cites="bernien2017probing"><a
+href="#ref-bernien2017probing" role="doc-biblioref">[1]</a></span> <span
+class="math display">\[\begin{aligned}
+    H = -\Delta\sum_{i}n_i +
+\frac{C}{2}\sum_{i,j}\frac{n_in_j}{r_{ij}^6} + \frac{\Omega}{2} \sum_i
+\sigma^x_i
+\end{aligned}\]</span> This describes an array of neutral atoms at
+positions <span class="math inline">\(r_i\)</span> which interact via
+the <span class="math inline">\(\sim \frac{1}{r^6}\)</span> Van der
+Waals force, where <span class="math inline">\(\Omega\)</span> is the
+laser power and <span class="math inline">\(\Delta\)</span> is the laser
+detuning from resonance. If <span class="math inline">\(\Omega\)</span>
+is small compared to <span class="math inline">\(\frac{C}{r^6}\)</span>,
+then this leads to the Rydberg blockade effect, where the subspace of
+states with no adjacent excitations is separated from the rest of the
+spectrum by a gap and weakly coupled by <span
+class="math inline">\(\Omega\)</span>. Another relevant situation is the
+interaction between a multilevel atom and a resonant cavity <span
+class="citation" data-cites="blais2021circuit"><a
+href="#ref-blais2021circuit" role="doc-biblioref">[2]</a></span>: <span
+class="math display">\[\begin{aligned}
+    H = \sum_{j}\omega_j\ketbra{j}{j} + \omega_r a^\dagger a +
+\sum_{ij}g_{ij}\ketbra{i}{j}a^\dagger + \text{h.c.}
+\end{aligned}\]</span> Although formally the coupling is unbounded, for
+small enough excitation numbers these couplings can be treated as small
+with respect to the bare system (see Appendix B of <span
+class="citation" data-cites="blais2021circuit"><a
+href="#ref-blais2021circuit" role="doc-biblioref">[2]</a></span>).
+Lastly, the original use of Schrieffer and Wolff was to relate the Kondo
+and Anderson model Hamiltonians <span class="citation"
+data-cites="schrieffer1966relation"><a
+href="#ref-schrieffer1966relation" role="doc-biblioref">[3]</a></span>.
+The Anderson model Hamiltonian for a single localized <span
+class="math inline">\(d\)</span> orbital is <span
+class="math display">\[\begin{aligned}
+H = \sum_{ks}\epsilon_k n_{ks} + \sum_s \epsilon_d n_{ds} + U
+n_{d\uparrow} n_{d\downarrow} + \sum_{ks}V_{kd} c_{ks}^\dagger c_{ds} +
+\text{h.c.}
+\end{aligned}\]</span> where <span
+class="math inline">\(\epsilon_k\)</span> and <span
+class="math inline">\(\epsilon_d\)</span> are the single-particle
+energies of the localized and conduction orbitals respectively. The
+potential <span class="math inline">\(V\)</span> mixes these states, and
+<span class="math inline">\(U\)</span> is the Coulomb repulsion between
+two <span class="math inline">\(d\)</span>-orbital electrons. The idea
+of the Schrieffer-Wolff transformation is to construct a Hamiltonian
+<span class="math inline">\(H_{\text{eff}}\)</span> which acts on the
+low-energy subspace of <span class="math inline">\(H_0\)</span> but
+reproduces the eigenvalues of <span class="math inline">\(H = H_0 +
+\epsilon V\)</span>, obtaining an effective interaction between the bare
+states.</p>
+<h1 id="direct-rotations">Direct rotations</h1>
+<p>The essence is to define a canonical rotation between two subspaces,
+which will be the low-energy subspaces of the unperturbed and perturbed
+Hamiltonian respectively. This canonical rotation is called a “direct
+rotation," which we will define in the following section.</p>
+<div class="defn">
+<p><strong>Def 1</strong>. <em>Given two subspaces <span
+class="math inline">\(P_0, P_1\)</span> of the same dimension, the
+unitary <span class="math inline">\(U\)</span> closest to the identity
+that maps <span class="math inline">\(P_0 \to P_1\)</span> is called the
+direct rotation relating the two subspaces.</em></p>
+</div>
+<div class="defn">
+<p><strong>Def 2</strong>. <em>Given a subspace <span
+class="math inline">\(P_0\)</span>, we define a reflection <span
+class="math inline">\(R_0\)</span> about that subspace via <span
+class="math inline">\(R_0 = 2\pi_0-1\)</span>, where <span
+class="math inline">\(\pi_0\)</span> is a projector onto <span
+class="math inline">\(P_0\)</span>.</em></p>
+</div>
+<div class="lem">
+<p><strong>Lemma 1</strong>. <em><span class="math inline">\(\Vert \pi_1
+- \pi_0 \Vert &lt; 1\)</span> iff no vector in <span
+class="math inline">\(P_0\)</span> is orthogonal to <span
+class="math inline">\(P_1\)</span> and vice versa.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For the forward direction, suppose the contrary. Then
+WLOG <span class="math inline">\(v \in P_1 \perp P_0\)</span>, so <span
+class="math inline">\(\Vert(\pi_1 - \pi_0)v\Vert = 1\)</span>, which is
+a contradiction. For the reverse direction, again suppose the contrary.
+Then the maximum eigenvalue of <span class="math inline">\(\pi_1 -
+\pi_0\)</span> is <span class="math inline">\(\pm 1\)</span>, so there
+exists <span class="math inline">\(v\)</span> such that <span
+class="math inline">\((\pi_1 - \pi_0)v = \pm v\)</span>. This is
+possible only if <span class="math inline">\(\pi_0v = 0\)</span> or
+<span class="math inline">\(\pi_1v = 0\)</span>, which completes the
+proof. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 2</strong>. <em>We may block-diagonalize <span
+class="math inline">\(R_1\)</span> and <span
+class="math inline">\(R_0\)</span> with blocks of size less than or
+equal to two on the diagonal.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> TBD. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 3</strong>. <em>Suppose that <span
+class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> are subspaces and <span
+class="math inline">\(\Vert \pi_1 - \pi_0 \Vert &lt; 1\)</span>. Then
+<span class="math inline">\(T = \pi_1 - \pi_0\)</span> satisfies <span
+class="math inline">\(\Vert T \Vert = \Vert \pi_0 \pi_1^\perp \Vert =
+\Vert \pi_0^\perp \pi_1\Vert\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Considering again the block-diagonal form, we need
+only prove the claim for each block. We have <span
+class="math inline">\(T^\dagger T = \pi_0 + \pi_1 - \pi_0\pi_1 -
+\pi_1\pi_0\)</span>, and thus <span class="math inline">\(\pi_0^\perp
+T^\dagger T \pi_0  = 0\)</span>, so <span
+class="math inline">\(T^\dagger T\)</span> is block-diagonal with
+respect to <span class="math inline">\(\pi_0\)</span>. Thus the largest
+eigenvalue of <span class="math inline">\(T^\dagger T\)</span> is the
+largest eigenvalue of either <span class="math inline">\(\pi_0 T^\dagger
+T \pi_0 = \pi_0 \pi_1^\perp \pi_0\)</span> or <span
+class="math inline">\(\pi_0^\perp T^\dagger T \pi_0^\perp = \pi_0^\perp
+\pi_1 \pi_0^\perp\)</span>, which is either <span
+class="math inline">\(\Vert \pi_0 \pi_1^\perp\Vert\)</span> or <span
+class="math inline">\(\Vert \pi_0^\perp\pi_1 \Vert\)</span>. Since <span
+class="math inline">\(P_0, P_0^\perp, P_1,P_1^\perp\)</span> are all
+one-dimensional subspaces, it is clear that <span
+class="math inline">\(\Vert \pi_0^\perp \pi_1 \Vert = \Vert \pi_0
+\pi_1^\perp \Vert\)</span>. ◻</p>
+</div>
+<div class="prop">
+<p><strong>Prop 1</strong>. <em>If <span class="math inline">\(\Vert
+\pi_1 - \pi_0 \Vert &lt; 1\)</span>, then the unitary <span
+class="math inline">\(U_{01}\)</span> given by <span
+class="math inline">\(\sqrt{R_1R_0}\)</span> maps <span
+class="math inline">\(P_0\)</span> to <span
+class="math inline">\(P_1\)</span>, where this is well-defined when the
+branch cut of the square root is taken along <span
+class="math inline">\(\mathbb R^{&lt;0}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Since <span class="math inline">\(P_0\)</span> and
+<span class="math inline">\(P_1\)</span> may not contain any subspaces
+orthogonal to the other, we focus on the <span
+class="math inline">\(2\times 2\)</span> blocks. Then <span
+class="math inline">\(P_0\)</span> is spanned by <span
+class="math inline">\(\ket{0}\)</span> and <span
+class="math inline">\(P_1\)</span> is spanned by <span
+class="math inline">\(\cos(\theta)\ket{0} +
+\sin(\theta)\ket{1}\)</span>, where <span class="math inline">\(\ket{0},
+\ket{1}\)</span> are normalized kets spanning the block in question.
+Explicitly, we have <span class="math inline">\(R_0 = \sigma^z\)</span>
+and <span class="math display">\[\begin{aligned}
+    R_1 &amp;= 2(\cos(\theta)\ket{0} +
+\sin(\theta)\ket{1})(\cos(\theta)\bra{0} + \sin(\theta)\bra{1}) - 1 \\
+        &amp;= 2\cos^{2}(\theta)\ketbra{0}{0} +
+2\sin^{2}(\theta)\ketbra{1}{1} + 2\sin(\theta)\cos(\theta)\sigma^x-1 \\
+        &amp;= 2\ketbra{1}{1}  + 2\cos^{2}(\theta)\sigma^z +
+\sin(2\theta)\sigma^x-1 \\
+        &amp;= 2\ketbra{1}{1}  +\cos(2\theta)\sigma^z + \sigma^z +
+\sin(2\theta)\sigma^x-1 \\
+        &amp;= \cos(2\theta)\sigma^z + \sin(2\theta)\sigma^x
+\end{aligned}\]</span> Therefore <span
+class="math display">\[\begin{aligned}
+    R_1R_0 &amp;= \exp(-2i\theta \sigma^y)
+\end{aligned}\]</span> This shows that <span
+class="math inline">\(U_{01} = \exp(-i\theta \sigma^y)\)</span>, and
+therefore performs the desired rotation. Furthermore, since <span
+class="math inline">\(\theta &lt; \pi/2\)</span>, the square root is
+well-defined. ◻</p>
+</div>
+<div class="cor">
+<p><strong>Cor 1</strong>. <em><span
+class="math inline">\(U_{01}\)</span> satisfies <span
+class="math inline">\(U_{01}P_1 U_{01}^\dagger = P_0\)</span>.</em></p>
+</div>
+<p>It is more useful later on to work directly with the generator, whose
+properties we address in the following lemma:</p>
+<div class="lem">
+<p><strong>Lemma 4</strong>. <em>The generator <span
+class="math inline">\(S\)</span> of <span
+class="math inline">\(U_{01}\)</span> is block-off-diagonal with respect
+to <span class="math inline">\(P_0\)</span>, satisfies <span
+class="math inline">\(\exp(S)P_1\exp(-S) = P_0\)</span> and <span
+class="math inline">\(\Vert S \Vert &lt; \frac{\pi}{2}\)</span>.
+Furthermore, <span class="math inline">\(S\)</span> satisfying these
+properties is unique.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We will not prove uniqueness. The properties follow
+from the previous proof. ◻</p>
+</div>
+<p>With uniqueness, we can formally identify the construction above with
+the initial definition of a direct rotation.</p>
+<h1 id="the-schrieffer-wolff-transformation">The Schrieffer-Wolff
+transformation</h1>
+<p>The Schrieffer-Wolff transformation is a second-order perturbation
+theory technique to block-diagonalize a Hamiltonian into low-energy and
+high-energy subspaces. Given a bare Hamiltonian <span
+class="math inline">\(H_0\)</span> and eigenspaces <span
+class="math inline">\(V_{&lt;}, V_{&gt;}\)</span>, let <span
+class="math inline">\(H = H_0 + \epsilon V\)</span> be the system
+Hamiltonian, where <span class="math inline">\(V\)</span> does not
+preserve the decomposition <span class="math inline">\(V_{&lt;}\oplus
+V_{&gt;}\)</span>. Then we wish to find a unitary transformation <span
+class="math inline">\(U\)</span>, called the Schrieffer-Wolff
+transformation, such that <span
+class="math inline">\(UHU^\dagger\)</span> reproduces the spectrum of
+<span class="math inline">\(H\)</span> when restricted to <span
+class="math inline">\(V_{&lt;}\)</span>. This will be the direct
+rotation relating the low-energy subspaces of <span
+class="math inline">\(H\)</span> and <span
+class="math inline">\(H_0\)</span>. We say that <span
+class="math inline">\(H_0\)</span> has a spectral gap <span
+class="math inline">\(\Delta\)</span> if there exists an interval <span
+class="math inline">\(I_0\)</span> such that any eigenvalue of <span
+class="math inline">\(H_0\)</span> in <span
+class="math inline">\(I_0\)</span> is separated from the rest of the
+spectrum by at least <span class="math inline">\(\Delta\)</span>. Define
+<span class="math inline">\(P_0\)</span> to be the space spanned by
+eiegenvalues of <span class="math inline">\(H_0\)</span> within <span
+class="math inline">\(I_0\)</span>. Then let <span
+class="math inline">\(I\)</span> be the interval obtained by thickening
+<span class="math inline">\(I_0\)</span> by <span
+class="math inline">\(\Delta/2\)</span>. Define <span
+class="math inline">\(P_1\)</span> to be the subspace spanned by
+eigenvectors of <span class="math inline">\(H\)</span> within <span
+class="math inline">\(I\)</span>. Intuitively, the perturbation <span
+class="math inline">\(\epsilon V\)</span> can shift the spectrum by at
+most <span class="math inline">\(\epsilon\)</span>, so for <span
+class="math inline">\(\epsilon &lt; \Delta/2\)</span>, all of the
+eigenvalues of <span class="math inline">\(H_0\)</span> within <span
+class="math inline">\(I_0\)</span> will correspond to eigenvalues of
+<span class="math inline">\(H\)</span> within <span
+class="math inline">\(I\)</span>. This is expressed in the following
+lemma:</p>
+<div class="lem">
+<p><strong>Lemma 5</strong>. <em>Suppose <span
+class="math inline">\(\Vert V \Vert = 1\)</span> and <span
+class="math inline">\(\epsilon &lt; \Delta /2\)</span>. Then <span
+class="math inline">\(\Vert \pi_1 - \pi_0 \Vert \leq 2\epsilon/\Delta
+&lt; 1\)</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Put <span class="math inline">\(T = \pi_1 -
+\pi_0\)</span>. By a proposition in the previous section, we have <span
+class="math inline">\(\Vert T \Vert = \Vert \pi_0  \pi_1^\perp
+\Vert\)</span>. Then we observe that <span
+class="math display">\[\begin{aligned}
+        (\pi_0 H_0 \pi_0)(\pi_0 \pi_1^\perp) - (\pi_0
+\pi_1^\perp)(\pi_1^\perp H \pi_1^\perp) = \pi_0(H_0 - H)\pi_1^\perp =
+-\epsilon \pi_0 V \pi_1^\perp
+    
+\end{aligned}\]</span> We freely subtract a constant from <span
+class="math inline">\(H_0\)</span> so that <span
+class="math inline">\(I_0\)</span> is centered at zero. Since the
+spectrum of <span class="math inline">\((\pi_0 H_0 \pi_0)\)</span> is
+separated from the spectrum of <span class="math inline">\((\pi_1^\perp
+H \pi_1^\perp)\)</span> by at least <span
+class="math inline">\(\Delta/2\)</span>, by the lemma that follows we
+have <span class="math inline">\(\Vert \pi_0 \pi_1^\perp \Vert \leq
+\frac{2\epsilon}{\Delta}\)</span>. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 6</strong>. <em>Let <span class="math inline">\(A,
+B\)</span> be normal operators such that <span
+class="math inline">\(\operatorname{spec}(A) \subseteq D_\rho\)</span>
+and <span class="math inline">\(\operatorname{spec}(B) \subseteq
+D_{\rho+\delta}^c\)</span>. Then the solution of the equation <span
+class="math inline">\(BX - XA = Y\)</span> (called a Sylvester equation)
+satisfies <span class="math inline">\(\Vert X \Vert  \leq
+\frac{1}{\delta}\Vert Y \Vert\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> First, observe that <span
+class="math display">\[\begin{aligned}
+    X = \sum_{n=0}^\infty B^{-n-1}YA^n
+\end{aligned}\]</span> Satisfies the given equation. Furthermore, the
+operator norm is submultiplicative, so <span
+class="math display">\[\begin{aligned}
+    \Vert X \Vert &amp;\leq \sum_{n=0}^\infty \Vert B^{-1} \Vert^{n+1}
+\Vert Y \Vert \Vert B \Vert^n \\
+                  &amp;\leq \frac{\Vert Y \Vert}{\rho + \delta}
+\sum_{n=0}^\infty \qty(\frac{\rho}{\rho + \delta})^n \\
+                  &amp;= \frac{1}{\delta}\Vert Y \Vert
+\end{aligned}\]</span> ◻</p>
+</div>
+<div class="defn">
+<p><strong>Def 3</strong>. <em>The direct rotation relating <span
+class="math inline">\(P_0\)</span> and <span
+class="math inline">\(P_1\)</span> (as defined at the beginning of the
+section) is called the Schrieffer-Wolff transformation, and the operator
+<span class="math inline">\(H_{\text{eff}} = \pi_0U_{01}H U_{01}^\dagger
+\pi_0\)</span> is called an effective Hamiltonian.</em></p>
+</div>
+<h1 id="perturbation-theory">Perturbation Theory</h1>
+<p>Without diagonalizing both Hamiltonians, it is difficult to construct
+the transformation directly. Instead, we can use the fact (proved in the
+last section) that <span class="math inline">\(S\)</span> is
+off-diagonal in <span class="math inline">\(\pi_0\)</span> and <span
+class="math inline">\(H\)</span> is block-diagonal in <span
+class="math inline">\(\pi_0\)</span>.</p>
+<div class="defn">
+<p><strong>Def 4</strong>. <em>Define the super-operators <span
+class="math inline">\(\mathcal O\)</span> and <span
+class="math inline">\(\mathcal D\)</span> as projecting onto the
+off-diagonal and diagonal blocks respectively with respect to <span
+class="math inline">\(\pi_0\)</span>. Let <span
+class="math inline">\(\mathcal L\)</span> be a superoperator defined by
+<span class="math inline">\(\mathcal L(\ketbra{i}{j}) = \mathcal
+O(\ketbra{i}{j})/(E_i - E_j)\)</span>, where <span
+class="math inline">\(H_0\ket{i} = E_i\ket{i}\)</span>.</em></p>
+</div>
+<div class="prop">
+<p><strong>Prop 2</strong>. <em>If <span
+class="math inline">\(X\)</span> is an operator, then <span
+class="math display">\[\begin{aligned}
+        \mathcal L([H_0, X]) = [H_0, \mathcal L(X)] = \mathcal O(X)
+    
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math display">\[\begin{aligned}
+        \mathcal L([H_0, X]) &amp;= \sum_{i,j}\frac{\bra{i}\mathcal
+O([H_0, X])\ket{j}}{E_i - E_j}\ketbra{i}{j} \\
+                             &amp;= \sum_{i,j}\frac{\bra{i}H_0\mathcal
+O(X) - \mathcal O(X) H_0)\ket{j}}{E_i - E_j}\ketbra{i}{j} \\
+                             &amp;=\sum_{i,j}\frac{(E_i-E_j)\bra{i}\mathcal
+O(X)\ket{j}}{E_i - E_j}\ketbra{i}{j} = \sum_{i,j}\bra{i}\mathcal
+O(X)\ket{j}\ketbra{i}{j}  = \mathcal O(X)
+    
+\end{aligned}\]</span> ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 7</strong>. <em><span class="math inline">\(S\)</span>
+satisfies the equation <span class="math inline">\(S = \epsilon
+\qty[(\mathcal D(V)) + \hat S \coth(\hat S)\mathcal
+O(V)]\)</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Write <span class="math inline">\(\hat S\)</span> for
+the superoperator action of <span class="math inline">\(S\)</span> by
+the commutator. Then we may write <span
+class="math inline">\(H_{\text{eff}} = UHU^\dagger = \exp(S)H\exp(-S) =
+\exp(\hat S)H\)</span>, which is block-diagonal with respect to <span
+class="math inline">\(\pi_0\)</span> as shown previously. Then <span
+class="math display">\[\begin{aligned}
+    \mathcal O(\exp(\hat S)H) = \sinh(\hat S)\mathcal D(H) + \cosh(\hat
+S)\mathcal O(H) = \sinh(\hat S)\mathcal D(H) + \epsilon\cosh(\hat
+S)\mathcal O(V) = 0
+\end{aligned}\]</span> Since <span class="math inline">\(S\)</span> is
+block-off-diagonal, <span class="math display">\[\begin{aligned}
+    S = \mathcal O(S) = \mathcal L([H_0, S]) = -\mathcal L(\hat S H_0)
+\end{aligned}\]</span> Assuming that <span
+class="math inline">\(\epsilon\)</span> is sufficiently small such that
+<span class="math inline">\(\sinh(\hat S)\)</span> is invertible, we
+have <span class="math inline">\(\mathcal D(H) = H_0 + \epsilon \mathcal
+D(V) = -\epsilon \coth(\hat S)\mathcal O(V)\)</span> from before, so
+<span class="math display">\[\begin{aligned}
+\mathcal L(\hat S H_0) = -\epsilon\mathcal L(\hat S\mathcal D(V) - \hat
+S\coth(\hat S)\mathcal O(V))
+\end{aligned}\]</span> ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 8</strong>. <em>If <span class="math inline">\(S =
+\sum_{n=0}^\infty\epsilon^n S_n\)</span> is the Taylor series expansion
+of <span class="math inline">\(S\)</span>, then <span
+class="math inline">\(S_n\)</span> satisfies <span
+class="math inline">\(S_{n+1} = \mathcal L \hat S_n \mathcal D(V) +
+\sum_{j=1}^\infty a_{2j}\mathcal L(\hat S^{2j}_{n-1}\mathcal
+O(V))\)</span>, where we define the symbol <span
+class="math display">\[\begin{aligned}
+        \hat S^k_m = \sum_{\substack{n_1, \dots, n_k=1 \\ n_1 + \dots +
+n_k = m}}\hat S_{n_1}\dots \hat S_{n_k}
+    
+\end{aligned}\]</span> and <span class="math inline">\(a_m\)</span> are
+the coefficients in the Taylor series expansion of <span
+class="math inline">\(x\coth(x)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We solve the equation from the previous lemma with
+<span class="math inline">\(S = \sum_{n=0}^\infty \epsilon^n
+S_n\)</span>: <span class="math display">\[\begin{aligned}
+        \sum_{n=0}^\infty\epsilon^n S_n &amp;=
+        \sum_{n=0}^\infty \epsilon^{n+1}\mathcal L\hat S_n \mathcal D(V)
++ \epsilon\mathcal L \sum_{m=0}^\infty a_mS^m\mathcal O(V) \\
+                                        &amp;= \sum_{n=0}^\infty
+\epsilon^{n+1}\mathcal L\hat S_n \mathcal D(V) + \epsilon\mathcal L
+\sum_{m=0}^\infty a_m\qty(\sum_{n}\epsilon^n \hat S_n)^m\mathcal O(V) \\
+                                        &amp;= \sum_{n=0}^\infty
+\epsilon^{n+1}\mathcal L\qty[\hat S_n \mathcal D(V) + \sum_{m=0}^\infty
+a_m\hat S_k^n\mathcal O(V)]
+\end{aligned}\]</span> Equating powers of <span
+class="math inline">\(\epsilon\)</span> on each side gives the desired
+result. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 9</strong>. <em>The effective Hamiltonian is given by
+<span class="math display">\[\begin{aligned}
+        H_{eff} = P_0HP_0 + P_0\sum_{n=2}^\infty\epsilon_n\qty[\sum_{j =
+1}^\infty b_{2j-1}\hat S^{2j-1}_{n-1}\mathcal O(V)]P_0
+    
+\end{aligned}\]</span> Where <span class="math inline">\(b_m\)</span>
+are the coefficients in the Taylor series of <span
+class="math inline">\(\tanh(x/2)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Assuming <span class="math inline">\(\cosh(\hat
+S)\)</span> is invertible, which holds for sufficiently small <span
+class="math inline">\(S\)</span>, we have <span
+class="math inline">\(\tanh(\hat S)\mathcal D(H) = -\epsilon \mathcal
+O(V)\)</span>. Then the transformed Hamiltonian can be rewritten as
+<span class="math display">\[\begin{aligned}
+    \exp(\hat S)H = \mathcal D(\exp(\hat S)H) &amp;= \cosh(\hat
+S)\mathcal D(H) + \sinh(\hat S)\mathcal O(H) \\
+                                              &amp;= \mathcal D(H)
++\frac{\cosh(\hat S)-1}{\tanh(\hat S)}\tanh(\hat S)\mathcal D(H) +
+\epsilon\sinh(\hat S)\mathcal O(V) \\
+                                              &amp;= \mathcal D(H) +
+\epsilon\qty[\sinh(\hat S) - \frac{\cosh(\hat S)-1}{\tanh(\hat
+S)}]\mathcal O(V)  \\
+                                              &amp;= \mathcal D(H) +
+\epsilon\tanh(\hat S/2)\mathcal O(V)
+\end{aligned}\]</span> Combining this with the series expression for
+<span class="math inline">\(S\)</span> from the previous lemma gives the
+desired result. ◻</p>
+</div>
+<h1 id="locality-bounds">Locality bounds</h1>
+<p>For the remainder of this section, consider a bipartition of the
+system into subsystems <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>, and let <span
+class="math inline">\(O^A\)</span> denote an operator that acts
+nontrivially only on subsystem <span
+class="math inline">\(A\)</span>.</p>
+<div class="lem">
+<p><strong>Lemma 10</strong>. <em>If <span class="math inline">\(\Vert
+\pi^A_1 - \pi^A_0\Vert &lt; 1\)</span> and <span
+class="math inline">\(\Vert \pi^B_1 - \pi^B_0 \Vert &lt; 1\)</span>,
+then this implies <span class="math inline">\(\Vert \pi^A_1 \otimes
+\pi^B_1 -\pi^A_0 \otimes \pi^B_0\Vert &lt; 1\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By assumption, we have <span
+class="math inline">\(\pi^A_1 - \pi^A_0 \leq (1-\alpha)I\)</span> and
+<span class="math inline">\(\pi^B_1 - \pi^B_0 \leq (1-\beta)I\)</span>
+for <span class="math inline">\(\alpha, \beta &gt; 0\)</span> (We
+interpret <span class="math inline">\(M \geq N\)</span> as saying that
+<span class="math inline">\(M-N\)</span> is positive semi-definite).
+Rearranging, we find <span class="math inline">\(\pi^A_1\pi^A_0 \pi^A_1
+\geq \alpha \pi^A_1\)</span> and <span class="math inline">\(\pi^B_1
+\pi^B_0 \pi^B_1 \geq \beta \pi^B_1\)</span>, which implies that <span
+class="math display">\[\begin{aligned}
+    (\pi^A_1 \otimes \pi^B_1)(\pi^A_0 \otimes \pi^B_0)(\pi^A_1 \otimes
+\pi^B_1) \geq \alpha \beta \pi^A_1 \otimes \pi^B_1
+\end{aligned}\]</span> where we use the fact that the tensor product
+preserve positive semi-definiteness. However proceeding by
+contradiction, if <span class="math inline">\(\Vert \pi^A_1 \otimes
+\pi^B_1 -\pi^A_0 \otimes \pi^B_0\Vert = 1\)</span>, then there is a
+vector <span class="math inline">\(v\)</span> such that <span
+class="math inline">\(\pi^A_1\otimes \pi^B_1 v =  v\)</span> (or
+likewise for <span class="math inline">\(0\)</span>) and <span
+class="math inline">\(\pi^A_0 \otimes \pi^B_0v = 0\)</span>. However
+applying the equation above to <span class="math inline">\(v\)</span>
+gives <span class="math inline">\(0 \geq \alpha \beta\)</span>, which is
+a contradiction. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 11</strong>. <em><span
+class="math display">\[\begin{aligned}
+        (U^{AB})^\dagger (\pi^A_1 \otimes \pi^B_1) = (U^A \otimes
+U^B)^\dagger(\pi^A_1 \otimes \pi^B_1)
+    
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The above lemma implies that we can block-diagonalize
+the projectors <span class="math inline">\(\pi^A_1, \pi^A_0\)</span>,
+and <span class="math inline">\(\pi^B_1, \pi^B_1\)</span>, we only need
+to prove it for a <span class="math inline">\(2\times 2\)</span> block.
+However, this follows quickly from the fact that each block is a
+projector onto a one-dimensional subspace, i.e. <span
+class="math inline">\((U^A)^\dagger\ket{\psi^A_1} =
+\ket{\psi^A_0}\)</span> and <span
+class="math inline">\((U^B)^\dagger\ket{\psi^B_1} =
+\ket{\psi^B_0}\)</span> implies that <span class="math inline">\((U^A
+\otimes U^B)^\dagger\ket{\psi^A_1}\otimes \ket{\psi^B_1} =
+\ket{\psi^A_0} \otimes \ket{\psi^B_0}\)</span>. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 12</strong>. <em>Let <span class="math inline">\(H_0 =
+H_0^A + H_0^B\)</span> and <span class="math inline">\(V = V^A +
+V^B\)</span>. Then <span class="math display">\[\begin{aligned}
+        H_{eff} = H_{eff}^A + H_{eff}^B
+    
+\end{aligned}\]</span> where <span
+class="math inline">\(H_{eff}^A\)</span> is the SW transformation
+obtained for <span class="math inline">\(H_0^A\)</span> to <span
+class="math inline">\(H_0^A + \epsilon V^A\)</span> and similarly for
+<span class="math inline">\(B\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Now we have <span
+class="math display">\[\begin{aligned}
+    H^{AB}_{eff} &amp;= (\pi^A_0 \otimes \pi^B_0)
+U^{AB}H(U^{AB})^\dagger(\pi^A_0 \otimes \pi^B_0) \\
+                 &amp;=  (\pi^A_0 \otimes \pi^B_0) (U^A \otimes
+U^B)H(U^{A}\otimes U^B)^\dagger(\pi^A_0 \otimes \pi^B_0) \\
+                 &amp;= H_{eff}^A + H_{eff}^B
+\end{aligned}\]</span> ◻</p>
+</div>
+<div class="defn">
+<p><strong>Def 5</strong>. <em>Consider an interaction graph <span
+class="math inline">\((\Lambda, E)\)</span>. Expand <span
+class="math inline">\(V = \sum_{e \in E}\epsilon_e V^e\)</span>, where
+<span class="math inline">\(e \in E\)</span> indexes the terms <span
+class="math inline">\(\epsilon_e\)</span> and <span
+class="math inline">\(V^e\)</span>. Then we can expand <span
+class="math display">\[\begin{aligned}
+        H_{eff} = \sum_{n = 0}^\infty\sum_{C \subset E}^\infty K_n^C
+    
+\end{aligned}\]</span> where <span class="math inline">\(K^C_n \equiv
+\sum_{m_1 + m_2 + \dots + m_n = n}\prod_{e_i \in
+C}\epsilon_{e_i}^{m_i}K^C_{m_1, \dots, m_n}\)</span> for some operators
+<span class="math inline">\(K^C_{m_1, \dots, m_n}\)</span></em></p>
+</div>
+<div class="prop">
+<p><strong>Prop 3</strong>. <em><span
+class="math inline">\(K^C_n\)</span> acts only on <span
+class="math inline">\(C\)</span> and <span class="math inline">\(K_n^C =
+0\)</span> unless <span class="math inline">\(C\)</span> is a connected
+set and <span class="math inline">\(|C| \leq n\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Since <span class="math inline">\(K_n^C\)</span> does
+not depend on <span class="math inline">\(\epsilon_e\)</span> for <span
+class="math inline">\(e \notin C\)</span>, we can freely take these to
+be zero. Then the system factorizes into <span
+class="math inline">\(\Lambda(C)\)</span> and its compliment, so the
+additivity property shows that <span
+class="math inline">\(K_n^C\)</span> only acts on <span
+class="math inline">\(\Lambda(e) \in C\)</span>. For the second claim,
+suppose <span class="math inline">\(C = C_1 \sqcap C_2\)</span>. Then in
+a similar method, we set <span class="math inline">\(\epsilon_e =
+0\)</span> for any <span class="math inline">\(e \notin C\)</span>, and
+the system factorizes into a product of <span
+class="math inline">\(C_1\)</span> and <span
+class="math inline">\(C_2\)</span>. Thus <span
+class="math inline">\(H_{eff} = H_{eff}^A + H_{eff}^B\)</span>, which an
+affords an expansion in which no term contains variables <span
+class="math inline">\(\epsilon^e\)</span> from both <span
+class="math inline">\(C_1\)</span> and <span
+class="math inline">\(C_2\)</span>. The claim that <span
+class="math inline">\(K_n^C = 0\)</span> for <span
+class="math inline">\(|C| &gt; n\)</span> is just by definition. ◻</p>
+</div>
+<p>Note that the above proof is very general, and only relies on the
+additivity property of the transformation.</p>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-bernien2017probing" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">H.
+Bernien <em>et al.</em>, <span>“Probing many-body dynamics on a 51-atom
+quantum simulator,”</span> <em>Nature</em>, vol. 551, no. 7682, pp.
+579–584, 2017.</div>
+</div>
+<div id="ref-blais2021circuit" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A.
+Blais, A. L. Grimsmo, S. M. Girvin, and A. Wallraff, <span>“Circuit
+quantum electrodynamics,”</span> <em>Reviews of Modern Physics</em>,
+vol. 93, no. 2, p. 025005, 2021.</div>
+</div>
+<div id="ref-schrieffer1966relation" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">J.
+R. Schrieffer and P. A. Wolff, <span>“Relation between the anderson and
+kondo hamiltonians,”</span> <em>Physical Review</em>, vol. 149, no. 2,
+p. 491, 1966.</div>
+</div>
+<div id="ref-bravyi2011schrieffer" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">S.
+Bravyi, D. P. DiVincenzo, and D. Loss, <span>“Schrieffer–wolff
+transformation for quantum many-body systems,”</span> <em>Annals of
+physics</em>, vol. 326, no. 10, pp. 2793–2826, 2011.</div>
+</div>
+</div>
+    </main>
+    </body>
+</html>

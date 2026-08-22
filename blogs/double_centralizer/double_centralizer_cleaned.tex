@@ -1,0 +1,775 @@
+\documentclass[11pt]{article}
+\usepackage[margin = 2cm]{geometry}
+
+\usepackage{xcolor}
+\definecolor{mycolor}{rgb}{0.0, .15, .6}
+\usepackage[colorlinks = true,
+linkcolor = mycolor,
+citecolor = mycolor,
+urlcolor = mycolor]{hyperref}
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{dsfont}
+\usepackage{ytableau}
+
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{rmk}{Remark}
+
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\Ind}{\operatorname{Ind}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\Rad}{\operatorname{Rad}}
+\newcommand{\Mat}{\operatorname{Mat}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\U}{\operatorname{U}}
+\newcommand{\SU}{\operatorname{SU}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\perm}{\mathrm{S}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\gl}{\mathfrak{gl}}
+
+\begin{document}
+
+\noindent\Large{Representation theory of the symmetric group, the
+  double-centralizer theorem, and Schur-Weyl duality} \\
+\normalsize{\textbf{Ben McDonough}}\\\
+\normalsize{\today}
+
+\tableofcontents
+
+\section{Double-centralizer theorem}
+
+\subsection{Semisimple algebras}
+This section establishes some basic results about the representation theory of
+algebras. In particular, we will define the \textit{radical} $\Rad(A)$
+of an algebra $A$, and $A$ will be called \textit{semisimple} if
+$\Rad(A) = 0$. The main point of this section is that the representation theory
+of semisimple algebras is basically completely analogous to that of a a group
+algebra $A = k[G]$, where $k$ is a field and $G$ is a finite group, i.e.
+finite-dimensional modules are semisimple.
+For the rest of this section, let $A$ be an algebra over a field $k$, where $k$
+is algebraically closed.
+
+\begin{defn}
+Let $\hat A$ refer to isomorphism classes of simple $A$-modules.
+\end{defn}
+
+
+\begin{lem}[Filtrations]\label{lem:filtrations}
+ Any finite dimensional representation $V$ of $A$ admits a \textit{filtration} 
+ \begin{align}
+   0 = V_0 < V_1 < \cdots  < V_k = V
+ \end{align}
+ such that $V_i$ are subrepresentations and the quotients $V_{i}/V_{i-1}$ are irreducible.
+\end{lem}
+
+\begin{proof}
+  We will induct on $n \equiv \dim(V)$. If $V$ is irreducible, then we are done,
+  so let $V_1 < V$ be an irreducible subrepresentation. Let $U \equiv V/V_1$, and take a filtration
+  \begin{align}
+    U_0 < U_1 < \cdots < U_{k-1} = U
+  \end{align}
+  such that $U_i/U_{i-1}$ are irreducible.
+  Then let $V_i \equiv U_i \oplus V_1$.
+  This shows
+  \begin{align}
+    V_i / V_{i-1} = (U_i \oplus V_1)/(U_{i-1}\oplus V_1) \cong U_i / U_{i-1},
+  \end{align}
+  which shows that the successive quotients are irreducible. Thus, $0 < V_1 <
+  \dots < V_{k-1} < V$ is the desired filtration.
+\end{proof}
+
+
+\begin{prop}
+  $\Rad(A)$ is the largest nilpotent two-sided ideal in $A$.
+\end{prop}
+
+\begin{proof}
+Let $V$ be a simple $A$-module and $I \leq A$ a nilpotent ideal. Let $v \in V$
+be arbitrary. If $Iv \neq 0$, then $Iv = V$. However, this implies that $xv = v$
+for some $x \in I$, therefore $x^nv = v$, and so $x^n \neq 0$. This contradicts
+$I$ being nilpotent, so we must have $Iv = 0$, and thus $I \leq \Rad(A)$.
+
+Next, consider $A$ as an $A$-module over itself, and take a filtration
+\begin{align}
+  0 = A_0 < A_1 < \ldots < A_k = A.
+\end{align}
+Since $x \in A$ acts on the irreducible quotients $A_i/A_{i-1}$ by zero, this
+means that $x: A_i \to A_{i-1}$, and therefore $x^k = 0$. This shows that
+$\Rad(A)$ is nilpotent.
+\end{proof}
+
+\begin{lem}\label{lem:funky_semisimple}
+  Let $V_I = \bigoplus_{i \in I} V_i$, where $V_i$ are simple $A$-modules, and let
+  $f:V \to U$ be a surjection. Then $U \cong V_J \equiv \bigoplus_{i \in J}V_i$ for some $J
+  \subseteq I$.
+\end{lem}
+
+\begin{proof}
+Let $J \subseteq I$ be the maximal subset of $I$ such that $f|V_J$ is injective.
+If $J \neq I$ (in which case we are done), let $i \notin J$. Then the map $f:V_i
+\to U/f(V_J)$ is nonzero for some $i$ (otherwise $I = J$), so by Schur's lemma,
+it is injective since $V_i$ is simple. This implies that $f|V_{J \cup \{i\}}$ is
+injective, contradicting the maximality of $J$.
+\end{proof}
+
+\begin{cor}
+  If $V \cong \bigoplus_{i}V_i^{n_i}$ for $V_i$ simple $A$-modules and $U \leq
+  V$, then $V$ and $U$ are both semisimple.
+\end{cor}
+
+\begin{thm}[Density]\label{thm:density}
+ The map
+ \begin{align}
+   \rho: A \to \End(V_i)
+ \end{align}
+ is surjective.
+\end{thm}
+
+\begin{proof}
+  Suppose that $V$ is a simple $A$-module, and let $v_1, \dots, v_n$ be a basis of $V$.
+  The image of the map $a \to (av_1, \dots, av_n)$ is a subrepresentation
+  $U \leq V^{\oplus n}$. By the above lemma, $U \cong V^{\oplus r}$ for $r \leq
+  n$. Let $\phi$ be the isomorphism $V^{\oplus r} \cong U \leq V^{\oplus n}$.
+  Represent $\phi$ by the matrix $X$, such that $\phi(w_1, \dots, w_r) = (w_1,
+  \dots, w_r)X$. If $n = r$ we are done, so suppose $r < n$.
+
+  Taking $a = 1$, we see that $(v_1, \dots, v_n) \in
+  U$,  and therefore there exist $w_1, \dots, w_r \in V$ such that $(w_1, \dots,
+  w_r)X = (v_1, \dots, v_n)$. But since $r < n$, $X$ has a left kernel, so let
+  $X(q_1, \dots, q_n)^t = 0$. We then have
+  \begin{align}
+    (w_1, \dots, w_r)X(q_1, \dots, q_n)^t = \sum_i v_iq_i = 0,
+  \end{align}
+  which contradicts the choice of $\{v_n\}$ as a basis. Therefore $n = r$.
+
+  This shows us that $U \cong V^n$. Therefore 
+  if $c \in \End(V)$, then 
+  $(cv_1, \dots, cv_n)$ is in the image of the map $a \mapsto (v_1,
+  \dots, v_n)$, so $av_i = cv_i$ for each $i$.
+
+\end{proof}
+
+\begin{thm}\label{prop:PeterWeyl}
+If $A$ is a finite-dimensional algebra, then 
+\begin{equation}
+  A/\Rad(A) \cong \bigoplus_{V_i \in \hat A} \End(V_i)
+\end{equation}
+In particular, there are finitely many simple $A$ modules and all are finite-dimensional.
+\end{thm}
+
+\begin{proof}
+  Consider the homomorphism
+\begin{align}
+  \rho = \bigoplus_{V_i \in \hat A} \rho_{i} : A \to \bigoplus_{V_i \in \hat A} \End V_i
+\end{align}
+Let $B_i$ be the image of $\rho_i$ and $B$ be the image of $\rho$. By
+Lem.~\ref{lem:funky_semisimple}, we know that $B$ is semisimple. By the density theorem,
+\begin{equation}
+  B_i \cong \End(V_i) \cong V_i^{\dim V_i}
+\end{equation}
+so $V_i$ occurs in $B$ with multiplicity $\dim V_i$. However this implies
+\begin{equation}
+\bigoplus_i \End_i(V_i)  \leq B \leq \bigoplus_i \End_i(V_i)
+\end{equation}
+which proves that $\rho$ is a surjection.
+This implies that there are only finitely many non-isomorphic
+$A$-modules, all of which are finite dimensional. The kernel of $\rho$ is $\Rad(A)$, which proves the claim.
+\end{proof}
+
+\begin{cor}[Artin-Wedderburn for algebras]
+  Every semisimple algebra $A$ over an algebraically closed field $k$ is
+  isomorphic to
+  \begin{align}
+    A \cong \bigoplus_{i=1}^r \Mat_{d_i}(k)
+  \end{align}
+  for some $r$ and $d_1, \dots, d_r$.
+\end{cor}
+
+\begin{cor}\label{cor:maschke}
+  All finite-dimensional
+  $A$-modules are semisimple.
+\end{cor}
+
+\begin{proof}
+Let $V$  be a finite-dimensional $A$-module, and let $v_1, \dots, v_n$ be a
+basis for $V$. Then the map (of $A$-modules) $\psi:A^n \to V$ via $\psi(a_1, \dots, a_n) = a_1v_1
++ \cdots + a_nv_n$ is surjective (by choosing $a_1, \dots, a_n$ to be scalars). Therefore $V$ is isomorphic (as an
+$A$-module) to a subspace of $A^n$, and since we have shown
+in Thm.~\ref{thm:density} that $A^n$ is semisimple, so is $V$.
+\end{proof}
+
+\subsection{Proof of double-centralizer}
+
+\begin{lem}
+  For any semisimple $A$-module $V$ there is a canonical isomorphism
+\begin{align}
+V \cong \bigoplus_{V_i \in \hat A}\Hom_A(V_i, V) \otimes V_i,
+\end{align}
+canonical because of the choice of ordering of the summands, which is given by
+the evaluation map $f \otimes v \mapsto f(v)$.
+\end{lem}
+
+\begin{proof}\label{lem:altshur}
+  Since $V$ is semisimple, we have
+  \begin{align}
+    V \cong \bigoplus_{V_i \in \hat A}V_i^{\oplus n_i} \cong \bigoplus_{V_i \in \hat A}k^{n_i} \otimes V_i
+  \end{align}
+  ($k$ is the field). By Schur's lemma, we find
+  \begin{align}
+    k^{n_i} \cong \Hom_A(V_i, V)
+  \end{align}
+  This proves the two are isomorphic.
+  Furthermore, by Schur's lemma, $f \in \Hom_A(V_i, V)$ is given by element-wise
+  scalar multiplication, so $f \otimes x \mapsto f(x)$ is injective. This proves the claim.
+\end{proof}
+
+\begin{thm}[Double centralizer]\label{thm:doublecentralizer}
+Let $E$ be a finite-dimensional algebra, and let $A\leq E$ be a semisimple
+subalgebra, and let $B \equiv \End_AE$. Then the following hold:
+\begin{itemize}
+  \item $A = \End_BE$ (double-centralizer)
+  \item $B$ is semisimple
+  \item The simple $B$-modules are in 1-to-1 correspondence with simple $A$-modules
+  \item As $A$-modules, we have a decomposition
+    \begin{equation}
+      E \cong \bigoplus_{V_i \in \hat A} W_i \otimes V_i
+    \end{equation}
+    where $W_i$ are the simple $B$-modules.
+\end{itemize}
+\end{thm}
+
+\begin{proof}
+  By Cor.~\ref{cor:maschke}, $E$ is semisimple as an $A$-module, and so by
+  Lem.~\ref{lem:altshur}, we have a decomposition
+  \begin{align}
+    E \cong \bigoplus_{V_i \in \hat A}\Hom_A(V_i, E) \otimes V_i
+  \end{align}
+  Let
+  $W_i \equiv \Hom_A(V_i, E)$.
+  Next, since $A \cong \bigoplus_{i}\End(V_i) \subseteq \End(E)$, this shows
+  that $V_i$ occurs as a subspace of $E$ for each $i$, and thus $W_i$
+  is nonzero for each $i$.   By
+  Schur's lemma, we have
+  \begin{align}
+    B = \End_A(E) &\cong \Hom_A(\bigoplus_{V_i \in \hat A}W_i \otimes V_i, \bigoplus_{V_j \in \hat A}W_j \otimes V_j) \notag\\
+                  &\cong \bigoplus_{V_i,V_j \in \hat A}\Hom(W_i, W_j)\otimes \Hom_A(V_i, V_j) \notag\\
+    &\cong \bigoplus_{V_i \in \hat A}\End(W_i)
+  \end{align}
+  From this decomposition, we can see that $W_i$ are irreducible as $B$-modules
+  (precisely because $W_i$ is irreducible as an $\End(W_i)$-module). By the same
+  argument, $\Rad(\End(W_i)) = 0$, so $B$ is semisimple. Lastly, by
+  Prop.~\ref{prop:PeterWeyl}, this shows that $W_i$ are exhaustive of the
+  irreducible $B$-modules, thus showing that irreducible $B$-modules are in
+  1-to-1 correspondence with irreducible $A$-modules. This proves all the
+  statements of the theorem.
+\end{proof}
+
+\section{Schur-Weyl duality}
+\begin{prop}
+  Let $G$ be a Lie group with Lie algebra $\mathfrak g$. A tensor product of
+  representations of $\mathfrak g$ is defined by the following action of $X \in
+  \mathfrak g$:
+  \begin{align}
+    X(v_1 \otimes v_2 \otimes \cdots \otimes v_n) = \sum_{i=1}^n (v_1 \otimes \cdots \otimes Xv_i \otimes \cdots \otimes v_n)
+  \end{align}
+\end{prop}
+
+\begin{proof}
+Recall the exponential map $\e : \mathfrak g \to G$. In particular, 
+\begin{align}
+  \pdv{t}\Big|_{t=0} \e^{tX} = X
+\end{align}
+Then we can obtain the action of $X$ based on the action of $G$:
+\begin{align}
+\pdv{t}\Big|_{t=0}[\e^{Xt}(v_1 \otimes \cdots \otimes v_n)] &= 
+  \pdv{t}\Big|_{t=0}[\e^{Xt}v_1 \otimes \cdots \otimes \e^{Xt} v_n] \\
+  &= \sum_{i = 1}^n v_1 \otimes \cdots \otimes Xv_i \otimes \cdots \otimes v_n
+\end{align}
+which follows by the product rule.
+\end{proof}
+
+\begin{defn}[Universal enveloping algebra]
+Given a Lie algebra $\mathfrak g$, the \textit{universal enveloping algebra}
+$\mathcal U(\mathfrak g)$ is the associative algebra defined by the property
+that every morphism of $\mathfrak g$ induces a unique morphism of $\mathcal
+U(\mathfrak g)$ and vice-versa. As a consequence, Lie algebra modules are the same as modules
+over $\mathcal U(\mathfrak g)$, which in turn are in correspondence with Lie
+group representations when the group is compact.
+\end{defn}
+
+\begin{rmk}
+  Note that while the Lie algebras of e.g. $\SU(V)$ and $\GL(V)$ are both
+  finite-dimensional, the corresponding universal enveloping algebras are
+  infinite-dimensional. This is the reason that there can be infinitely many $\SU(V)$-irreps.
+\end{rmk}
+
+\begin{lem}
+Let $V$ be a finite-dimensional vector space over $k = \mathbb R$ or $\mathbb C$, let $U \leq V$ be a subspace, and
+let $\{v_1, \dots, v_n\} \in V$.  Then if
+\begin{align}
+  \sum_{i = 1}^n t^iv_i \in U
+\end{align}
+for sufficiently small $t$, then $v_1, \dots, v_n \in U$.
+\end{lem}
+
+\begin{proof}
+  We will induct on $n$. When $n = 1$, the claim is obvious. Since $k$ is a
+  complete field and $U$ is finite-dimensional, it is closed, and therefore contains
+  \begin{align}
+    \pdv{t}|_{t= 0} \sum_{i = 1}^n t^i v_i = v_1
+  \end{align}
+  Thus, $\sum_{i = 1}^{n-1} t^iv_{i+1} \in U$, and the claim follows from induction.
+\end{proof}
+
+\begin{lem}\label{lem:sym_irrep}
+Let $V$ be a finite dimensional vector space over a complete field $k$ with
+characteristic zero. Then
+$\Sym^n(V)$ is spanned by
+\begin{align}
+  \{v \otimes \cdots \otimes v\}_{v \in V}
+\end{align}
+\end{lem}
+
+\begin{proof}
+  By multinomial expansion, we find
+\begin{align}
+  \qty(\sum_{i=1}^dt_iv_i)^{\otimes n} = \sum_{k_1 +k_2 + \cdots + k_d = n} \binom{n}{k_1, \dots, k_d}\pi_{\text{sym}}\bigotimes_{i=1}^d t_i^{k_i}v_i^{\otimes k_i}
+\end{align}
+where $\pi_{\text{sym}}$ is a projector onto the symmetric subspace.
+Applying the lemma above sequentially to each $i$, we get $\pi_{\text{sym}}\bigotimes_{i=1}^d
+v_{i}^{\otimes k_i}$ in the span of $\{v \otimes \cdots \otimes v\}$ for each
+$k_1 + \dots + k_d = n$, which clearly span $\Sym^n(V)$.
+\end{proof}
+
+\begin{thm}[Fundamental theorem of symmetric polynomials]
+Every symmetric polynomial can be expanded as a linear combination of power-symmetric polynomials
+\begin{equation}
+  P_j(\vb x)  = x_1^j + x_2^j + \cdots + x_n^j
+\end{equation}
+\end{thm}
+
+\begin{thm}[Schur-Weyl]
+Let $\mathfrak{gl}(V)$ be the Lie algebra of $\GL(V)$. The centralizer of
+$\mathbb C \perm_n$ (acting by permuting the tensor factors)
+ in $V^{\otimes n}$ is $\mathcal U(\mathfrak{gl}(V))$. 
+\end{thm}
+
+\begin{proof}
+Since $V$ is finite-dimensional, we have $\End_{\C \perm_n}(V^{\otimes n}) \cong
+\Sym^n(\End(V))$. Let $\Delta$ represent the action of $\mathcal
+U(\mathfrak{gl}(V))$, i.e.
+\begin{align}
+  \Delta(X)(v_1 \otimes \cdots \otimes v_n) = \sum_{i}v_1 \otimes \cdots \otimes Xv_i \otimes \cdots v_n
+\end{align}
+By the fundamental theorem on symmetric polynomials, for any $v \in \End(V)$, we
+can write $v^{\otimes n}$ as a polynomial in $\Delta(v), \Delta(v^2),
+\Delta(v^3) \dots$. By Lem.~\ref{lem:sym_irrep}, $v^{\otimes n}$ span $\Sym^n \End(V)$.
+This proves the claim.
+\end{proof}
+
+
+\begin{cor}
+  The same holds for $\mathcal U(\mathfrak{u}(V))$, the universal enveloping
+  algebra of the Lie algebra of the unitary operators on $V$.
+\end{cor}
+
+\begin{proof}
+  Note that $\mathfrak{u}\otimes \mathcal C$, also known as the
+  \textit{complexification} of $\mathfrak{u}$, is just $\mathfrak{gl}(V)$.
+  Passing to the complexification does not change the centralizer.
+\end{proof}
+
+\begin{cor}[Schur Functors]
+  We have a decomposition
+  \begin{align}
+V^{\otimes n} \cong \bigoplus_{\lambda} V_{\lambda} \otimes W_\lambda
+  \end{align}
+  as representations of $\C S_n \times G$, where $G = \U(V), \GL(V)$ and
+  $V_\lambda$ are the irreps of $S_n$ indexed by a partition $\lambda$, and $W_\lambda$ are irreps of $G$. In
+  particular, the map
+  \begin{align}
+    V_\lambda \mapsto W_\lambda \equiv \Hom_{G}(V_\lambda, V^{\otimes n})
+  \end{align}
+  is a surjection (some $W_\lambda$ may vanish).
+\end{cor}
+\begin{rmk}
+In the proof of the double centralizer theorem
+[Thm.~\ref{thm:doublecentralizer}], we saw that $V_\lambda$ and $W_\lambda$ were
+in bijection. The distinction is that $\mathcal U(\mathfrak{gl}(V))$  is
+infinite-dimensional, and we are applying the theorem to its finite-dimensional
+image within $\End(V^{\otimes n})$. The simple modules of this image are
+automatically simple modules of $\mathcal U(\mathfrak{gl}(V))$, but the reverse
+is not true.
+\end{rmk}
+
+\section{Representation theory of the symmetric group}
+
+\subsection{Induced representations}
+Let $G$ be a group. It is easier to define induced representations in terms of modules over the
+group algebra $\C G$. (For historical reasons, \textit{representation} is
+generally reserved for groups and \textit{module} for rings, but they are the
+same thing.)
+We can see that the $\C G$-modules are in direct correspondence with
+representations of $G$ over $\C$.
+This fact is because every group morphism $G \to \End(V)$ can be extended by $\C$-linearity into an algebra morphism $\C G \to \End(V)$, and vice-versa. This leads us to the following idea of induction of representations:
+
+\begin{defn}[Induced representation]
+    Given a $\C H$-module $V$ where $H \leq G$, we define $\Ind_H^G(V) \equiv \C
+    G \otimes_{\C H} V$ to be the representation induced by $V$ on $G$.
+\end{defn}
+
+Note that if $A$ is a right $B$-module and $C$ is a left $B$-module, then the
+\textit{tensor product} $A \otimes_B C$ can be defined just like the tensor
+product of vector spaces where elements of $B$ are treated as scalars, so $ab
+\otimes c = a \otimes bc$. Induced representations are special due to the
+following correspondence:
+
+\begin{lem}[Frobenius reciprocity]
+  Let $\Res_G^H(U)$ denote the restriction of a representation $U$ of $G$ to $H
+  \leq G$. Then
+  \begin{align}
+    \Hom_{G}(\Ind_H^G(V), U) \cong \Hom_H(V, \Res^H_G(U))
+  \end{align}
+\end{lem}
+\begin{proof}
+This is a consequence of the more general tensor-hom adjunction, which we will state here:
+
+\begin{prop}
+Let $A, B, C$ be rings. Let $M$ be an $A-B$-module, let $N$ be a $B-C$-module, and let $K$ be an $A-C$-module. Then
+  \begin{equation}
+    \Hom_A(M \otimes_B N, K) \cong \Hom_B(N, \Hom_A(M,K))
+  \end{equation}
+  is a natural isomorphism of $C-C$-bimodules.
+\end{prop}
+
+\begin{proof}
+  The isomorphism is the evaluation map
+  \begin{align}
+    \Hom_A(M \otimes_B N, K) \ni \phi \mapsto \psi: [\psi(n)](m) = \phi(m \otimes n)
+  \end{align}
+  and one can check that this isomorphism preserves the module structure and is natural.
+\end{proof}
+
+From this, Frobenius reciprocity follows:
+  observe that
+\begin{equation}
+\Hom_{\C G}(\C G \otimes_{\C H} V, U) \cong \Hom_{\C H}(V, \Hom_{\C G}(\C G, U)) \cong \Hom_{\C H}(V, U)
+\end{equation}
+where we applied the isomorphism $\Hom_{A}(A, V) \cong V$ for any ring $A$ and
+$A$-module $V$.
+\end{proof}
+
+\subsection{Classifying irreps of $S_n$}
+Now, we will deduce the representation theory of $S_n$. We know in general there is a (non-canonical) bijection between
+irreps and conjugacy classes. Since conjugation in $S_n$ is just a permutation
+of the $n$ labels, conjugacy classes correspond to cycle types, which in turn
+correspond to partitions of $n$. Therefore, we will look for a set of
+non-isomorphic irreps corresponding to every partition $\lambda \vdash n$. 
+
+First, we define Young diagrams and Young tableaux.
+\begin{defn}
+  Given a partition $\lambda = \lambda_1 \geq \lambda_2 \geq \dots \geq
+  \lambda_k$ of $n$, a \textit{Young diagram} is a set of boxes with $\lambda_1$ boxes in
+  the first row, $\lambda_2$ boxes in the second, etc.
+  Using this representation, the \textit{transpose} of a partition $\lambda$ is defined as the
+  partition associated to the Young diagram of $\lambda$ with the rows and
+  columns interchanged.
+  A \textit{Young tableau} is a
+  Young diagram with unique numbers from $1, \dots, n$ in each of the boxes. Given $g \in S_n$ and a Young
+  tableau $T$, we will write $gT$ for the tableau where each entry $j$ in $T$
+  is replaced with $g(j)$.
+\end{defn}
+
+\begin{defn}[Young subgroups]
+ Given a partition $\lambda = \lambda_1 \geq \lambda_2 \geq \dots \geq
+  \lambda_k$, consider the Young tableau $T_\lambda$ which is
+ filled with numbers sequentially left to right and bottom to top.
+ Define
+ $P_\lambda$ as the subgroup $S_{\lambda_1} \times S_{\lambda_2} \times \dots
+ \times S_{\lambda_k} \leq S_n$ which preserves the rows of $T_\lambda$, which
+ is called the \textit{Young subgroup} of $\lambda$.
+ Define $Q_\lambda$ to be the subgroup preserving the columns of $T_\lambda$,
+ which is equivalently the Young subgroup of the transpose $\lambda^t$.
+\end{defn}
+
+Then we will define the following distinguished representations of $S_n$:
+\begin{defn}
+  Given a partition $\lambda$, define
+  \begin{align}
+    I^+_\lambda &\equiv \Ind_{P_\lambda}^{S_n}(\operatorname{triv}) & I^-_\lambda &\equiv \Ind_{Q_{\lambda}}^{S_n}(\operatorname{sgn})
+  \end{align}
+\end{defn}
+
+Our goal will be to show that $I_{\lambda}^+, I_{\lambda}^-$ have one unique,
+irreducible summand in common, which we will call $V_{\lambda}$, or a
+\textit{Specht module}.
+
+\begin{defn}[Lexicographic ordering]
+We will say $\lambda > \mu$ if the first nonzero $\lambda_i - \mu_i$ is positive.
+\end{defn}
+
+\begin{prop}
+$\dim \Hom(I_\mu^-, I_{\lambda}^+) = 0$ if $\lambda > \mu$ and 1 if $\lambda = \mu$.
+\end{prop}
+
+\begin{proof}
+  By Frobenius reciprocity,
+  \begin{align}
+    \Hom_{S_n}(I^{-}_{\lambda}, I^+_{\lambda}) &\cong \Hom_{Q_\lambda}(\mathrm{sgn}, \mathbb C[S_n/P_{\lambda}]) \cong \Hom_{Q_{\lambda}}(\mathbb C[S_n/P_\lambda], \mathrm{sgn}) \\
+    &\cong \{f:S_n \to \C : f(\tau g\sigma) = \sgn(\tau)f(g) \ \forall \ \tau \in Q_\lambda, \sigma \in P_\lambda\}
+  \end{align}
+  where we have identified $\Ind_H^G(\mathrm{triv}) \cong \mathbb C[G/ H]$, and
+  also used $\Hom_G(U, V) \cong \Hom_G(V, U)$ for completely reducible
+  representations.
+
+  Now we notice that if $\tau  = g\sigma g^{-1}$ for any transpositions $\tau
+  \in Q_\mu, \sigma \in P_{\lambda}$, then
+  \begin{equation}
+  f(g) = f(g\sigma) = f(\tau g) = -f(g) \implies f(g) = 0
+  \end{equation}
+
+  This brings us to the following lemma:
+
+  \begin{lem}
+    If $\lambda > \mu$, then for any $g \in S_n$ there exist $\sigma \in
+    P_\lambda, \tau \in Q_{\mu}$ with $\tau = g\sigma g^{-1}$.
+  \end{lem}
+
+  \begin{proof}
+    If $\lambda_1 > \mu_1$, then there must be two integers in the first row of
+    $gT_\lambda$ that lie in the same column of $T_{\mu}$. The permutations
+    interchanging these integers are the 
+    desired $\tau, \sigma$. Otherwise, $\lambda_1 = \mu_1$. If no two integers
+    in the first row of $T_\lambda$ lie in the same column of $T_\mu$, then we
+    can find a permutation $q \in Q_\lambda$ which brings all the integers in
+    $T_\mu$ lying in the first row of $gT_\lambda$ to the first row of
+    $T_{\mu}$, and a permutation $p \in gP_\lambda g^{-1}$ which re-orders the
+    first row of $gT_\lambda$ so that the first rows of $pgT_\lambda$ and
+    $qT_\mu$ are the same. Then we can eliminate the first row of both tableaux, and
+    repeat the argument.
+  \end{proof}
+
+  The above lemma implies the first part of our claim, because if $\lambda >
+  \mu$, then for any $g$, $f(g) = 0$, so $\Hom_{S_n}(I^-_\mu, I^+_\lambda) = 0$. 
+
+  Next, we will make a similar argument for $\lambda = \mu$. We notice that
+  $f(g)$ is determined entirely by the double-coset $Q_\lambda g 
+  P_\lambda$. On the identity coset, i.e. any $g = qp$ with $q \in Q_\lambda,
+  p\in P_\lambda$, we have $f(g) = f(qp) = \sgn(q)f(1)$. We will now argue that
+  $f$ must vanish on all non-identity double-cosets, which will follow from a lemma:
+
+  \begin{lem}
+    If $g \not \in Q_\lambda P_\lambda$, then there exist $\sigma \in P_\lambda$,
+    $\tau \in Q_\lambda$ such that $\tau = g \sigma g^{-1}$.
+    \label{lem:same}
+  \end{lem}
+
+  \begin{proof}
+    We will prove the contrapositive. Suppose such a $\sigma, \tau$ do not exist.
+    Then any two elements of the first
+    row of $gT_\lambda$ must be in different columns of $T_{\lambda}$, otherwise
+    transpositions interchanging these would produce the desired $\sigma, \tau$.
+    As in the previous lemma, we can thus construct $q \in Q_\lambda$, $p \in
+    gP_\lambda g^{-1}$ such that $pgT_\lambda = qT_\lambda$. This gives us
+    $pg = gp'$ where $p' = g^{-1}qg \in 
+    P_\lambda$, and so $g = qp' \in Q_\lambda P_\lambda$, as desired.
+  \end{proof}
+
+  Now to complete the proof, if $g \notin Q_\lambda P_\lambda$ then $f(g) = 0$
+  because by the lemma above, we can find such a $\sigma, \tau$. If $g = qp \in
+  Q_\lambda P_\lambda$, then $f(g) = \sgn(q)f(1)$. This shows that
+  $\Hom_{S_n}(I_\lambda^-, I_\lambda^+)$ is 1-dimensional, which completes the claim.
+
+\end{proof}
+
+The classification theorem then follows:
+\begin{cor}
+  The representations $V_\lambda$ are a complete set of non-isomorphic
+  representations of $S_n$.
+\end{cor}
+
+\begin{proof}
+Since $\dim \Hom(I^-_\lambda, I^+_\lambda) = 1$, there is exact one irreducible
+$V_\lambda$ which occurs in both $I_\lambda^-, I_\lambda^+$ by Schur's lemma, which we call
+$V_\lambda$. If $\lambda \neq \mu$, then either $\mu > \lambda$ or $\lambda >
+\mu$. We assume the latter without loss of generality. Then $\dim \Hom(I^-_\mu,
+I^+_\lambda) = 0$, so $V_\lambda$ must not occur in $I^-_\mu$, and therefore
+$V_\mu$ is not isomorphic to $V_{\lambda}$. Since there are exactly as many
+nonisomorphic irreps as conjugacy classes in $S_n$ which are labeled by
+partitions, this completes the proof.
+\end{proof}
+
+\subsection{Computations}
+
+\subsubsection{Explicit basis for $V_\lambda$}
+\begin{prop}[Formula for induced representations]
+  Suppose that $\chi$ is the character of a 1-dimensional representation. Then
+  \begin{equation}
+    \Ind_{H}^G \chi \cong \C G\epsilon \hspace{2cm}\text{where}\hspace{2cm}
+    \epsilon = \frac{1}{|H|}\sum_{h \in H}\overline \chi(h)h
+  \end{equation}
+  is an idempotent.
+\end{prop}
+
+\begin{proof}
+  Let $\{g_1, \dots, g_k\}$ be a set of coset representatives for $G/ H$.
+  $\Ind_H^G \chi$ is spanned by elements of the form $g_i \otimes \C_\chi$, where
+  $\C_{\chi}$ is a one-dimensional vector space. Then
+  for any $g \in G$ we have $gg_i = g_jh$ for a unique $g_j, h$. By definition,
+  \begin{align}
+    g(g_i \otimes \C_{\chi}) = \chi(h)(g_j \otimes \C_{\chi})
+  \end{align}
+  On the other hand, we observe that $\C G \epsilon$ is spanned by elements $g_i
+  \epsilon$, and
+  \begin{align}
+    g g_i \epsilon = g_j\frac{1}{|H|}\sum_{k \in H}hk\overline \chi(k) = \chi(h)g_j\epsilon
+  \end{align}
+  Therefore the map $g_i \otimes \C_\chi \mapsto g_i\epsilon$ is the desired
+  isomorphism, completing the proof.
+\end{proof}
+
+\begin{lem}
+  If $\epsilon$ is an idempotent, $A$ is an algebra, and $V$ is an $A$-module, then $\Hom_{A}(A\epsilon, V) \cong \epsilon
+  V$. 
+\end{lem}
+
+\begin{thm}[Young Symmetrizers]
+  Given a partition $\lambda$, let
+  \begin{align}
+    a_\lambda & \equiv \frac{1}{|P_\lambda|}\sum_{\sigma \in P_\lambda} \sigma & b_\lambda & \equiv \frac{1}{|Q_\lambda|}\sum_{\tau \in Q_\lambda}\sgn(\tau)\tau & c_{\lambda} &\equiv a_\lambda b_\lambda
+  \end{align}
+  Then $c_\lambda$ (called a \textit{Young symmetrizer}) is proportional to an idempotent, and we have the following explicit expression for $V_\lambda$:
+  \begin{equation}
+    V_\lambda \cong \C[S_n] c_\lambda
+  \end{equation}
+\end{thm}
+
+\begin{proof}
+  Notice that $I^-_\lambda \cong \C[S_n]b_\lambda$ and $I^+_\lambda \cong
+  \C[S_n]a_\lambda$ by the lemma above. 
+  Then we have
+  \begin{equation}
+    \Hom_{S_n}(I^-_\lambda, I^+_\lambda) \cong \Hom_{S_n}(\C[S_n], b_\lambda \C[S_n] a_{\lambda}) \cong b_\lambda \C[S_n] a_{\lambda}
+  \end{equation}
+  so we conclude $b_{\lambda} \C[S_n]a_\lambda$ is one-dimensional. Also, this
+  implies $(c_\lambda^*)^2 = b_{\lambda}a_\lambda b_{\lambda}a_{\lambda} \propto c_\lambda^*$, so 
+  $c_{\lambda}$ is proportional to an idempotent.
+  Now we can compute
+  \begin{equation}
+    \Hom_{S_n}(I^-_\lambda, \C[S_n]a_\lambda b_\lambda)  \cong \Hom_{S_n}(\C[S_n]b_\lambda, \C[S_n]a_\lambda b_{\lambda}) \cong (b_{\lambda} \C[S_n] a_\lambda) b_{\lambda}
+  \end{equation}
+  Similarly,
+  \begin{align}
+    \Hom_{S_n}(\C[S_n]a_\lambda b_{\lambda}, I^+_{\lambda}) \cong \Hom_{S_n}(\C[S_n], a_{\lambda}b_{\lambda} \C[S_n] a_{\lambda}) \cong a_{\lambda} (b_{\lambda} \C[S_n]a_\lambda)
+  \end{align}
+ so both are one-dimensional. This
+ shows that $\C[S_n]a_{\lambda}b_{\lambda}$ occurs once in $I^+_\lambda$ and
+ $I^-_\lambda$, so it must be isomorphic to $V_\lambda$.
+\end{proof}
+
+\begin{defn}[Young tabloids and polytabloids]
+Given a Young tableau $T$, define a \textit{tabloid} $\{T\}$ to be the
+equivalence class of tableaux which are equal up to a permutation $\sigma \in
+P_T$ (the group preserving the rows of $T$). Then define a
+\textit{polytabloid} to be a tableaux which is antisymmetrized over $\pi \in
+Q_{T}$ (the group preserving the columns):
+\begin{align}
+\e_{T} \equiv \sum_{\pi \in Q_T}\sgn(\pi)\{ \pi T\}
+\end{align}
+\end{defn}
+
+\begin{prop}
+  Given a partition $\lambda$, we have
+  \begin{align}
+    V_\lambda \cong \C[S_n] \e_{T_\lambda}
+  \end{align}
+\end{prop}
+
+\begin{proof}
+Consider the map
+\begin{align}
+  V_\lambda \cong \C[S_n]c_\lambda \ni \sigma c_{\lambda} \mapsto \e_{\sigma T_{\lambda}}
+\end{align}
+and we will prove this is an isomorphism of representations.
+
+First, we say that $T_1 \sim T_2$ iff $T_2 = \sigma T_1$ for some $\sigma \in P_T$.
+This implies that $\pi T_2 = (\pi \sigma \pi^{-1})\pi T_1$ iff $T_1 \sim T_2$.
+Since $P_{\pi T} = \pi P_T\pi^{-1}$, this shows that $\{\pi T\} =  \pi\{T\}$. From this, we find
+\begin{align}
+  \sigma \e_{\{T\}} =  \sum_{\pi \in Q_T}\sgn(\pi)\{ \sigma\pi T\} &=
+                                                                      \sum_{\pi \in Q_T}\sgn(\pi)\{(\sigma \pi\sigma^{-1}) \sigma T\}  \notag \\
+  &=
+    \sum_{\pi \in Q_T}\sgn(\sigma\pi\sigma^{-1})\{(\sigma \pi\sigma^{-1}) \sigma T\} \notag \\
+  &=
+  \sum_{\pi' \in \sigma Q_T\sigma^{-1}}\sgn(\pi')\{\pi' \sigma T\} = \e_{\sigma T}
+\end{align}
+Therefore our map is a morphism of representations. Using this, we make the
+following observation:
+\begin{equation}
+  \e_{T_\lambda} = c_\lambda T
+\end{equation}
+We then see that $\C[S_n]T$ is a faithful representation of
+$S_n$ for any tableau $T$ (just the fundamental representation!). As an element of $\C[S_n]T$, we have
+\begin{align}
+v = \sum_{\sigma} a_\sigma \sigma \e_{T_\lambda} = \sum_{\sigma}a_{\sigma}\sigma c_{\lambda}T
+\end{align}
+so if $v$ vanishes then $\sum_{\sigma}a_{\sigma}\sigma c_{\lambda}$ must vanish
+as well. This shows that our map is injective. Surjectivity follows by definition.
+\end{proof}
+
+The theorem above gives us an easy way to explicitly work out the basis for
+a given irreducible representation, which we will illustrate with some examples.
+
+\subsubsection{Examples}
+Observe the polytabloid generated by the following tableau:
+\begin{align}
+\ytableaushort{12 \dots n}
+\end{align}
+There are no columns to antisymmetrize, so the corresponding polytabloid
+consists of only 1 tabloid, a single row with unordered elements $1 \dots n$.
+This is the trivial representation.
+
+Now consider the polytabloid generated by the tableau
+\begin{align}
+\ytableaushort{1, 2, \vdots, n}
+\end{align}
+There are now no rows to symmetrize, so the corresponding polytabloid is simply
+a linear combination of permutations of the $n$ boxes weighted by the sign of
+the permutation. This is the sign representation.
+
+Lastly, we have the permutation representation $\operatorname{span}\{\ket{k}\}_{k=1}^n$ where
+the action is defined by $\sigma\ket{k} = \ket{\sigma(k)}$. There is a copy of
+the trivial representation $\ket{\mathrm{triv}} = \frac{1}{n}\sum_k \ket{k}$.
+The orthogonal compliment $\ket{\mathrm{triv}}^{\perp}$ within the permutation
+representation has a special name, the \textit{standard representation}, given
+explicitly by
+\begin{align}
+  \left\{\sum_{k = 1}^n a_k \ket{k} : \sum_{k=1}^n a_k = 0 \right\}
+\end{align}
+Is the standard representation irreducible? Consider the polytabloid generated by
+\begin{align}
+\ytableaushort{n, 12 \dots {$n-1$}}
+\end{align}
+We will label this tabloid by which element appears in the top box, so the above
+tabloid is $\vb n$. The corresponding polytabloid is obtained by antisymmetrizing
+the first column, so $\vb n$ becomes $\vb n - \vb 1$. We can clearly see that
+the standard representation is spanned by $\vb i - \vb 1$ for all $\vb i \neq
+1$.
+
+\bibliographystyle{plain}
+\nocite{*}
+\bibliography{refs}
+\end{document}

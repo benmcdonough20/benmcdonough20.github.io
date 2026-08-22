@@ -1,0 +1,1094 @@
+\documentclass{article}
+\usepackage[margin = 2cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{physics}
+\usepackage{tikz-cd}
+\usepackage{cancel}
+\usepackage[colorlinks = true]{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\theoremstyle{definition}
+\newtheorem{rmk}{Remark}
+\newtheorem{prop}{Prop}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{ex}{Example}
+
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Hom}{\text{Hom}}
+\newcommand{\cohom}{\mathrm H}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\Ext}{\text{Ext}}
+\newcommand{\Tor}{\text{Tor}}
+\newcommand{\Id}{\text{Id}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\KW}{\mathrm{KW}}
+\newcommand{\CX}{\mathrm{CX}}
+\newcommand{\U}{\mathrm{U}}
+\newcommand{\D}{\mathrm{D}}
+\newcommand{\CZ}{\mathrm{CZ}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\control}[1]{\mathrm{C}^{#1}}
+\newcommand{\CCZ}{\mathrm{CCZ}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\Stab}{\operatorname{Stab}}
+\newcommand{\Ind}{\operatorname{Ind}}
+\newcommand{\Orb}{\operatorname{Orb}}
+\newcommand{\hol}{\operatorname{hol}}
+
+\newcommand{\tetrahedron}{
+  \mathchoice
+    {\includegraphics[height=2ex]{tetrahedron}} % \displaystyle
+    {\includegraphics[height=2ex]{tetrahedron}} % \textstyle
+    {\includegraphics[height=1.6ex]{tetrahedron}} % \scriptstyle
+    {\includegraphics[height=1ex]{tetrahedron}} % \scriptscriptstyle
+}
+
+\title{Notes on twisted codes}
+\date{\today}
+\author{Ben McDonough}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Group cohomology}
+
+\begin{defn}[Group cohomology]
+Let $G$ be a group and $A$ be a trivial $G$-module. Let $EG$ be the free
+simplicial complex on $G$, i.e. the $k$-simplices of $EG$ are $k$-tuples $[g_0,
+\ldots, g_k]$, with possible repeated elements. Consider the action of $G$ on
+$EG$ by $g[g_0, \ldots, g_k] = [gg_0, \ldots, gg_k]$. Then let $EG/G \equiv BG$,
+i.e. $[g_0, \ldots, g_k] \equiv [1,g_0^{-1}g_1, \ldots, g_0^{-1}g_k]$ in $BG$
+(note that $BG$ is a CW complex, not a simplicial complex).  The cohomology of
+this complex with coefficients in $A$ is what we call the group cohomology (with
+coefficients in $A$). $BG$ is a defined up to homotopy by the property
+$\pi_1(BG) \cong G$, and is commonly called the classifying space of $G$.
+\end{defn}
+
+\begin{prop}[Coboundary formula]\label{prop:group-coboundary-formula}
+From the definition above, we have the following boundary formula for group cocycles
+\begin{align}
+\delta \phi(g_0, \dots, g_k) \equiv \delta \phi([g_0, \dots, g_k]) &=  \phi(\partial[g_0, \cdots, g_k])
+ = \sum_{i}(-1)^i\phi(g_0, \dots, \widehat g_i, \dots, g_k)
+\end{align}
+subject to the condition $\phi(gg_0, \dots, gg_k) = \phi(g_0, \dots, g_k)$ for any $G \in g$.
+\end{prop}
+
+\begin{defn}[Bar resolution]\label{defn:bar-resolution}
+It is convenient to note that for any $[g_0, g_1, g_2, \cdots, g_k] \in BG$, we have
+\begin{align}
+[g_0, g_1, g_2, \cdots, g_k] &= g_0[1, g_0^{-1}g_1, \cdots, g_0^{-1}g_k]\notag\\
+&= [1, g_0^{-1}g_1, (g_0^{-1}g_1) (g_1^{-1}g_2) \cdots, (g_0^{-1}g_1) \ldots (g_{k-1}^{-1}g_k)] \notag \\
+&\equiv [1, h_1, h_1h_2,\cdots, h_1\ldots h_k]\equiv [h_1 | h_2 | \cdots | h_k],
+\end{align}
+which is commonly denoted with bars, hence the name ``bar resolution". Note the boundary formula for the simplicial chains of $BG$:
+\begin{align}
+\partial [h_1 | \cdots | h_k]  &= \partial [1, h_1, h_1h_2, \cdots, h_1\ldots h_k] \notag \\
+&= [1, h_2, h_2h_3, \cdots, h_2 \ldots h_k] + \sum_{i=2}^k(-1)^{i} [1, h_1, \cdots, \widehat{h_1 \ldots h_i}, \cdots, h_1 \ldots h_k] \notag \\
+&= [h_2 | \cdots | h_k] + \sum_{i=2}^{k-1}(-1)^{i} [ h_1 | \cdots| h_{i-1} | h_ih_{i+1} | \cdots | h_k] + (-1)^k[h_1 | \cdots | h_{k-1}]
+\end{align}
+\end{defn}
+
+\begin{defn}[Inhomogeneous]\label{defn:inhomogeneous-cocycles}
+In the literature \cite{SPT_cohomology}, cocycles using the simplicial representation of the simplices of $BG$ vs the bar representation of $BG$ are called \textit{homogeneous} and $\textit{inhomogeneous}$ cocycles. Frequently, the formulas are prettier in inhomogeneous form, but the topological depiction is clearer in homogeneous form.
+\end{defn}
+
+\begin{cor}[Inhomogeneous coboundary]\label{cor:inhomogeneous-coboundary-formula}
+The boundary map for inhomogeneous cocycles is the following:
+\begin{align}
+\delta \phi(h_1| \dots| h_k) 
+&= \phi(h_2| \dots| h_k) + \sum_{i=2}^{k-1}(-1)^i\phi(h_1| \dots| h_{i-1}|h_ih_{i+1}| \dots| h_k) + (-1)^k\phi(h_1| \dots| h_{k-1})
+\end{align}
+Note that it is non-standard to put the bars in the cochains, but we will adopt this convention to easily move between the two pictures.
+\end{cor}
+
+\begin{defn}[Normalized cocycles\label{defn:normalized-cocycles}]
+It is frequently convenient to quotient by the subcomplex of $BG$ consisting of
+simplices $[g_0, \dots, g_k]$ where $g_i = g_{i+1}$  for any $i$. This removes
+``degeneracies" in $EG$. In the bar resolution picture, this is the same as
+quotienting by simplices $[h_1 | \ldots | h_k]$ if $h_i = 1$ for any $i$. The
+corresponding chain complexes are called \textit{normalized}, and in cohomology,
+this is equivalent to requiring that $\phi = 0$ on the quotiented subcomplex.
+Every cocycle is cohomologous to a normalized cocycle.
+\end{defn}
+
+\subsection{Cocycles in low dimension}
+
+\begin{cor}[Cocycles in low-dimension]\label{cor:h-1-homomorphisms} 
+$\cohom^1(G, A) \cong \Hom(G, A)$. 
+\end{cor}
+
+\begin{proof}
+Let $b \in C^1(G, A)$
+\begin{align}
+\delta b(g_1|g_2) = b(g_2) - b(g_1g_2) + b(g_1) = 0
+\end{align}
+\end{proof}
+
+\begin{cor}[Shur multipliers]\label{cor:shur-multipliers}
+Projective representations of $G$ over $\F$ are classified by a linear representation $V$ of $G$ (over $\F$) and a 2-cocycle $\omega \in H^2(G, \F)$.
+\end{cor}
+
+\begin{proof}
+Given a projective representation of $G$, we know that there is a representation $\rho$ and a function $\omega : G \times G \to \F$ such that $\rho(g_1)\rho(g_2) = \omega(g_1, g_2)\rho(g_1g_2)$ by definition. By associativity,
+\begin{align}
+\rho(g_1g_2g_3) &= \omega(g_1g_2, g_3)\rho(g_1g_2)\rho(g_3) = \omega(g_1g_2, g_3)\omega(g_1, g_2)\rho(g_1)\rho(g_2)\rho(g_3) \notag \\
+\rho(g_1g_2g_3) &= \omega(g_1, g_2g_2)\rho(g_1)\rho(g_2g_3) = \omega(g_1, g_2g_3)\omega(g_2,g_3)\rho(g_1)\rho(g_2)\rho(g_3)
+\end{align}
+Equating the two lines,
+\begin{equation}
+\omega(g_2, g_3) \omega(g_1, g_2g_3) = \omega(g_1, g_2)\omega(g_1g_2, g_3)
+\end{equation}
+Or, in additive notation,
+\begin{equation}
+\omega(g_2, g_3) -\omega(g_1g_2, g_3) +\omega(g_1, g_2g_3) - \omega(g_1, g_2) = \delta \omega(g_1| g_2| g_3) = 0
+\end{equation}
+This shows that $\omega$ is a 2-cocycle. Furthermore, suppose that $\tau(g)$ also lifts $g$. Then $\tau(g) = f(g)\rho(g)$ for some $f:G \to \F$. We find
+\begin{align}
+ \tau(g_1g_2) &= c'(g_1, g_2)\tau(g_1)\tau(g_2) = c'(g_1,g_2)f(g_1)f(g_2)\rho(g_1)\rho(g_2) \notag\\
+ \tau(g_1g_2) &= f(g_1g_2)\rho(g_1g_2) = f(g_1g_2)c(g_1, g_2)\rho(g_1)\rho(g_2)
+\end{align}
+The above chain of equalities shows that 
+\begin{align}
+c(g_1,g_2) = \frac{f(g_1)f(g_2)}{f(g_1g_2)}c'(g_1,g_2) = (\delta f)(g_1|g_2)c'(g_1, g_2),
+\end{align}
+so the two cocycles differ by a coboundary.
+\end{proof}
+
+\begin{cor}
+\label{cor:central-extensions}
+Central extensions, or groups $G$ which fit into a short exact sequence of the form
+\begin{center}
+\begin{tikzcd}
+1 \ar[r] & A \ar[r, "i"] & G \ar[r, "p"] & \ar[r] Q & 1
+\end{tikzcd}
+\end{center}
+where $i(A) \in Z(G)$
+are classified by a cocycle $\omega \in \cohom^2(Q, A)$.
+\end{cor}
+
+\begin{proof}
+Let $s$ be a \textit{section} of $p$, i.e. $p \circ s = \Id$. 
+Note that $s$ is not necessarily a homomorphism.
+Since $i$ is injective, we can consider $A$ as a subgroup of $G$. Let 
+\begin{align}
+c(q_1, q_2)\equiv 
+s(q_1)s(q_2)s(q_1q_2)^{-1} ,
+\end{align}
+commonly called a \textit{factor system}.
+Since
+\begin{align}
+p[c(q_1, q_2)] = p[s(q_1)s(q_2)s(q_1q_2)^{-1}] = q_1q_2(q_1q_2)^{-1} = 1
+\end{align}
+we have $c(q_1, q_2) \in \ker p = A$ (by exactness). We can compute
+\begin{align}
+\delta c(q_1, q_2, q_3) &= c(q_2, q_3)c(q_1, q_2q_3) c(q_1q_2, q_3)^{-1}c(q_1, q_2)^{-1} \notag \\
+&= c(q_2,q_3)s(q_1)s(q_2q_3)s(q_3)^{-1}s(q_2)^{-1}s(q_1)^{-1} \notag \\
+&= c(q_2,q_3)c(q_2, q_3)^{-1} = 1 \notag \\
+\end{align}
+where we used the fact that $A$ is central, so $c(q_2, q_3)$ commutes with all elements of $G$. Furthermore, two isomorphic extensions (in the sense of isomorphism of chain complexes, which we have not defined) will produce two sections $s, s'$ of $p$. Let $\beta \equiv s(g)s'(g)^{-1}$. Since $p \beta(g) = 1$, we have $\beta(g) \in A$. Furthermore,
+\begin{align}
+c'(q_1, q_2) &= \beta(q_1)s(q_1)\beta(q_2)s(q_2)s(q_1q_2)^{-1}\beta(q_1q_2)^{-1} \notag \\ 
+&=\beta(q_1)\beta(q_2)\beta(q_1q_2)^{-1}s(q_1)s(q_2)s(q_1q_2)^{-1} \notag \\
+&= (\delta \beta)(q_1, q_2)c(q_1, q_2)
+\end{align}
+where we used the fact that $\beta(q) \in A \leq Z(G)$. 
+\end{proof}
+
+\begin{rmk}\label{rmk:extension-multiplication-rule}
+The multiplication in $G$ is defined by the following: the choice of section $s$ is a choice of coset of $A$ in $G$ with coset representatives $q \in Q$. 
+Given $g \in G$, we can write $g = a_gq_g$ uniquely with $q_g = p(g) \in Q$ and $a_g = gq_g^{-1} = gs(p(g))^{-1}$. Since $p a_g = p(g)p(g)^{-1} = 1$, we have $a_g \in A$.
+Then the multiplication rule is given by
+\begin{align}
+(a_g, q_g)\cdot (a_h, q_h) \equiv  (a_{gh}, q_{gh}) &= (gh s(p(gh))^{-1}, p(gh)) \notag\\
+&= (gh s(p(h))^{-1}s(p(g))^{-1}c(p(g), p(h)), p(g)p(h), p(g)p(h)) \notag \\
+&= (a_ga_hc(q_g, q_h), q_gq_h)
+\end{align}
+This shows additionally that $Q$ is always normal in $G$. Furthermore, if $A$ is a field, then projective representations over $A$ are in bijection with central extensions of $G$ by $A$.
+\end{rmk}
+
+\section{SPT states and twisted quantum doubles}
+
+\subsection{Definition of SPT states}
+We will explain SPT states, first
+through their symmetry properties and wavefunctions following 
+\cite{lattice_models}, then through their stabilizers following \cite{Yoshida_2017}.
+First, consider a triangulation $T$ of a $d$-dimensional orientable manifold $M$ and
+a finite group $G$. Let $S_k(T)$ denote the $k$-simplices in $T$.
+\begin{defn}[fundamental class]\label{defn:fundamental-class}
+We put an acyclic orientation on the edges of $M$ and choose a
+total ordering of the vertices of $M$ which is consistent with this orientation. Then for each $d$-simplex $s$, the ordering of the vertices
+of $s$ defines an orientation of $s$. We then define
+$\epsilon(s) = \pm 1$ if this orientation agrees (disagrees) with the
+orientation of the manifold. Now, we define the \textit{fundamental class}
+\begin{align}\label{}
+[M] \equiv \sum_{s \in S_d(T)}\epsilon(s)s \in C^d(T, \Z)
+\end{align}
+and we will write the pairing of $[M]$ with $\alpha \in H^d(M, \Z)$ as
+\begin{align}
+\alpha([M]) \equiv \int_{[M]}\alpha
+\end{align}
+\end{defn}
+
+To each 0-simplex, we associate the Hilbert space $\C G$. Equivalently, we can
+think of the Hilbert space as spanned by 0-form $G$-fields, i.e. simplicial maps
+from the vertices of $T$ into $G$:
+\begin{align}
+  a \in \mathbb C \Hom(M, EG) \hspace{2cm} \ket{a} \equiv \bigotimes_{v \in S_1(T)}\ket{a(v)}
+\end{align}
+Then let
+\begin{align}\label{eq:trivial-SPT-definition}
+\ket{+_G} = \bigotimes_{v \in V} \sum_{g \in G}\ket{g}_{v} = \sum_{a: M \to EG}\ket{a}
+\end{align}
+represent the trivial SPT state (with the trivial $G$ action). We will drop normalization factors for
+convenience.
+Given $\omega \in H^{d+1}(G, \U(1))$, we will define an operator
+called the \textit{SPT entangler}, which is a non-symmetric (does not commute
+with the action of $G$ simultaneously on all qudits) local unitary
+\begin{equation}\label{eq:SPT-entangler-definition}
+  U^\omega\ket{a} = a^* i_{g_*}\omega([M])\ket{a}
+\end{equation}
+where $g_* \in G$ is arbitrary, and we have defined the \textit{interior product}
+\begin{align}\label{eq:interior-product-definition}
+  (i_g\omega)(g_0, \dots, g_d)\equiv \omega(g, g_0, \dots, g_d)
+\end{align}
+and the pointwise pullback $a^*:H^k(G, \U(1)) \to H^k(T, \U(1))$
+for $\beta \in H^k(G, \U(1))$ via
+\begin{align}\label{eq:pointwise-pullback-definition}
+  (a^* \beta)([v_1, \dots, v_d]) \equiv  \beta([a(v_1), \dots, a(v_d)])
+\end{align}
+As we will argue, the SPT wavefunction is independent of the choice of $g_*$
+when $M$ is closed.
+We can explicitly express $U^\omega$ as a local operator using linearity:
+\begin{align}\label{eq:SPT-entangler-is-local}
+U^\omega \ket{a} = \prod_{s = [v_0, \dots, v_d]}\omega(g_*, a(v_0), \ldots, a(v_d))\ket{a}
+\end{align}
+
+Another useful way to express this wavefunction is as a partition function.
+Let $\beta \in H^{d+1}(G, \R/\Z)$ such that $\omega = (-1)^\beta$. 
+Let $N$ be the cone of $M$, i.e. $N = M \times [0,1]/M \times \{1\}$, fix the
+triangulation of $N$ to be that of $M$ with a single additional vertex at $\{1\}
+\times M$. We can imagine this vertex as representing the `bulk' of $N$. Then
+\begin{align}\label{eq:SPT-statesum-definition}
+  \ket{+^\omega_G} = \sum_{g_* \in G \text{ bulk}} \sum_{a:M \to G}Z[a]\ket{a}
+\end{align}
+where
+\begin{align}\label{eq:SPT-partition-function-defintion}
+  Z[a] \equiv \sum_{g_* \in G \text{ bulk}} a^* \omega([N]) = \sum_{g_* \in G \text{bulk}}\e^{\pi \ii\int_{N}a^* \beta}
+\end{align}
+is a partition function with `boundary condition' $a$. For this reason $\omega$
+is sometimes called the topological action associated with the SPT state.
+
+\subsection{Properties of SPT states}
+Using $G$-invariance of the cocycles, we see that
+\begin{align}\label{eq:transformation-under-G-action}
+\prod_v \overleftarrow X^h_v \ket{+^\omega_G} &= \sum_{\vb g \in G^{|V|}}\prod_{s \in S_d(M)}\omega(g_*, s)\ket{\vb gh^{-1}} =  \sum_{\vb g \in G^{|V|}}\prod_{s \in S_d(M)}\omega(g_*h^{-1}, s)\ket{\vb g}
+\end{align}
+Therefore the global action of $G$ is equivalent to a different choice of $g_*$.
+When $M$ is closed, $Z[a]$ is invariant under this change, and when
+$M$ has a boundary, there is an \textit{anomaly}, i.e. the partition function
+transforms with a nontrivial phase corresponding to \textit{topologically
+protected edge modes}.
+
+\begin{prop}\label{prop:anomaly-formula}
+The anomalous phase is given by
+\begin{align}
+i_gi_1\omega([\partial M])
+\end{align}
+\end{prop}
+
+\begin{proof}
+  We will use additive notation. Let $\gamma \in H^{d+1}(M, \R/\Z)$ such that
+  $\omega = (-1)^\gamma$.
+  Using Eq.~\eqref{eq:transformation-under-G-action}, the anomalous phase is
+  given by
+  \begin{align}
+    \int_{[M]} i_g\gamma - i_1 \gamma
+  \end{align}
+  Then we have
+  \begin{align}
+     0 = \int_{M} i_gi_1\delta \gamma &= 
+    \int_{[M]} i_g\gamma - i_1 \gamma + \delta i_gi_1\gamma \\
+    &= \int_{[M]} i_g\gamma - i_1 \gamma + \int_{[\partial M]}i_gi_1\gamma
+  \end{align}
+  where in the last line we applied discrete Stoke's theorem.
+  This proves the claim.
+\end{proof}
+
+\begin{ex}\label{ex:edge-modes-1d-example}
+This becomes particularly apparent in (1+1)d. Consider $M \cong S^1$ and a
+triangulation consisting of 4 spins. Let $\epsilon([i, i+1]) = (-1)^i$. Then
+$\prod_{i}\omega^{(-1)^i}(h, i, i+1)$ is the phase we get by applying $\omega$ to the faces of the simplex shown on the left side of the panel below:
+\begin{center}
+\includesvg[width = .35\textwidth]{figures/SPT_cocycle_phase.svg}
+\end{center}
+Applying $\omega$ to the right side, we get $\prod_{i}\omega^{-(-1)^i}(1, i, i+1)$. But if we glue the two halves together at the face in the center, we clearly find a union of 3-simplices $t$, and 
+\begin{equation}
+\prod_{i}\omega^{(-1)^i}(h, i, i+1) \prod_{j} \omega^{-(-1)^j}(1, j, j+1) = \delta \omega(t) = 0
+\end{equation}
+If the boundaries were open, then there is a phase corresponding to the two
+missing faces which connect the two open boundaries:
+\begin{align}
+\frac{\omega(h, v_0, v_3)}{\omega(1, v_0, v_3)} = \frac{\omega(1,h, v_3)}{\omega(1,h, v_0)}
+\end{align}
+This is an explicit example of the formula in Prop.~\ref{prop:anomaly-formula}.
+\end{ex}
+
+Another reason for calling these phases topological is that there are no
+short-range degrees of freedom, and only the long-range `topological' DOFs
+remain. The physical manifestation of this is that the partition function is
+unchanged when $M$ is retriangulated.
+Any retriangulation can be performed by a
+sequence of ``Pachner moves," \cite{twisted_qd} which all amount to adding the
+boundary of a $d+2$-simplex. A consequence of this is that the cocycle
+condition is equivalent to invariance under Pachner moves.
+
+ \begin{ex}\label{ex:Pachner-move-1d-example}
+ To illustrate this, we give a $(1+1)d$ example:
+\begin{equation}
+\includesvg[width =.5\textwidth]{figures/pachner_moves.svg}
+\end{equation}
+The $+/-$ symbols label orientations $\epsilon(s)$. We can see that this is simply the cocycle condition for $\omega$.
+\end{ex}
+
+Next, we will explain why the classification factors through the quotient by
+coboundaries.
+\begin{prop}\label{prop:SPTs-are-classified-by-cohomology}
+  Suppose that $M$ is closed.
+  Then there is a local, finite-depth, $G$-symmetric circuit $U$ such that
+  $\ket{+^\gamma_G} = U\ket{+^{\gamma + \delta \beta}_G}$. This is not the case when $M$ is open.
+\end{prop}
+
+\begin{proof}
+  The difference in phase between the two SPT entanglers is the following:
+\begin{align}
+  \int_{[M]} i_g\delta\beta ([M]) &= \int_{[M]}\beta - \delta i_g\beta  \\
+  &= \int_{[\partial M]}i_g \beta + \int_{[M]} \beta
+\end{align}
+ We see that the phase $\int_{[M]}\beta$ is $G$-symmetric and local, which
+ proves the claim.
+\end{proof}
+
+\subsection{Stabilizers}
+The stabilizers of $\ket{+_G^\omega}$ are
+\begin{equation}\label{eq:TQD-stabilizers-definition}
+\widetilde X_v^g \equiv U^\omega \overleftarrow X_v^g (U^{\omega})^\dagger = \prod_{s \ni v}U_{s}^\omega \overleftarrow X_v^g (U^{\omega}_s)^\dagger 
+\end{equation}
+(note the symmetry operators are taken to be \textit{right} multiplication). Now the goal is to find a diagonal operator $D_v^g$ such that
+\begin{align}\label{eq:phase-of-TQD-stabilizers-definition}
+\widetilde X^g_v = \overleftarrow X^g_vD_{v}^g
+\end{align}
+This is given by Eq.~30 in \cite{Yoshida_2017}. We will derive it below.
+\begin{prop}\label{prop:formula-for-TQD-stabilizer-phase}
+  Suppose that $v$ is a bulk vertex, i.e. there are no simplices $s \ni v$ which
+  intersect with the boundary of $M$. Then
+  \begin{align}
+D_v^g = \prod_{s = [v_0, \dots, v_d] \ni v}\omega^{\epsilon'(s)}(v_0, \ldots, vg^{-1}, v, \ldots, v_n)
+   \end{align}
+   where $\epsilon' = \pm 1$ if $\epsilon = \pm 1$ and $v = v_i$ where $i$ is odd(even).
+\end{prop}
+\begin{proof}
+We can write down an explicit formula for $D_{v}^g$:
+\begin{align}
+  D_v^g = \qty(\overleftarrow X^{g^{-1}}_v\prod_{s \ni v}U_s^\omega \overleftarrow X^g_v  \prod_{s' \ni v}\qty(U_{s'}^\omega)^\dagger) &= \prod_{s \ni v} \omega^{\epsilon(s)}(g_*, v_1, \ldots, vg^{-1}, \ldots, g_n) \omega^{\epsilon(s)}(g_*, v_1, \ldots, v, \ldots, g_n)
+\end{align}
+Then for each simplex $s \ni v$, consider the $d+2$-simplex
+\begin{align}
+  S_s = [g_*, v_1, \ldots, vg^{-1}, v, \ldots, v_n]
+\end{align}
+If we compute $\partial S_s$, we see that whenever $v_i$ is removed, the
+resulting face is also contained within another simplex $S_{s'}$ where $s'$
+contains $v$, and due to their shared edge, $\epsilon(s') = -\epsilon(s)$ (this
+is true because $v$ is a bulk vertex).
+The only faces which do not have any $v_i$ removed are unique to $S_s$, and are
+\begin{align}
+  &[v_1, \ldots, v_g^{-1}, v, \ldots, v_n] & &[g_*, v_1, \ldots, v, \ldots, v_n] & &[g_*, v_1, \ldots, vg^{-1}, \ldots, v_n]
+\end{align}
+Therefore we find
+\begin{align}
+\prod_{s \ni v} \omega^{\epsilon(s)}(g_*, v_1, \ldots, vg^{-1}, \ldots, g_n) \omega^{-\epsilon(s)}(g_*, v_1, \ldots, v, \ldots, g_n) &= 
+\prod_{s \ni v} \delta\omega^{\epsilon'(s)}(S_s) \omega^{-\epsilon'(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n) \notag\\
+&= \prod_{s \ni v} \omega^{-\epsilon'(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n)
+\end{align}
+where $\epsilon' = 1$ if $\epsilon = \pm 1$ and $v = v_i$ where $i$ is
+even(odd).
+This completes the proof.
+\end{proof}
+
+\begin{ex}\label{ex:TQD-stabilizer-phase-1d-example}
+We will again give a 1d example.
+Consider a 1d state and a stabilizer $\widetilde X^g_{v_2}$ which acts on a vertex $v_2$ neighbored by vertices $v_0, v_1$. The two simplices $s$ containing $v_2$ are $[v_1, v_2]$ and $[v_0, v_1]$. Thus, the commutator evaluates to
+\begin{center}
+\hspace{-2cm}\includesvg[width = \textwidth]{figures/stabilier_derivation.svg}
+\end{center}
+where on the right, the value is determined by taking the product of $\omega$ evaluated on each of the four 2-simplices and and inverting if the orientation is negative. We can see that this product forms the faces of two tetrahedra, as shown below:
+\begin{align}\label{eq:phasefactor}
+\includesvg[width = .45\textwidth]{figures/stabilizer_identity.svg} \notag\\
+= \omega(g_{v_0}, g_{v_2}g^{-1}, g_2)\omega^{-1}(g_{v_1}, g_{v_2}g^{-1}, g_{v_2})
+\end{align}
+\end{ex}
+
+We notice that the phase in Prop.~\ref{prop:formula-for-TQD-stabilizer-phase}
+corresponds to the cocycle $\omega$ applied to a $d+1$-simplex obtained from a
+simplex $s$ of $M$ by adding an additional vertex $vg^{-1}$ ordered such that it
+appears right before $v$.
+
+\begin{ex}\label{ex:geometric-interpretation-of-TQD-phase}
+The following diagram shows the 3d simplex constructed from a 2d simplex of $M$
+as described above:
+\begin{equation}
+\includesvg[width = .75\textwidth]{figures/cocycle_evaluation.svg}
+\end{equation}
+\end{ex}
+
+Lastly, the cocycle condition gives us the important property that
+\begin{prop}\label{prop:TQD-stabilizers-are-group-representation}
+  \begin{equation}
+\widetilde X_v^g \widetilde X_v^h = \widetilde X_v^{gh}
+\end{equation}
+\end{prop}
+
+\begin{proof}
+\begin{equation}
+\overleftarrow X_v^{h^{-1}}D_v^g \overleftarrow X_v^hD_v^h = \prod_{s = [v_1, \cdots, v_n] \ni v}\omega^{\epsilon(s)}(v_1, \ldots, vh^{-1}g^{-1}, v, \ldots, v_n)\omega^{\epsilon(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n)
+\end{equation}
+Consider the simplex
+\begin{align}
+  S_s &= [v_1, \ldots, v, vh^{-1}, vh^{-1}g^{-1}, \ldots, v_n]
+\end{align}
+We see that any face of $S_s$ which contains $v, vh^{-1}, vh^{-1}g^{-1}$ is also
+the face of a unique other simplex $s'$ containing $v$, and due to the opposite
+orientations, these faces cancel. Therefore we have
+\begin{align}
+  &\prod_{s = [v_1, \cdots, v_n] \ni v}\omega^{\epsilon(s)}(v_1, \ldots, vh^{-1}g^{-1}, v, \ldots, v_n)\omega^{\epsilon(s)}(v_1, \ldots, vg^{-1}, v, \ldots, v_n) \\
+  &= 
+\prod_{s = [v_1, \cdots, v_n] \ni v}\delta \omega^{\epsilon(s)}(S_s)\omega(v_1, \ldots, v, vh^{-1}g^{-1}, \ldots, v_n) = D_v^{gh}
+\end{align}
+as required.
+\end{proof}
+
+We will explore some other important properties of the stabilizers. First, we
+will define an operator
+\begin{align}\label{eq:stabilizer-product-phase-definition}
+  D^g = \prod_{v}X_v^{g^{-1}}\widetilde X_v^g = 
+  \prod_{v}X_v^{g^{-1}}U^\omega\prod_{v}\widetilde X_v^g(U^\omega)^\dagger = \prod_{s \in S_d(M)}\frac{i_g\omega^{\epsilon(s)}(s)}{i_1\omega^{\epsilon(s)}(s)}
+\end{align}
+Comparing this to Eq.~\eqref{eq:transformation-under-G-action}, we see that the
+operator $D^g$ is exactly the anomalous phase at the boundary.
+
+\subsection{Twisted topological order from gauging SPT phases}
+There is a duality between SPT phases with an onsite $G$-symmetry and twisted
+quantum doubles, where both are classified by $H^{d+1}(G, \U(1))$. In this
+section, we will introduce the procedure of gauging that realates the two models.
+First, we recall the general procedure of gauging \cite{ Yoshida_2016}. Take a cellulation of a 2D orientable surface $\Sigma = (V, E, F)$. Suppose that $\ket{\psi}_V$ is some $G$-symmetric state on the vertices. Place the state $\ket{\vb 1}_E$ on the edges (more generally, one can put any flux-free state on the edges to prepare another ground state, but for now we focus on the trivial state). Then we implement the following ``Kramers-Wannier" (KW) map, which can be described as follows:
+\begin{itemize}
+\item[(1)] Map site variables to bond variables
+\item[(2)] Turn the onsite $G$ symmetry into a gauge symmetry
+\end{itemize}
+\begin{center}
+\includesvg[width =.5\textwidth]{figures/gauging_map.svg}
+\end{center}
+This map results in the following transformation of operators:
+\begin{align}
+\overrightarrow X_v^g &\mapsto 1 & \overleftarrow X_{v}^g &\mapsto \prod_{(v, e)}X_{e}^{g} &
+(Z_v^{\Gamma})^\dagger Z_{v'}^{\Gamma} &\mapsto Z^{\Gamma}_e
+\label{eq:gauging}
+\end{align}
+where $e = [v,v']$ and $X^g_e$  acts by left(right) translation if $e$ is
+oriented away from(toward) $v$. Note that \textit{left} translation becomes
+trivial while the $G$-symmetry is implemented by \textit{right} translation.
+This is fixed by the convention that path ordering is from left-to-right.
+
+
+Now we will see that when we gauge these stabilizers, we obtain the stabilizers
+from Refs.~\cite{CuiTwisted, twisted_qd}. Consider writing down the
+inhomogeneous version of the cocycle phase in Prop.~\ref{prop:formula-for-TQD-stabilizer-phase}:
+\begin{align}
+\omega(v_1, \ldots, vg^{-1},v, \ldots, v_n) &=  \omega(g_{[v_0,v_1]} | g_{[v_1,v_2]} | \ldots | g_{[v_{i-1}, v_i]}g^{-1}| g |\ldots| g_{[v_{n-1},v_n]})
+\end{align}
+where $v_i = v$ and $g_{[v_j, v_{j+1}]} = v_j^{-1}v_{j+1}$. Therefore we see
+that $D^g_v$ passes through the gauging map.
+However, this is only the case if $M$ is closed, i.e. there is no anomaly, which
+is the physical manifestation of the common phrase \textit{an anomalous symmetry
+cannot be gauged}.
+This is the case for any
+$G$-symmetric transformation, including $\omega$ and $\omega'$ which differ by a
+coboundary as in Prop.~\ref{prop:SPTs-are-classified-by-cohomology}.
+
+The important property of the $\KW$ map is that it induces an isomorphism
+between the ground state of $\overleftarrow X_{v}^g$ and the space of flat
+connections, spanned by $\ket{\vb g}$ such that $\prod_{e \in \gamma}g_e = 1$
+for any loop $\gamma$ (non just homotopically trivial ones). To show this, first
+note that
+\begin{align}
+  \KW\ket{\vb g}  = \KW \ket{\vb h}
+\end{align}
+if and only if there exists $k \in G$ such that $\vb g = k\vb h$ (acting
+simultaneously on all qubits). This implies that $\KW$ is injective on the
+gauge-symmetric subspace. To see the isomorphism, given any flat connection
+$\ket{\vb g}_E$, define the state
+\begin{align}
+\sum_{h \in G}\bigotimes_v
+\ket{h\hol_{\vb g}(\gamma(v_0, v))}_v
+\end{align}
+where $v_0$ is a chosen basepoint, $\gamma(v_0, v)$ is a path from $v_0$ to
+$v$, and $\hol_{\vb g}(\gamma)$ computes the holonomy around
+$\gamma$. The fact that $\vb g$ is flat is precisely what allows this state to
+be well-defined independently of the choice of $\gamma(v_0, v)$. The essential
+consequence of this isomorphism is that the stabilizers $\widetilde X_{\delta
+  v}^g, \widetilde X_{\delta v'}^h$ have the same commutation relations as the
+ungauged stabilizers within the flux-free subspace (although they will generally
+fail to commute outside of this subspace).
+
+\subsection{Path integral interpretation}
+For this discussion, we take $G$ to be cyclic of order $m$ (the Abelian
+assumption is important, cyclic is just to simplify the stabilizers).
+The gauged model is now an eigenstate of the stabilizers
+\begin{align}\label{eq:homological-stabilizer-formulas}
+  Z_{\partial p} &= \prod_{e \in \partial p}Z_e
+  &
+    \widetilde X_{\delta v}^g &= \prod_{e:\delta v(e) \neq
+  0}X^{g}_{e}D_{v}^g
+\end{align}
+  Therefore we can write the ground state as
+\begin{align}\label{eq:TQD-ground-state-expression}
+  \ket{\Omega} = (\prod_v \sum_{g}\widetilde X_{\delta v}^g)(\prod_p \sum_{n = 1}^mZ_e^n)\ket{+} = 
+  \prod_v \sum_{g}\widetilde X_{\delta v}^g\sum_{a \in Z^1(M, G)}\ket{a}
+\end{align}
+where we have identified the $Z$-stabilizer ground state as a sum over all flat
+connections, or equivalently, the cocycles $Z^1(M, G)$. Now let $N \cong M
+\times [0,1]$ be a
+``thickened'' version of $M$. We will think of the application of $\prod_v
+\sum_g \widetilde X^g_{\delta v}$ as a single step in time. From
+Ex.~\ref{ex:geometric-interpretation-of-TQD-phase}, assuming the cocycle
+$\omega$ is normalized, the phase $D_{v}^g\ket{a}$ can be viewed as decorating
+the vertical edges of $N$ with $1$ except for the edge lying above $v$ decorated
+with $g$, then decorating the edges of the slice $M \times \{1\}$ with $a +
+\delta v$, where we now imagine $v$ as a $G$-valued cocycle which takes the
+value $g$ on vertex $v$ and $1$ elsewhere:
+\begin{align}
+  \prod_v \sum_gX_{\delta v}^g = \sum_{s \in C^0(M, G)}X_{\delta s}
+\end{align}
+Thus we can rewrite the ground state as
+\begin{align}\label{eq:TQD-statesum-representation}
+\ket{\Omega} = \sum_{a \in Z^1(N, G)}\e^{\pi \ii\int a^* \omega}\ket{a|_{t = 1}}
+\end{align}
+This is called the \textit{state-sum} representation, in the same way as
+Eq.~\eqref{eq:SPT-statesum-definition}. Furthermore, since
+\begin{align}
+(\prod_v \sum_g \widetilde X_{\delta v}^g)^N = \prod_v \sum_g \widetilde X_{\delta v}^g
+\end{align}
+for any $N$, we can make the ``time-steps'' as small as desired, so this is an
+honest-to-goodness path integral. This is an explicit illustration of how
+$d$-dimensional twisted quantum doubles correspond to $d+1$-dimensional
+bulk Dijkgraaf-Witten theories. Also by comparison with
+Eq.~\eqref{eq:SPT-statesum-definition}, we see that ``gauging'' a $G$-symmetry
+corresponds to \textit{making the global symmetry local} by coupling the action
+of $G$ to a background field and then letting the field fluctuate.
+
+\subsection{Cocycles of product groups}
+$H^3(\Z_N^k, \U(1))$ is typically broken up into three classifications; type-I, type-II, and type-III. This classification follows from the Kunneth formula for the cohomology of a product of groups:
+\begin{equation}
+H^n(X \times Y, \Z) \cong \bigoplus_{i+j = n}H^i(X, \Z) \otimes H^j(Y, \Z) \oplus \bigoplus_{p+q=n+1}\Tor(H^p(X, \Z), H^q(Y, \Z))
+\end{equation}
+This relates the cohomology in degree $n$ to the products of lower-degree cohomologies. SPT phases with $\Z_N^k$ symmetry are essentially stacks of toric codes, and cocycles which live in the tensor product of lower-degree cohomology groups do not couple all of the sheets in the stack. For $n = 3$, the types I, II, and III cocycles are given explicitly by the formulae
+\begin{align}
+\omega^{(i)}_{\mathrm{I}}(\vec a, \vec b, \vec c) &= \exp(\frac{2\pi \ii p}{N^2}a_i\qty(b_i+c_i - (b_i + c_i) \mod N)) \\
+\omega^{(ij)}_{\mathrm{II}}(\vec a, \vec b, \vec c) &= \exp(\frac{2\pi \ii p}{N^2}a_i\qty(b_j+c_j - (b_j + c_j) \mod N)) \\
+\omega^{(ijk)}_{\mathrm{III}}(\vec a, \vec b, \vec c) &= \exp(\frac{2\pi \ii p}{N}a_ib_jc_k)
+\end{align}
+where $p$ is an integer.
+In this way, up to 3 sheets of toric codes can be coupled together in 2D with a type-III cocycle, and types I and II always lead to Abelian theories \cite{propitius}. We can see that the unique type-III cocyle of $\Z^3$ is just a $\CCZ$ gate between the three sheets.
+
+\section{Review of gauging symmetries}
+
+\subsection{Microscopic model}
+Gauging is a process where an onsite symmetry of some state is made dynamical by
+coupling it to a fluctuating gauge field. Obtaining the twisted quantum doubles
+by gauging the $G$-symmetry was a special case of this.
+We will mostly
+follow \cite{bombindelgado} for this discussion. Our first model
+will be gauging the SWAP symmetry of two toric codes, which is isomorphic to the
+$D_4$ toric code, as described in \cite{shortest_route}. We can consider the gauging procedure as
+proliferating domain walls of the symmetry (corresponding to Dirac strings), and broken domain walls will then correspond to
+topological excitations. At the stabilizer level, a fixed domain wall will
+transform the stabilizers in the following way:
+\begin{center}\label{fig:lattice_level_gauging_procedure}
+\includesvg[width = .3\textwidth]{figures/dw_stabilizer_transformation.svg}
+\hspace{2cm}
+\includesvg[width = .23\textwidth]{figures/defect.svg}
+\end{center}
+In the left panel above, we show $X$ stabilizers by crosses and $Z$ stabilizers by red boxes. The
+red indicates the stabilizer acts on $\TC_1$ and the blue indicates action on
+$\TC_2$. The blue edges show the gauge field, and the green line
+shows a domain wall. Within the domain wall, the SWAP symmetry is applied, and
+this transforms the stabilizers that intersect the domain wall to be composed of
+operators on $\TC_1$ (shown in red) and operators on $\TC_2$ (shown in blue).
+It is irrelevant that we transform the stabilizers in the bulk of the domain,
+and only the stabilizers which intersect the domain wall are relevant. This
+allows us to define a broken domain wall, shown on the right.
+The green crosses illustrate excited plaquettes on the gauge field (magnetic
+excitations) and the green line illustrates the Dirac string connecting them. We
+have illustrated a string of $X_1$ operators on the dual lattice creating a
+magnetic excitation in $\TC_1$ with a red dotted line. Since a SWAP gate is
+applied just to one side of the defect line, and the Dirac string must commute with
+the deformed plaquettes, this forces it to switch from an $m_1$ anyon to an $m_2$
+anyon as it crosses the green domain wall. Now, the identification of these
+anyons with $D(D_4)$, the quantum double of $D_4$ is straightforward. We begin
+with the following presentation:
+\begin{align}
+  D_4 = \langle  a,b,c| a^2 = b^2 = c^2, cac = b , ab = ba\rangle  =\Z_2 \rtimes \Z_2^2
+\end{align}
+This is the semidirect product.
+In other words, we have $a = rs$, $b = r^3s$, and $c = s$.
+In the general picture of gauge theory \cite{propitius}, fluxes are represented by elements of the gauge
+group, and when a flux $g$ crosses the Dirac string of another flux $h$, the flux
+transforms under a gauge transformation $g \mapsto hgh^{-1}$. Therefore, the
+flux of the twist acting by conjugation swaps the other fluxes, so we can
+identify $c$ with the flux of the twist, $a$ with $m_1$ and $b$ with $m_2$.
+
+\subsection{Cluster states}
+As pointed out in \cite{sahay_nonabelian}, there is an interpretation of
+the gauging procedure in terms of cluster states that makes the transformation of the
+stabilizers much more transparent. For simplicity, we will work with $G = \Z_2$,
+although all the manipulations straightforwardly generalize to an arbitrary
+symmetry group.
+
+Consider the cluster state on a graph $V, E$ with the stabilizers
+\begin{align}
+  &X_{v}X_{\delta v} & &Z_{e}Z_{\partial e}  \label{eq:clusterstabilizers}
+\end{align}
+This is a symmetry-enriched state, which is a precursor to an LRE state before
+``integrating out the matter fields". 
+
+Now we couple this state to a 0-form $\Z_2$ symmetry $U = \prod_v U_v$ of a
+state $\ket{\psi}$. Let $V'$ be the vertices of $\psi$ in bijection with those
+of $V$ (possible after coarse-graining). We apply a symmetry-enriching unitary $\Omega_{\mathrm{SET}}$ such that
+\begin{align}
+\Omega_{\mathrm{SET}}X_{v'} \Omega_{\mathrm{SET}}^\dagger = X_{v'} U_{v}
+\end{align}
+The edges of the cluster state correspond to the gauge field, and the unitary
+$\Omega_{\mathrm{SET}}$ couples domains of this field to the symmetry $U$ as
+shown in Fig.~1~\ref{fig:lattice_level_gauging_procedure}.
+It is easy to see that the form of $\Omega_{\mathrm{SET}}$ should always be
+\begin{align}
+  \Omega_{\mathrm{SET}} = \ketbra{0}{0}_{v'} \otimes 1_{v} + \ketbra{1}{1}_{v'} \otimes U_{v}.
+\end{align}
+Lastly, we add $X_v$ for each $V \in v$ to the stabilizer group to obtain the
+gauged model. 
+This is the lattice-level manifestation of integrating out the matter field
+supported on the vertices.
+We can see that $Z_{\gamma}Z_{\partial \gamma}$ only commutes with all $X_v$ if
+$\gamma = \partial p$, so the remaining stabilizers are $\Omega_{\mathrm{SET}} X_vX_{\delta v}\Omega^\dagger_{\mathrm{SET}}$ and
+$Z_{\partial p}$. If the
+manifold $M$ has a non-trivial fundamental group, then the logical-$X$ operators
+must also be added.
+
+\section{Gauging symmetries, fault-tolerant logical gates, and cup product}
+The square lattice model of the $\D_4$ quantum double is the paradigmatic
+example of several different important concepts that are appearing recently in
+the literature. Using this model, we will illustrate
+\begin{itemize}
+  \item Gauging a SPT state
+  \item PEM duality on a normal subgroup
+  \item The decorated domain wall construction 
+  \item The state sum description of TQDs
+  \item Gauging a fault-tolerant logical gate constructed with the cup product
+\end{itemize}
+
+\subsection{Introducing the model}
+The model we will consider can be found in \cite{non_pauli_decoding,
+  kobayashi_twisted_double}. The lattice is a stack of three squarelattice toric
+codes with $\Z_3^2$ qubits. The stabilizers are shown below:
+\begin{equation}\label{eq:Z23-squarelattice-TQD-stabilizer-definition}
+\includegraphics[width = .3\textwidth]{figures/D4_definition.png}
+\end{equation}
+The $Z$ stabilizers are unchanged from the standard stack of toric codes, but
+the $X$ stabilizers are modified with $\CZ$ gates as shown in the figure above.
+
+\subsection{From gauging an SPT state}
+From Prop.~\ref{prop:formula-for-TQD-stabilizer-phase}, we can calculate $D_v$
+explicitly. Fortunately, this is already done for us in Ref.~\cite{np_stabilizer_models}:
+\begin{equation}
+\includegraphics[width = .7\textwidth]{figures/TQD_stabilizer_example.png}
+\end{equation}
+Note that their orientation convention is reversed from ours.
+\begin{itemize}
+  \item $g = (1,0,0)$; In formula \eqref{eq:reference}, the cocycle is trivial
+    unless $g$ comes in the first argument
+\begin{equation}
+\frac{\omega(l_9, l_3 \oplus g, g)\omega(l_3 \oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1 \oplus g, g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} = \frac{\omega(g, l_4, l_{11})}{\omega(g, l_6, l_{12})} = (-1)^{l_4^{(2)}l_{11}^{(3)} + l_6^{(2)}l_{12}^{(3)}}
+\end{equation}
+\item $g = (0,1,0)$; similarly, $g$ can only appear in the second argument
+\begin{equation}
+\frac{\omega(l_9, l_3 \oplus g, g)\omega(l_3 \oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1 \oplus g, g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} = \frac{\omega(l_3 \oplus g,g, l_4)}{\omega(l_1 \oplus g, g, l_6)} = (-1)^{l_3^{(1)}l_4^{(3)}+l_1^{(1)}l_6^{(3)}}
+\end{equation}
+\item $g = (0,0,1)$
+\begin{equation}
+\frac{\omega(l_9, l_3 \oplus g, g)\omega(l_3 \oplus g, g, l_4) \omega(g, l_4, l_{11})}{\omega(l_8, l_1 \oplus g, g)\omega(l_1 \oplus g, g, l_6)\omega(g, l_6, l_{12})} = \frac{\omega(l_9, l_3 \oplus g, g)}{\omega(l_8, l_1 \oplus g, g)} = (-1)^{l_9^{(1)}l_3^{(2)}+l_8^{(1)}l_1^{(2)}}
+\end{equation}
+\end{itemize}
+Graphically, these stabilizers are the following;
+\begin{equation}
+\includesvg[width = .5\textwidth]{figures/Z3_stabilizer.svg}
+\end{equation}
+We can see that after disentangling the diagonal edges (in orange) with a local unitary
+circuit (specifically, $\CX$ gates around the leftward triangles) we arrive at
+the stabilizers in Eq.~\eqref{eq:Z23-squarelattice-TQD-stabilizer-definition}.
+
+\subsection{PEM duality}
+It is a result that all equivalences of topological order arise through a
+partial Fourier transformation on a normal subgroup \cite{HuPEMDuality}.
+Consider the
+following presentation of $\D_4$:
+\begin{align}
+\D_4 \cong \langle  a,b,c| a^2=b^2=c^2 = 1, cac = ab \rangle
+\end{align}
+This realizes $\D_8$ as a central extension of $\Z_2$ by $\Z_2^2$. Explicitly,
+the cocycle  $\omega \in \cohom^2(\Z_2^2, \Z_2)$ is given by
+\begin{align}
+  \omega(\vb a, \vb c) = a_1c_2
+\end{align}
+where we are using additive notation. The multiplication rule is 
+\begin{align}
+  (a_1, b_1, c_1) \times (a_2, b_2, c_2) = (a_1a_2, b_1b_2 + \omega(a_2, c_1), c_1c_2)
+\end{align}
+Inversion is found to be
+\begin{align}
+  (a_1, b_1, c_1)^{-1} = (0,0,c_1) \times (0, b_1, 0) \times (a_1, 0, 0) = (a_1, b_1 + a_1c_1, c_1)
+\end{align}
+Consider a $\D_8$ quantum double on a square lattice. Under this presentation of
+$\D_8$, the $X$ checks are given by
+  \begin{equation}\label{eq:Xstabilizers}
+\includesvg[width = .8\textwidth]{figures/double_stabilizers.svg}
+\end{equation}
+To derive the $Z$-checks, consider the following plaquette:
+\begin{align}
+\includesvg[width = .27\textwidth]{figures/example_plaquette.svg}
+\end{align}
+Then the flux-free constraint is equivalent to 
+\begin{align}
+  &(a_1, b_1, c_1) \times
+  (a_2, b_2, c_2) \times
+  (a_3, b_3, c_3)^{-1} \times
+  (a_4, b_4, c_4)^{-1} \notag\\
+  &= (a_1+a_2+a_3+a_4, \notag \\&\hspace{1cm}b_1+b_2+b_3+b_4 + a_3c_3 + a_4c_4 + c_1(a_2+a_3+a_4) + c_2(a_3+a_4) + c_3a_4, \notag\\&\hspace{1cm}c_1+c_2+c_3+c_4)
+\end{align}
+For $Z$-checks on the $b$
+sublattice, we assume the flux-free constraints $c_1+c_2+c_3+c_4 = 1$ and $a_1 +
+a_2 + a_3 + a_4 = 1$:
+\begin{align}
+  &a_3c_3 + a_4c_4 + c_1(a_2+a_3+a_4) + c_2(a_3+a_4) + c_3a_4 \notag\\
+  &a_3c_3 + c_1(a_2+a_3) + c_2a_3  \notag\\
+  &c_1a_2+c_4a_3
+\end{align}
+Therefore our checks are the following:
+\begin{align}
+\includesvg[width = .5\textwidth]{figures/double_Z_stabilizers.svg}
+\end{align}
+These checks are the same ones stabilizing the quantum double model appearing in \cite{Tantivasadakarn_2023}.
+Now, we Fourier transform the $b$ sublattice and move it to the northeast by
+half a cell. This transforms the $Z$-checks on the blue sublattice into $X$
+checks and vice-versa. It also converts the $\CX$ gates in
+\eqref{eq:Xstabilizers} into $\CZ$ gates, producing the stabilizers of the
+twisted double in Eq.~\eqref{eq:Z23-squarelattice-TQD-stabilizer-definition}.
+
+\subsection{Decorated domain walls}
+We comment on the relationship with the decorated domain wall
+construction in \cite{Tantivasadakarn_2023}. To recap this construction, we wish to
+realize a central extension $G$ of $N = \Z_2$ by $Q$ classified by the cocycle $\omega
+\in H^2(Q, N)$. Consider the gauging map applied to a single $G$ edge $[(n_i,
+q_i), (n_f, q_f)]$:
+\begin{align}
+  \KW^G: [(n_i, q_i), (n_f, q_f)] \mapsto (n_i, q_i)^{-1}(n_f, q_f)
+\end{align}
+we work out
+\begin{align}
+  (n_i, q_i)(n_i^{-1}, q_i^{-1}) = (\omega(q_i, q_i^{-1}), 1) \implies (n_i, q_i)^{-1} = (n_i^{-1}\overline \omega(q_i, q_i^{-1}), q_i^{-1})
+\end{align}
+Therefore we have
+\begin{align}
+  (n_i, q_i)^{-1}(n_f, q_f) = (n_i^{-1}n_f\overline \omega(q_i, q_i^{-1})\omega(q_i^{-1}, q_f), q_iq_f^{-1}) = (n_i^{-1}n_f \overline \omega(q_i, q_i^{-1}q_f), q_i^{-1}q_f)
+\end{align}
+where in the last step, we used the cocycle condition
+\begin{align}
+  \delta \omega(q_i, q_i^{-1}, q_f) = \omega(q_i^{-1}, q_f)\cancel{\overline \omega(q_iq_i^{-1}, q_f)} \omega(q_i, q_i^{-1}q_f) \overline \omega(q_i, q_i^{-1}) = 1
+\end{align}
+where we used $\omega(q_i, 1) = 1$ if $\omega$ is normalized. Now consider an
+$N\times Q$ toric code. We can sequentially gauge $N$ first, then apply
+$X_{e}^{\overline \omega(q_i, q_i^{-1} q_f)}$, then gauge $Q$, which is then
+equivalent to $\KW^G$. Another option is to first Fourier transform the $N$
+toric code, converting
+\begin{align}
+  X_e^{\overline \omega(q_i, q_i^{-1}q_f)} \mapsto Z_e^{\overline \omega(q_i, q_i^{-1}q_f)}
+\end{align}
+where the edge $e$ is imagined as now intersecting the corresponding edge in the
+$Q$ toric code perpendicularly. Writing $\nu$ as the homogeneous version of
+$\omega$, we see that $\omega(q_i, q_i^{-1}q_f) = \nu(1, q_i, q_f)$, so
+wherever there is a domain wall in the $N$ toric code, the corresponding bond in
+the $Q$ toric code is in an SPT state classified by $\nu$. This is known as the
+\textit{decorated domain wall construction}. Explicitly, the SPT entangler is
+\begin{align}
+U\ket{\vb n, \vb q} = \prod_{s = n, q_i, q_f} (-1)^{n\nu(1, q_i, q_f)} \ket{\vb n, \vb q}
+\end{align}
+This is generalized beyond $N = \Z_2$ by recognizing that $\chi(n) = (-1)^{n}$
+is a 1-cocycle, or representation of $N = \Z_2$, which relates $\alpha \in
+\cohom^3(G, \U(1))$  to $\omega \in \cohom^2(Q, N)$ and $\chi \in \cohom^1(N,
+\U(1))$ via the Kunneth formula.
+
+\subsection{State sum and cup-product action}
+The cup product is a bilinear operation $\smile: C^p(M, \Z) \times C^q(M, \Z)
+\to C^{p+q}(M, \Z)$ via
+\begin{align}\label{eq:cup-product-definition}
+  (\omega \smile \nu)(v_0, \ldots, v_{p+q}) \equiv \omega(v_0, \ldots, v_p)\nu(v_p, \ldots, v_{p+q})
+\end{align}
+We can verify directly that the cup product satisfies the graded Leibniz rule
+\begin{align}\label{eq:cup-product-liebniz-rule}
+\delta(\omega \smile \nu) = \delta\omega \smile \nu + (-1)^{p}\omega \smile \delta \nu
+\end{align}
+and this implies that the cup product descends to an operation on cohomology.
+The cup product is associative on cohomology but not on cochains directly.
+Since $Z^3(M, \Z_2^3) \cong Z^3(M,\Z_2)^{\times 3}$, we can write $\vb a \in
+Z^3(M, \Z_2^3)$ as $\vb a = (a_r, a_g, a_b)$. Then we can specify a state-sum
+with the following action:
+\begin{align}
+  Z[a] = (-1)^{\int a_1 \smile a_2 \smile a_3}
+\end{align}
+This relates to our definition of a quantum double via the following correspondence:
+\begin{prop}\label{prop:equivalence_cup_typeIII_cocycle}
+  Let $\omega \in H^3(\Z_2^3, \R/\Z)$ be the normalized type-III cocycle, and
+  let $\vb a \in Z^3(M, \Z_2^3)$. Then we have
+\begin{align}
+  a_1 \smile a_2 \smile a_3 = \vb a^* \omega
+\end{align}
+
+\begin{proof}
+This is verified through direct computation;
+\begin{align}
+  \vb a^*\omega(v_0, v_1, v_2, v_3) &= \omega(\vb a([v_0, v_1]) | \vb a([v_1, v_2]) | \vb a([v_2, v_3])) \notag \\
+                                &= a_1([v_0, v_1])a_2([v_1, v_2])a_3([v_2, v_3]) \notag \\
+  &= (a_1 \smile a_2 \smile a_3)(v_0, v_1, v_2, v_3)
+\end{align}
+\end{proof}
+\end{prop}
+
+
+\subsection{Cup products and fault-tolerant logical gates}
+\subsubsection{Cups and gates}
+A CSS code can be specified by a two-term cochain complex, which we will recap briefly. For
+simplicity, we consider $\Z_M$-valued qudits with the clock and shift operators
+$X\ket{k} = \ket{k+1}$ and $Z\ket{k} = \e^{2\pi \ii k / M}\ket{k}$, with the
+commutators $ZX = \e^{2\pi \ii /M}XZ$.
+If $Q$ is the set of qudits, then a basis for the Hilbert space can be
+identified with $\Z_M[Q]$, the free $\Z_M$-module over $Q$. 
+Let the stabilizer group be $\mathcal S = \mathcal S_X \sqcup
+\mathcal S_Z$, where $\mathcal S_X$ contains $X$-type stabilizers and $\mathcal
+S_Z$ contains $Z$-type stabilizers. From the $Z$-stabilizers, we get a map
+\begin{align}\label{eq:CSS-chain-complex-boundary-map}
+  \Z_M[\mathcal S_Z] \xrightarrow{\partial} \Z_M[Q] \hspace{2cm}  \mathcal Z_k = \prod_{q \in Q}Z_{q}^{n_{kq}} \mapsto \sum_{q \in Q}n_{kq}q
+\end{align}
+We similarly construct a map
+\begin{align}
+  \Z_m[\mathcal S_X] \xrightarrow{\delta} \Z_m[Q]
+\end{align}
+The commutator between stabilizers $\mathcal X_j$, $\mathcal Z_k$ is given by
+\begin{align}\label{eq:CSS-chain-complex-stabilizer-commutators}
+ \mathcal Z_k \mathcal X_j = \prod_{q \in Q}Z_q^{n_{kq}} \prod_{p \in Q}X_{p}^{m_{jp}} = 
+ \e^{2\pi \ii\sum_{r \in Q}m_{jr}n_{kr}/M}\prod_{p \in Q}X_{p}^{m_{jp}}\prod_{q \in Q}Z_q^{n_{kq}} = \e^{2\pi \ii\sum_{r \in Q}m_{jr}n_{kr}/M}\mathcal X_j \mathcal Z_k
+\end{align}
+We can see that
+\begin{align}\label{eq:CSS-code-chain-complex-correspondence}
+   \sum_{r \in Q}m_{jr}n_{kr} = \langle  \delta \mathcal X_j,  \partial \mathcal Z_k\rangle = \langle\mathcal X_j, \delta^T \partial\mathcal Z_k \rangle
+\end{align}
+wherein the pairwise commutativity of the stabilizers implies that $\partial^T
+\delta = 0$ as this form is non-degenerate. Thus, the code is specified by a
+chain complex
+\begin{align}
+C_\bullet = \Z_M[\mathcal S_Z] \xrightarrow{\partial} \Z_M[Q] \xrightarrow{\delta^T} \Z_M[\mathcal S_X]
+\end{align}
+The logical $Z$ operators are those elements of $\ker \delta^T$ (the $Z$
+operators which commute with all $X$ stabilizers) modulo $\im \partial$, or
+those $Z$ operators which are products of stabilizers. Therefore the logical $Z$
+operators are elements of $H_1(C_\bullet)$. We can also dualize the sequence by
+applying $\Hom(\bullet, \Z_M)$:
+\begin{align}
+C^\bullet = \Hom(\Z_{M}[\mathcal S_Z], \Z_M) \xleftarrow{\partial^T} \Hom(\Z_M[Q], \Z_M) \xleftarrow{\delta} \Hom(\Z_M[\mathcal S_X], \Z_M)
+\end{align}
+We can interpret $\Hom(\Z_M[Q], \Z_M)$ as a
+basis for the Hilbert space consisting of
+\begin{align}
+  \ket{c} \equiv \bigotimes_{q \in Q}\ket{c(q)}
+\end{align}
+The eigenspace of the $Z$-stabilizers is $\ker{\partial^T}$, and the code words
+are an even superposition off all basis states differing by an application of $X$-stabilizers:
+\begin{align}
+  z \in \ker{\partial^T}: \ket{[c]} \equiv \sum_{j}\mathcal X_j\ket{c} = \sum_{j}\ket{c+\delta \mathcal X_j}
+\end{align}
+This implies that the distinct codewords are given by $H^1(C^\bullet)$. Abelian quantum doubles are a special case of
+this construction where the chain complex is taken to be the first 3 terms in
+the cellular chain complex of an orientable manifold.
+
+The observation of \cite{cupsandgates} is that elements of $\Hom(H^1(C^\bullet),
+\U(1))$ give rise to diagonal logical gates. In particular, if one starts with
+$\Lambda$ copies of a single CSS code and then looks for elements $\psi \in
+\Hom(C^1(C^\bullet)^\Lambda, \U(1))$ which descend to operations on cohomology, then one finds non-Clifford logical gates
+on $\Lambda$ copies of the CSS code. Explicitly, we will define operator-valued
+cochains, denoted with hat, by
+\begin{align}
+  (-1)^{\psi(\hat c_1, \ldots, \hat c_{\Lambda})} \equiv \sum_{\vb c \in C^1(C^\bullet)^\Lambda} (-1)^{\psi(c_1, \ldots, c_\Lambda)}\ketbra{c_1, \ldots, c_\Lambda}{c_1, \ldots, c_\Lambda}
+\end{align}
+because $\psi$ only depends on the cohomology classes $[c_1], \ldots,
+[c_\Lambda]$, it induces a logical gate.
+Then we will express $c_i = \sum_{q^*}c_i(q)q^*$, where $q^*$ is an indicator
+cochain on the qudit $q$. Using the bilinearity of $\psi$,
+\begin{align}
+  &\sum_{\vb c \in C^1(C^\bullet)^\Lambda} (-1)^{\psi(c_1, \ldots, c_\Lambda)}\ketbra{c_1, \ldots, c_\Lambda}{c_1, \ldots, c_\Lambda} \notag\\
+&= \sum_{\vb c \in C^1(C^\bullet)^\Lambda} (-1)^{\sum_{q_1, \ldots, q_\Lambda}c_1(q_1)\ldots c_\Lambda(q_\Lambda)\psi(q_1^*, \ldots, q_\Lambda^*)}\bigotimes_{q_1, \ldots, q_n}\ketbra{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)}{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)} \notag\\
+            &= \sum_{\vb c \in C^1(C^\bullet)^\Lambda} \bigotimes_{q_1, \ldots, q_n}(-1)^{c_1(q_1)\ldots c_\Lambda(q_\Lambda)\psi(q_1^*, \ldots, q_\Lambda^*)}\ketbra{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)}{c_1(q_1), \ldots, c_\Lambda(q_\Lambda)} \notag\\
+            &= \bigotimes_{q_1, \ldots, q_n}\sum_{z_1, \ldots, z_\Lambda \in \Z_M^\Lambda} (-1)^{z_1\ldots z_\Lambda\psi(q_1^*, \ldots, q_\Lambda^*)}\ketbra{z_1, \ldots, z_\Lambda}{z_1, \ldots, z_\Lambda} \notag\\
+            &= \bigotimes_{q_1, \ldots, q_n}(\control{\Lambda}Z_{q_1, \ldots, q_n})^{\psi(q_1^*, \ldots, q_\Lambda^*)}
+\end{align}
+where $\control{\Lambda}Z_{q_1, \ldots, q_\Lambda}$ is a controlled phase gate
+between the qudits $q_1,\ldots, q_\Lambda$. If $\psi$ is a local function, then
+this gate is manifestly transversal. The cup product provides the fundamental
+example of such an operation; it is by construction local, and by the Leibniz
+rule [Eq.~\eqref{eq:cup-product-liebniz-rule}], it descends to a cohomology operation.
+
+\subsection{Gauging a cup product symmetry}
+We will bring these concepts together to describe the $\D_4$ double through
+gauging a cup product symmetry. Let $M$ be any closed,
+connected 2D CW complex. Then we can construct the fundamental class $[M]$ as in
+Def.~\ref{defn:fundamental-class}. We will take the coefficients in $\Z_2$ so
+that the orientations can be ignored. Consider the operation
+\begin{align}
+  U = (-1)^{\int \hat c_1 \smile \hat c_2} &= \prod_{q, q'}(\CZ_{qq'})^{\int q^* \smile q'^*}
+\end{align}
+on two copies $a$ and $b$ of $M$.
+Starting with the quantum double
+stabilizers, we find that
+\begin{align} \label{eq:stabilizer-transformation-cup-product-symmetry}
+  UX_{\delta v}^aU^\dagger = X_{\delta v}^a(-1)^{\int_M \delta v \smile \hat c_2} = X_{\delta v}^a \prod_{q'}Z_{q'}^{\int_M \delta v \smile q'^*} 
+\end{align}
+Now we need to introduce the cap product and Poincare map.
+\begin{defn}
+The cap product is
+defined as the dual to the cup product:
+\begin{align}
+  (\alpha \smile \psi)(s) = \psi(s \frown \alpha)
+\end{align}
+From this, we can write $s \frown \psi$ in a basis of indicator cochains:
+\begin{align}
+  x^*(s \frown \alpha) = (\alpha \smile x^*)(s) \implies s\frown \alpha = \sum_{x}x (\alpha\smile x^*)(s)
+\end{align}
+\end{defn}
+This also gives us an expression for the boundary of a cap product:
+\begin{prop}\label{prop:cap-product-boundary-formula}
+\begin{align}
+  \partial (s \frown \alpha) = (-1)^{|s| - |\alpha|}\qty[\delta s \frown \alpha - s \frown \partial \alpha]
+\end{align}
+\end{prop}
+\begin{proof}
+  Fix an arbitrary cocycle $\psi$ of degree $|s|- |\alpha|$. Then
+\begin{align}
+  \psi(\partial (s \frown \alpha)) &= \delta \psi(s \frown \alpha)\\
+                                   &= (\alpha \smile \delta \psi)(s) \\
+  &= (-1)^{|\psi|}[\delta(\alpha \smile \psi) - \delta \alpha \smile \psi](s) \\
+  &= (-1)^{|s| - |\alpha|}\psi(\partial s\frown \alpha - s \frown \delta \alpha)
+\end{align}
+and since the duality pairing is nondegenerate, this implies the claim.
+\end{proof}
+\begin{defn}\label{def:Poincare-duality-isomorphism}
+  The Poincare map sends $H^{q}(M) \to H_{d-q}(M)$ via
+  \begin{align}
+    c \mapsto [M] \frown c = \sum_{x}x \int_M c \smile x^*
+  \end{align}
+  in the case of a $d$-manifold, Poincare duality says that this map is an isomorphism.
+\end{defn}
+Now we can rewrite the transformed stabilizers from Eq.~\eqref{eq:stabilizer-transformation-cup-product-symmetry}:
+\begin{align}
+  \prod_{q'}Z_{q'}^{\int_M \delta v \smile q'^*} &= Z_{\sum_{q'} q'\int_M \delta v \smile q'^*} = Z_{[M] \frown \delta v}
+\end{align}
+Since we assumed $M$ is closed, we have
+\begin{align}
+\partial([M] \frown  v) = (-1)^d([\partial M] \frown v - [M] \frown \delta v) = -(-1)^d [M] \frown \delta v
+\end{align}
+Therefore  $Z_{[M] \frown \delta v} = Z_{\partial([M] \frown  v)}$ is a product
+of plaquettes surrounding $v$, so 
+\begin{align}
+  UX_{\delta v}^aU^\dagger &= X_{\delta v}^aZ^b_{\partial([M] \frown v)} \\
+  UX_{\delta v}^bU^\dagger &= X_{\delta v}^bZ^a_{\partial(v \frown [M])}
+\end{align}
+are products of stabilizers after the transformation. We did not use Poincare
+duality at this point. Suppose that $[c] \in H^1(M)$ is an essential cocycle,
+which supports a logical $X$ operator. Then 
+\begin{align}
+  UX^a_cU = X^a_c Z^b_{[M] \frown c}
+\end{align}
+so $U$ maps $X_c$  to its Poincare dual $Z$-operator on the other copy of the
+toric code.
+
+The cup product symmetry is manifestly local, and so we can gauge it. Consider
+adding a third copy of the toric code, which we will label $c$. Then one way to
+express $U$ is via
+\begin{align}
+  U = (-1)^{\sum_v \int v^* \smile (\hat c_1 \smile \hat c_2)} = \prod_{v}(-1)^{\int v^* \smile (\hat c_1 \smile \hat c_2)}
+\end{align}
+Then we can turn $v$ into a field (which we will call $u$) and quantize it:
+\begin{align}
+\Omega_{\mathrm{SET}} &= (-1)^{\int \hat u \smile (\hat c_1 \smile \hat c_2)}
+\end{align}
+The stabilizers are then the following:
+\begin{align}
+  &X^c_{\delta v}U_v = X^c_{\delta v}(-1)^{\int v^* \smile (\hat c_1 \smile \hat c_2)} \\
+  & \Omega_{\mathrm{SET}}X^a_{\delta v} \Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^a(-1)^{\int \hat u \smile (\delta v \smile \hat c_2)} \\
+  & \Omega_{\mathrm{SET}}X^b_{\delta v} \Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^b(-1)^{\int \hat u \smile (\hat c_1 \smile  \delta v)}
+\end{align}
+The last two equations still depend on the matter field $u$, which we then
+couple to a gauge field through $Z_{\partial e} = Z_{e}$ and then integrate out
+with $Z_{\partial p} = 1$. This is accomplished through the following observation: 
+\begin{align}
+  (-1)^{\int \hat u \smile (\delta v \smile \hat c_2)} &= Z_{[M] \frown (\delta v \smile \hat c_2)} \notag \\
+                                                       &= Z_{\partial([M] \frown (v \smile \hat c_2)) } Z_{[M]\frown (v \smile \delta \hat c_2)} \notag \\
+                                                       &= Z_{[M] \frown (v \smile \hat c_2)} \\
+  &= (-1)^{\int \hat c_0 \smile (v \smile \hat c_2)}
+\end{align}
+where we noticed that if $c'$ is a cycle, then
+\begin{align}
+Z_{[M] \frown (v \smile \delta \hat c_2)}
+  X^b_{c'}Z_{[M] \frown (v \smile \delta \hat c_2)} = X^b_{c'}Z_{[M] \frown (v \smile \delta c')} = 1
+\end{align}
+so $Z_{[M] \frown (v \smile \delta \hat c_2)} = 1$ because it commutes with all
+$X$-stabilizers and logical operators. Together, this gives the stabilizers
+\begin{align}\label{eq:stabilizers-cup-product-formula}
+ &X^c_{\delta v}U_v = X^c_{\delta v}(-1)^{\int v^* \smile (\hat c_1 \smile \hat c_2)} \\
+  & \Omega_{\mathrm{SET}}X^a_{\delta v} \Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^a(-1)^{\int \hat u \smile (\delta v \smile \hat c_2)}  = X_{\delta v}^a(-1)^{\int \hat c_0 \smile(v^* \smile \hat c_2)}\\
+  & \Omega_{\mathrm{SET}}X^b_{\delta v} \Omega_{\mathrm{SET}}^\dagger = X_{\delta v}^b(-1)^{\int \hat u \smile (\hat c_1 \smile  \delta v)} = X^b_{\delta v}(-1)^{\int \hat c_0 \smile (\hat c_1 \smile  v^*)}
+\end{align}
+a form which is appealingly symmetric.
+
+Now we can show explicitly that these stabilizers are those of our squarelattice
+$D_4$ double model. On a square lattice, the cup product $q \smile q'$ is nonzero only if $q$ and $q'$
+form an oriented corner of a plaquette. The cup products from
+\eqref{eq:stabilizers-cup-product-formula}
+ are shown below:
+ \hspace{1cm}
+\begin{center}
+  \includesvg[width = .8\textwidth]{figures/cup_products.svg}
+\end{center}
+The red and green show the two non-trivial cup products surrounding the vertex $v$.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}

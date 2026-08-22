@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Blog Post - Ben McDonough</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to your existing stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../../blog-styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+        
+        <!-- MathJax Script for rendering LaTeX math -->
+          <script>
+            window.MathJax = {
+              loader: {
+                load: ['[tex]/physics']
+              },
+              tex: {
+                packages: {'[+]': ['physics']}
+              }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+    <header>
+        <h1>Ben McDonough</h1>
+        <nav>
+            <a href="../../index.html#research">Research</a>
+            <a href="../../index.html#projects">Projects</a>
+            <a href="../../index.html#community">Community</a>
+            <a href="../../blog.html">Blog</a>
+        </nav>
+    </header>
+    
+    <!-- Your Blog Content Goes Here -->
+    <main class="card" style="margin-top: 40px; padding: 40px;">
+        <!-- PASTE PANDOC OUTPUT HERE -->
+<p><span>Representation theory of the symmetric group, the
+double-centralizer theorem, and Schur-Weyl duality</span><br />
+<span><strong>Ben McDonough</strong></span><br />
+ <span>2026-08-21</span></p>
+<h1 id="double-centralizer-theorem">Double-centralizer theorem</h1>
+<h2 id="semisimple-algebras">Semisimple algebras</h2>
+<p>This section establishes some basic results about the representation
+theory of algebras. In particular, we will define the <em>radical</em>
+<span class="math inline">\(\operatorname{Rad}(A)\)</span> of an algebra
+<span class="math inline">\(A\)</span>, and <span
+class="math inline">\(A\)</span> will be called <em>semisimple</em> if
+<span class="math inline">\(\operatorname{Rad}(A) = 0\)</span>. The main
+point of this section is that the representation theory of semisimple
+algebras is basically completely analogous to that of a a group algebra
+<span class="math inline">\(A = k[G]\)</span>, where <span
+class="math inline">\(k\)</span> is a field and <span
+class="math inline">\(G\)</span> is a finite group, i.e.
+finite-dimensional modules are semisimple. For the rest of this section,
+let <span class="math inline">\(A\)</span> be an algebra over a field
+<span class="math inline">\(k\)</span>, where <span
+class="math inline">\(k\)</span> is algebraically closed.</p>
+<div class="defn">
+<p><strong>Definition 1</strong>. Let <span class="math inline">\(\hat
+A\)</span> refer to isomorphism classes of simple <span
+class="math inline">\(A\)</span>-modules.</p>
+</div>
+<div id="lem:filtrations" class="lem">
+<p><strong>Lemma 1</strong> (Filtrations). <em>Any finite dimensional
+representation <span class="math inline">\(V\)</span> of <span
+class="math inline">\(A\)</span> admits a <em>filtration</em> <span
+class="math display">\[\begin{aligned}
+   0 = V_0 &lt; V_1 &lt; \cdots  &lt; V_k = V
+\end{aligned}\]</span> such that <span
+class="math inline">\(V_i\)</span> are subrepresentations and the
+quotients <span class="math inline">\(V_{i}/V_{i-1}\)</span> are
+irreducible.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We will induct on <span class="math inline">\(n
+\equiv \dim(V)\)</span>. If <span class="math inline">\(V\)</span> is
+irreducible, then we are done, so let <span class="math inline">\(V_1
+&lt; V\)</span> be an irreducible subrepresentation. Let <span
+class="math inline">\(U \equiv V/V_1\)</span>, and take a filtration
+<span class="math display">\[\begin{aligned}
+    U_0 &lt; U_1 &lt; \cdots &lt; U_{k-1} = U
+  
+\end{aligned}\]</span> such that <span
+class="math inline">\(U_i/U_{i-1}\)</span> are irreducible. Then let
+<span class="math inline">\(V_i \equiv U_i \oplus V_1\)</span>. This
+shows <span class="math display">\[\begin{aligned}
+    V_i / V_{i-1} = (U_i \oplus V_1)/(U_{i-1}\oplus V_1) \cong U_i /
+U_{i-1},
+  
+\end{aligned}\]</span> which shows that the successive quotients are
+irreducible. Thus, <span class="math inline">\(0 &lt; V_1 &lt;
+  \dots &lt; V_{k-1} &lt; V\)</span> is the desired filtration. ◻</p>
+</div>
+<div class="prop">
+<p><strong>Proposition 1</strong>. <em><span
+class="math inline">\(\operatorname{Rad}(A)\)</span> is the largest
+nilpotent two-sided ideal in <span
+class="math inline">\(A\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(V\)</span> be a
+simple <span class="math inline">\(A\)</span>-module and <span
+class="math inline">\(I \leq A\)</span> a nilpotent ideal. Let <span
+class="math inline">\(v \in V\)</span> be arbitrary. If <span
+class="math inline">\(Iv \neq 0\)</span>, then <span
+class="math inline">\(Iv = V\)</span>. However, this implies that <span
+class="math inline">\(xv = v\)</span> for some <span
+class="math inline">\(x \in I\)</span>, therefore <span
+class="math inline">\(x^nv = v\)</span>, and so <span
+class="math inline">\(x^n \neq 0\)</span>. This contradicts <span
+class="math inline">\(I\)</span> being nilpotent, so we must have <span
+class="math inline">\(Iv = 0\)</span>, and thus <span
+class="math inline">\(I \leq \operatorname{Rad}(A)\)</span>.</p>
+<p>Next, consider <span class="math inline">\(A\)</span> as an <span
+class="math inline">\(A\)</span>-module over itself, and take a
+filtration <span class="math display">\[\begin{aligned}
+  0 = A_0 &lt; A_1 &lt; \ldots &lt; A_k = A.
+\end{aligned}\]</span> Since <span class="math inline">\(x \in
+A\)</span> acts on the irreducible quotients <span
+class="math inline">\(A_i/A_{i-1}\)</span> by zero, this means that
+<span class="math inline">\(x: A_i \to A_{i-1}\)</span>, and therefore
+<span class="math inline">\(x^k = 0\)</span>. This shows that <span
+class="math inline">\(\operatorname{Rad}(A)\)</span> is nilpotent. ◻</p>
+</div>
+<div id="lem:funky_semisimple" class="lem">
+<p><strong>Lemma 2</strong>. <em>Let <span class="math inline">\(V_I =
+\bigoplus_{i \in I} V_i\)</span>, where <span
+class="math inline">\(V_i\)</span> are simple <span
+class="math inline">\(A\)</span>-modules, and let <span
+class="math inline">\(f:V \to U\)</span> be a surjection. Then <span
+class="math inline">\(U \cong V_J \equiv \bigoplus_{i \in J}V_i\)</span>
+for some <span class="math inline">\(J
+  \subseteq I\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(J \subseteq
+I\)</span> be the maximal subset of <span
+class="math inline">\(I\)</span> such that <span
+class="math inline">\(f|V_J\)</span> is injective. If <span
+class="math inline">\(J \neq I\)</span> (in which case we are done), let
+<span class="math inline">\(i \notin J\)</span>. Then the map <span
+class="math inline">\(f:V_i
+\to U/f(V_J)\)</span> is nonzero for some <span
+class="math inline">\(i\)</span> (otherwise <span
+class="math inline">\(I = J\)</span>), so by Schur’s lemma, it is
+injective since <span class="math inline">\(V_i\)</span> is simple. This
+implies that <span class="math inline">\(f|V_{J \cup \{i\}}\)</span> is
+injective, contradicting the maximality of <span
+class="math inline">\(J\)</span>. ◻</p>
+</div>
+<div class="cor">
+<p><strong>Corollary 1</strong>. <em>If <span class="math inline">\(V
+\cong \bigoplus_{i}V_i^{n_i}\)</span> for <span
+class="math inline">\(V_i\)</span> simple <span
+class="math inline">\(A\)</span>-modules and <span
+class="math inline">\(U \leq
+  V\)</span>, then <span class="math inline">\(V\)</span> and <span
+class="math inline">\(U\)</span> are both semisimple.</em></p>
+</div>
+<div id="thm:density" class="thm">
+<p><strong>Theorem 1</strong> (Density). <em>The map <span
+class="math display">\[\begin{aligned}
+   \rho: A \to \operatorname{End}(V_i)
+\end{aligned}\]</span> is surjective.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Suppose that <span class="math inline">\(V\)</span>
+is a simple <span class="math inline">\(A\)</span>-module, and let <span
+class="math inline">\(v_1, \dots, v_n\)</span> be a basis of <span
+class="math inline">\(V\)</span>. The image of the map <span
+class="math inline">\(a \to (av_1, \dots, av_n)\)</span> is a
+subrepresentation <span class="math inline">\(U \leq V^{\oplus
+n}\)</span>. By the above lemma, <span class="math inline">\(U \cong
+V^{\oplus r}\)</span> for <span class="math inline">\(r \leq
+  n\)</span>. Let <span class="math inline">\(\phi\)</span> be the
+isomorphism <span class="math inline">\(V^{\oplus r} \cong U \leq
+V^{\oplus n}\)</span>. Represent <span
+class="math inline">\(\phi\)</span> by the matrix <span
+class="math inline">\(X\)</span>, such that <span
+class="math inline">\(\phi(w_1, \dots, w_r) = (w_1,
+  \dots, w_r)X\)</span>. If <span class="math inline">\(n = r\)</span>
+we are done, so suppose <span class="math inline">\(r &lt;
+n\)</span>.</p>
+<p>Taking <span class="math inline">\(a = 1\)</span>, we see that <span
+class="math inline">\((v_1, \dots, v_n) \in
+  U\)</span>, and therefore there exist <span class="math inline">\(w_1,
+\dots, w_r \in V\)</span> such that <span class="math inline">\((w_1,
+\dots,
+  w_r)X = (v_1, \dots, v_n)\)</span>. But since <span
+class="math inline">\(r &lt; n\)</span>, <span
+class="math inline">\(X\)</span> has a left kernel, so let <span
+class="math inline">\(X(q_1, \dots, q_n)^t = 0\)</span>. We then have
+<span class="math display">\[\begin{aligned}
+    (w_1, \dots, w_r)X(q_1, \dots, q_n)^t = \sum_i v_iq_i = 0,
+  
+\end{aligned}\]</span> which contradicts the choice of <span
+class="math inline">\(\{v_n\}\)</span> as a basis. Therefore <span
+class="math inline">\(n = r\)</span>.</p>
+<p>This shows us that <span class="math inline">\(U \cong V^n\)</span>.
+Therefore if <span class="math inline">\(c \in
+\operatorname{End}(V)\)</span>, then <span class="math inline">\((cv_1,
+\dots, cv_n)\)</span> is in the image of the map <span
+class="math inline">\(a \mapsto (v_1,
+  \dots, v_n)\)</span>, so <span class="math inline">\(av_i =
+cv_i\)</span> for each <span class="math inline">\(i\)</span>. ◻</p>
+</div>
+<div id="prop:PeterWeyl" class="thm">
+<p><strong>Theorem 2</strong>. <em>If <span
+class="math inline">\(A\)</span> is a finite-dimensional algebra, then
+<span class="math display">\[A/\operatorname{Rad}(A) \cong
+\bigoplus_{V_i \in \hat A} \operatorname{End}(V_i)\]</span> In
+particular, there are finitely many simple <span
+class="math inline">\(A\)</span> modules and all are
+finite-dimensional.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Consider the homomorphism <span
+class="math display">\[\begin{aligned}
+  \rho = \bigoplus_{V_i \in \hat A} \rho_{i} : A \to \bigoplus_{V_i \in
+\hat A} \operatorname{End}V_i
+\end{aligned}\]</span> Let <span class="math inline">\(B_i\)</span> be
+the image of <span class="math inline">\(\rho_i\)</span> and <span
+class="math inline">\(B\)</span> be the image of <span
+class="math inline">\(\rho\)</span>. By Lem. <a
+href="#lem:funky_semisimple" data-reference-type="ref"
+data-reference="lem:funky_semisimple">2</a>, we know that <span
+class="math inline">\(B\)</span> is semisimple. By the density theorem,
+<span class="math display">\[B_i \cong \operatorname{End}(V_i) \cong
+V_i^{\dim V_i}\]</span> so <span class="math inline">\(V_i\)</span>
+occurs in <span class="math inline">\(B\)</span> with multiplicity <span
+class="math inline">\(\dim V_i\)</span>. However this implies <span
+class="math display">\[\bigoplus_i \operatorname{End}_i(V_i)  \leq B
+\leq \bigoplus_i \operatorname{End}_i(V_i)\]</span> which proves that
+<span class="math inline">\(\rho\)</span> is a surjection. This implies
+that there are only finitely many non-isomorphic <span
+class="math inline">\(A\)</span>-modules, all of which are finite
+dimensional. The kernel of <span class="math inline">\(\rho\)</span> is
+<span class="math inline">\(\operatorname{Rad}(A)\)</span>, which proves
+the claim. ◻</p>
+</div>
+<div class="cor">
+<p><strong>Corollary 2</strong> (Artin-Wedderburn for algebras).
+<em>Every semisimple algebra <span class="math inline">\(A\)</span> over
+an algebraically closed field <span class="math inline">\(k\)</span> is
+isomorphic to <span class="math display">\[\begin{aligned}
+    A \cong \bigoplus_{i=1}^r \operatorname{Mat}_{d_i}(k)
+  
+\end{aligned}\]</span> for some <span class="math inline">\(r\)</span>
+and <span class="math inline">\(d_1, \dots, d_r\)</span>.</em></p>
+</div>
+<div id="cor:maschke" class="cor">
+<p><strong>Corollary 3</strong>. <em>All finite-dimensional <span
+class="math inline">\(A\)</span>-modules are semisimple.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(V\)</span> be a
+finite-dimensional <span class="math inline">\(A\)</span>-module, and
+let <span class="math inline">\(v_1, \dots, v_n\)</span> be a basis for
+<span class="math inline">\(V\)</span>. Then the map (of <span
+class="math inline">\(A\)</span>-modules) <span
+class="math inline">\(\psi:A^n \to V\)</span> via <span
+class="math inline">\(\psi(a_1, \dots, a_n) = a_1v_1
++ \cdots + a_nv_n\)</span> is surjective (by choosing <span
+class="math inline">\(a_1, \dots, a_n\)</span> to be scalars). Therefore
+<span class="math inline">\(V\)</span> is isomorphic (as an <span
+class="math inline">\(A\)</span>-module) to a subspace of <span
+class="math inline">\(A^n\)</span>, and since we have shown in Thm. <a
+href="#thm:density" data-reference-type="ref"
+data-reference="thm:density">1</a> that <span
+class="math inline">\(A^n\)</span> is semisimple, so is <span
+class="math inline">\(V\)</span>. ◻</p>
+</div>
+<h2 id="proof-of-double-centralizer">Proof of double-centralizer</h2>
+<div class="lem">
+<p><strong>Lemma 3</strong>. <em>For any semisimple <span
+class="math inline">\(A\)</span>-module <span
+class="math inline">\(V\)</span> there is a canonical isomorphism <span
+class="math display">\[\begin{aligned}
+V \cong \bigoplus_{V_i \in \hat A}\operatorname{Hom}_A(V_i, V) \otimes
+V_i,
+\end{aligned}\]</span> canonical because of the choice of ordering of
+the summands, which is given by the evaluation map <span
+class="math inline">\(f \otimes v \mapsto f(v)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span id="lem:altshur"
+data-label="lem:altshur"></span> Since <span
+class="math inline">\(V\)</span> is semisimple, we have <span
+class="math display">\[\begin{aligned}
+    V \cong \bigoplus_{V_i \in \hat A}V_i^{\oplus n_i} \cong
+\bigoplus_{V_i \in \hat A}k^{n_i} \otimes V_i
+  
+\end{aligned}\]</span> (<span class="math inline">\(k\)</span> is the
+field). By Schur’s lemma, we find <span
+class="math display">\[\begin{aligned}
+    k^{n_i} \cong \operatorname{Hom}_A(V_i, V)
+  
+\end{aligned}\]</span> This proves the two are isomorphic. Furthermore,
+by Schur’s lemma, <span class="math inline">\(f \in
+\operatorname{Hom}_A(V_i, V)\)</span> is given by element-wise scalar
+multiplication, so <span class="math inline">\(f \otimes x \mapsto
+f(x)\)</span> is injective. This proves the claim. ◻</p>
+</div>
+<div id="thm:doublecentralizer" class="thm">
+<p><strong>Theorem 3</strong> (Double centralizer). <em>Let <span
+class="math inline">\(E\)</span> be a finite-dimensional algebra, and
+let <span class="math inline">\(A\leq E\)</span> be a semisimple
+subalgebra, and let <span class="math inline">\(B \equiv
+\operatorname{End}_AE\)</span>. Then the following hold:</em></p>
+<ul>
+<li><p><em><span class="math inline">\(A =
+\operatorname{End}_BE\)</span> (double-centralizer)</em></p></li>
+<li><p><em><span class="math inline">\(B\)</span> is
+semisimple</em></p></li>
+<li><p><em>The simple <span class="math inline">\(B\)</span>-modules are
+in 1-to-1 correspondence with simple <span
+class="math inline">\(A\)</span>-modules</em></p></li>
+<li><p><em>As <span class="math inline">\(A\)</span>-modules, we have a
+decomposition <span class="math display">\[E \cong \bigoplus_{V_i \in
+\hat A} W_i \otimes V_i\]</span> where <span
+class="math inline">\(W_i\)</span> are the simple <span
+class="math inline">\(B\)</span>-modules.</em></p></li>
+</ul>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By Cor. <a href="#cor:maschke"
+data-reference-type="ref" data-reference="cor:maschke">3</a>, <span
+class="math inline">\(E\)</span> is semisimple as an <span
+class="math inline">\(A\)</span>-module, and so by Lem. <a
+href="#lem:altshur" data-reference-type="ref"
+data-reference="lem:altshur">[lem:altshur]</a>, we have a decomposition
+<span class="math display">\[\begin{aligned}
+    E \cong \bigoplus_{V_i \in \hat A}\operatorname{Hom}_A(V_i, E)
+\otimes V_i
+  
+\end{aligned}\]</span> Let <span class="math inline">\(W_i \equiv
+\operatorname{Hom}_A(V_i, E)\)</span>. Next, since <span
+class="math inline">\(A \cong \bigoplus_{i}\operatorname{End}(V_i)
+\subseteq \operatorname{End}(E)\)</span>, this shows that <span
+class="math inline">\(V_i\)</span> occurs as a subspace of <span
+class="math inline">\(E\)</span> for each <span
+class="math inline">\(i\)</span>, and thus <span
+class="math inline">\(W_i\)</span> is nonzero for each <span
+class="math inline">\(i\)</span>. By Schur’s lemma, we have <span
+class="math display">\[\begin{aligned}
+    B = \operatorname{End}_A(E) &amp;\cong
+\operatorname{Hom}_A(\bigoplus_{V_i \in \hat A}W_i \otimes V_i,
+\bigoplus_{V_j \in \hat A}W_j \otimes V_j) \notag\\
+                  &amp;\cong \bigoplus_{V_i,V_j \in \hat
+A}\operatorname{Hom}(W_i, W_j)\otimes \operatorname{Hom}_A(V_i, V_j)
+\notag\\
+    &amp;\cong \bigoplus_{V_i \in \hat A}\operatorname{End}(W_i)
+  
+\end{aligned}\]</span> From this decomposition, we can see that <span
+class="math inline">\(W_i\)</span> are irreducible as <span
+class="math inline">\(B\)</span>-modules (precisely because <span
+class="math inline">\(W_i\)</span> is irreducible as an <span
+class="math inline">\(\operatorname{End}(W_i)\)</span>-module). By the
+same argument, <span
+class="math inline">\(\operatorname{Rad}(\operatorname{End}(W_i)) =
+0\)</span>, so <span class="math inline">\(B\)</span> is semisimple.
+Lastly, by Prop. <a href="#prop:PeterWeyl" data-reference-type="ref"
+data-reference="prop:PeterWeyl">2</a>, this shows that <span
+class="math inline">\(W_i\)</span> are exhaustive of the irreducible
+<span class="math inline">\(B\)</span>-modules, thus showing that
+irreducible <span class="math inline">\(B\)</span>-modules are in 1-to-1
+correspondence with irreducible <span
+class="math inline">\(A\)</span>-modules. This proves all the statements
+of the theorem. ◻</p>
+</div>
+<h1 id="schur-weyl-duality">Schur-Weyl duality</h1>
+<div class="prop">
+<p><strong>Proposition 2</strong>. <em>Let <span
+class="math inline">\(G\)</span> be a Lie group with Lie algebra <span
+class="math inline">\(\mathfrak g\)</span>. A tensor product of
+representations of <span class="math inline">\(\mathfrak g\)</span> is
+defined by the following action of <span class="math inline">\(X \in
+  \mathfrak g\)</span>: <span class="math display">\[\begin{aligned}
+    X(v_1 \otimes v_2 \otimes \cdots \otimes v_n) = \sum_{i=1}^n (v_1
+\otimes \cdots \otimes Xv_i \otimes \cdots \otimes v_n)
+  
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Recall the exponential map <span
+class="math inline">\(\mathrm{e}: \mathfrak g \to G\)</span>. In
+particular, <span class="math display">\[\begin{aligned}
+  \pdv{t}\Big|_{t=0} \mathrm{e}^{tX} = X
+\end{aligned}\]</span> Then we can obtain the action of <span
+class="math inline">\(X\)</span> based on the action of <span
+class="math inline">\(G\)</span>: <span
+class="math display">\[\begin{aligned}
+\pdv{t}\Big|_{t=0}[\mathrm{e}^{Xt}(v_1 \otimes \cdots \otimes v_n)]
+&amp;=
+  \pdv{t}\Big|_{t=0}[\mathrm{e}^{Xt}v_1 \otimes \cdots \otimes
+\mathrm{e}^{Xt} v_n] \\
+  &amp;= \sum_{i = 1}^n v_1 \otimes \cdots \otimes Xv_i \otimes \cdots
+\otimes v_n
+\end{aligned}\]</span> which follows by the product rule. ◻</p>
+</div>
+<div class="defn">
+<p><strong>Definition 2</strong> (Universal enveloping algebra). Given a
+Lie algebra <span class="math inline">\(\mathfrak g\)</span>, the
+<em>universal enveloping algebra</em> <span
+class="math inline">\(\mathcal U(\mathfrak g)\)</span> is the
+associative algebra defined by the property that every morphism of <span
+class="math inline">\(\mathfrak g\)</span> induces a unique morphism of
+<span class="math inline">\(\mathcal
+U(\mathfrak g)\)</span> and vice-versa. As a consequence, Lie algebra
+modules are the same as modules over <span
+class="math inline">\(\mathcal U(\mathfrak g)\)</span>, which in turn
+are in correspondence with Lie group representations when the group is
+compact.</p>
+</div>
+<div class="rmk">
+<p><strong>Remark 1</strong>. Note that while the Lie algebras of e.g.
+<span class="math inline">\(\operatorname{SU}(V)\)</span> and <span
+class="math inline">\(\operatorname{GL}(V)\)</span> are both
+finite-dimensional, the corresponding universal enveloping algebras are
+infinite-dimensional. This is the reason that there can be infinitely
+many <span
+class="math inline">\(\operatorname{SU}(V)\)</span>-irreps.</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 4</strong>. <em>Let <span
+class="math inline">\(V\)</span> be a finite-dimensional vector space
+over <span class="math inline">\(k = \mathbb R\)</span> or <span
+class="math inline">\(\mathbb C\)</span>, let <span
+class="math inline">\(U \leq V\)</span> be a subspace, and let <span
+class="math inline">\(\{v_1, \dots, v_n\} \in V\)</span>. Then if <span
+class="math display">\[\begin{aligned}
+  \sum_{i = 1}^n t^iv_i \in U
+\end{aligned}\]</span> for sufficiently small <span
+class="math inline">\(t\)</span>, then <span class="math inline">\(v_1,
+\dots, v_n \in U\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We will induct on <span
+class="math inline">\(n\)</span>. When <span class="math inline">\(n =
+1\)</span>, the claim is obvious. Since <span
+class="math inline">\(k\)</span> is a complete field and <span
+class="math inline">\(U\)</span> is finite-dimensional, it is closed,
+and therefore contains <span class="math display">\[\begin{aligned}
+    \pdv{t}|_{t= 0} \sum_{i = 1}^n t^i v_i = v_1
+  
+\end{aligned}\]</span> Thus, <span class="math inline">\(\sum_{i =
+1}^{n-1} t^iv_{i+1} \in U\)</span>, and the claim follows from
+induction. ◻</p>
+</div>
+<div id="lem:sym_irrep" class="lem">
+<p><strong>Lemma 5</strong>. <em>Let <span
+class="math inline">\(V\)</span> be a finite dimensional vector space
+over a complete field <span class="math inline">\(k\)</span> with
+characteristic zero. Then <span
+class="math inline">\(\operatorname{Sym}^n(V)\)</span> is spanned by
+<span class="math display">\[\begin{aligned}
+  \{v \otimes \cdots \otimes v\}_{v \in V}
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By multinomial expansion, we find <span
+class="math display">\[\begin{aligned}
+  \qty(\sum_{i=1}^dt_iv_i)^{\otimes n} = \sum_{k_1 +k_2 + \cdots + k_d =
+n} \binom{n}{k_1, \dots, k_d}\pi_{\text{sym}}\bigotimes_{i=1}^d
+t_i^{k_i}v_i^{\otimes k_i}
+\end{aligned}\]</span> where <span
+class="math inline">\(\pi_{\text{sym}}\)</span> is a projector onto the
+symmetric subspace. Applying the lemma above sequentially to each <span
+class="math inline">\(i\)</span>, we get <span
+class="math inline">\(\pi_{\text{sym}}\bigotimes_{i=1}^d
+v_{i}^{\otimes k_i}\)</span> in the span of <span
+class="math inline">\(\{v \otimes \cdots \otimes v\}\)</span> for each
+<span class="math inline">\(k_1 + \dots + k_d = n\)</span>, which
+clearly span <span
+class="math inline">\(\operatorname{Sym}^n(V)\)</span>. ◻</p>
+</div>
+<div class="thm">
+<p><strong>Theorem 4</strong> (Fundamental theorem of symmetric
+polynomials). <em>Every symmetric polynomial can be expanded as a linear
+combination of power-symmetric polynomials <span
+class="math display">\[P_j(\vb x)  = x_1^j + x_2^j + \cdots +
+x_n^j\]</span></em></p>
+</div>
+<div class="thm">
+<p><strong>Theorem 5</strong> (Schur-Weyl). <em>Let <span
+class="math inline">\(\mathfrak{gl}(V)\)</span> be the Lie algebra of
+<span class="math inline">\(\operatorname{GL}(V)\)</span>. The
+centralizer of <span class="math inline">\(\mathbb C
+\mathrm{S}_n\)</span> (acting by permuting the tensor factors) in <span
+class="math inline">\(V^{\otimes n}\)</span> is <span
+class="math inline">\(\mathcal U(\mathfrak{gl}(V))\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Since <span class="math inline">\(V\)</span> is
+finite-dimensional, we have <span
+class="math inline">\(\operatorname{End}_{\mathbb
+C\mathrm{S}_n}(V^{\otimes n}) \cong
+\operatorname{Sym}^n(\operatorname{End}(V))\)</span>. Let <span
+class="math inline">\(\Delta\)</span> represent the action of <span
+class="math inline">\(\mathcal
+U(\mathfrak{gl}(V))\)</span>, i.e. <span
+class="math display">\[\begin{aligned}
+  \Delta(X)(v_1 \otimes \cdots \otimes v_n) = \sum_{i}v_1 \otimes \cdots
+\otimes Xv_i \otimes \cdots v_n
+\end{aligned}\]</span> By the fundamental theorem on symmetric
+polynomials, for any <span class="math inline">\(v \in
+\operatorname{End}(V)\)</span>, we can write <span
+class="math inline">\(v^{\otimes n}\)</span> as a polynomial in <span
+class="math inline">\(\Delta(v), \Delta(v^2),
+\Delta(v^3) \dots\)</span>. By Lem. <a href="#lem:sym_irrep"
+data-reference-type="ref" data-reference="lem:sym_irrep">5</a>, <span
+class="math inline">\(v^{\otimes n}\)</span> span <span
+class="math inline">\(\operatorname{Sym}^n
+\operatorname{End}(V)\)</span>. This proves the claim. ◻</p>
+</div>
+<div class="cor">
+<p><strong>Corollary 4</strong>. <em>The same holds for <span
+class="math inline">\(\mathcal U(\mathfrak{u}(V))\)</span>, the
+universal enveloping algebra of the Lie algebra of the unitary operators
+on <span class="math inline">\(V\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Note that <span
+class="math inline">\(\mathfrak{u}\otimes \mathcal C\)</span>, also
+known as the <em>complexification</em> of <span
+class="math inline">\(\mathfrak{u}\)</span>, is just <span
+class="math inline">\(\mathfrak{gl}(V)\)</span>. Passing to the
+complexification does not change the centralizer. ◻</p>
+</div>
+<div class="cor">
+<p><strong>Corollary 5</strong> (Schur Functors). <em>We have a
+decomposition <span class="math display">\[\begin{aligned}
+V^{\otimes n} \cong \bigoplus_{\lambda} V_{\lambda} \otimes W_\lambda
+  
+\end{aligned}\]</span> as representations of <span
+class="math inline">\(\mathbb CS_n \times G\)</span>, where <span
+class="math inline">\(G = \operatorname{U}(V),
+\operatorname{GL}(V)\)</span> and <span
+class="math inline">\(V_\lambda\)</span> are the irreps of <span
+class="math inline">\(S_n\)</span> indexed by a partition <span
+class="math inline">\(\lambda\)</span>, and <span
+class="math inline">\(W_\lambda\)</span> are irreps of <span
+class="math inline">\(G\)</span>. In particular, the map <span
+class="math display">\[\begin{aligned}
+    V_\lambda \mapsto W_\lambda \equiv \operatorname{Hom}_{G}(V_\lambda,
+V^{\otimes n})
+  
+\end{aligned}\]</span> is a surjection (some <span
+class="math inline">\(W_\lambda\)</span> may vanish).</em></p>
+</div>
+<div class="rmk">
+<p><strong>Remark 2</strong>. In the proof of the double centralizer
+theorem [Thm. <a href="#thm:doublecentralizer" data-reference-type="ref"
+data-reference="thm:doublecentralizer">3</a>], we saw that <span
+class="math inline">\(V_\lambda\)</span> and <span
+class="math inline">\(W_\lambda\)</span> were in bijection. The
+distinction is that <span class="math inline">\(\mathcal
+U(\mathfrak{gl}(V))\)</span> is infinite-dimensional, and we are
+applying the theorem to its finite-dimensional image within <span
+class="math inline">\(\operatorname{End}(V^{\otimes n})\)</span>. The
+simple modules of this image are automatically simple modules of <span
+class="math inline">\(\mathcal U(\mathfrak{gl}(V))\)</span>, but the
+reverse is not true.</p>
+</div>
+<h1 id="representation-theory-of-the-symmetric-group">Representation
+theory of the symmetric group</h1>
+<h2 id="induced-representations">Induced representations</h2>
+<p>Let <span class="math inline">\(G\)</span> be a group. It is easier
+to define induced representations in terms of modules over the group
+algebra <span class="math inline">\(\mathbb CG\)</span>. (For historical
+reasons, <em>representation</em> is generally reserved for groups and
+<em>module</em> for rings, but they are the same thing.) We can see that
+the <span class="math inline">\(\mathbb CG\)</span>-modules are in
+direct correspondence with representations of <span
+class="math inline">\(G\)</span> over <span
+class="math inline">\(\mathbb C\)</span>. This fact is because every
+group morphism <span class="math inline">\(G \to
+\operatorname{End}(V)\)</span> can be extended by <span
+class="math inline">\(\mathbb C\)</span>-linearity into an algebra
+morphism <span class="math inline">\(\mathbb CG \to
+\operatorname{End}(V)\)</span>, and vice-versa. This leads us to the
+following idea of induction of representations:</p>
+<div class="defn">
+<p><strong>Definition 3</strong> (Induced representation). Given a <span
+class="math inline">\(\mathbb CH\)</span>-module <span
+class="math inline">\(V\)</span> where <span class="math inline">\(H
+\leq G\)</span>, we define <span
+class="math inline">\(\operatorname{Ind}_H^G(V) \equiv \mathbb C
+    G \otimes_{\mathbb CH} V\)</span> to be the representation induced
+by <span class="math inline">\(V\)</span> on <span
+class="math inline">\(G\)</span>.</p>
+</div>
+<p>Note that if <span class="math inline">\(A\)</span> is a right <span
+class="math inline">\(B\)</span>-module and <span
+class="math inline">\(C\)</span> is a left <span
+class="math inline">\(B\)</span>-module, then the <em>tensor
+product</em> <span class="math inline">\(A \otimes_B C\)</span> can be
+defined just like the tensor product of vector spaces where elements of
+<span class="math inline">\(B\)</span> are treated as scalars, so <span
+class="math inline">\(ab
+\otimes c = a \otimes bc\)</span>. Induced representations are special
+due to the following correspondence:</p>
+<div class="lem">
+<p><strong>Lemma 6</strong> (Frobenius reciprocity). <em>Let <span
+class="math inline">\(\Res_G^H(U)\)</span> denote the restriction of a
+representation <span class="math inline">\(U\)</span> of <span
+class="math inline">\(G\)</span> to <span class="math inline">\(H
+  \leq G\)</span>. Then <span class="math display">\[\begin{aligned}
+    \operatorname{Hom}_{G}(\operatorname{Ind}_H^G(V), U) \cong
+\operatorname{Hom}_H(V, \Res^H_G(U))
+  
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> This is a consequence of the more general tensor-hom
+adjunction, which we will state here:</p>
+<div class="prop">
+<p><strong>Proposition 3</strong>. <em>Let <span
+class="math inline">\(A, B, C\)</span> be rings. Let <span
+class="math inline">\(M\)</span> be an <span
+class="math inline">\(A-B\)</span>-module, let <span
+class="math inline">\(N\)</span> be a <span
+class="math inline">\(B-C\)</span>-module, and let <span
+class="math inline">\(K\)</span> be an <span
+class="math inline">\(A-C\)</span>-module. Then <span
+class="math display">\[\operatorname{Hom}_A(M \otimes_B N, K) \cong
+\operatorname{Hom}_B(N, \operatorname{Hom}_A(M,K))\]</span> is a natural
+isomorphism of <span
+class="math inline">\(C-C\)</span>-bimodules.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The isomorphism is the evaluation map <span
+class="math display">\[\begin{aligned}
+    \operatorname{Hom}_A(M \otimes_B N, K) \ni \phi \mapsto \psi:
+[\psi(n)](m) = \phi(m \otimes n)
+  
+\end{aligned}\]</span> and one can check that this isomorphism preserves
+the module structure and is natural. ◻</p>
+</div>
+<p>From this, Frobenius reciprocity follows: observe that <span
+class="math display">\[\operatorname{Hom}_{\mathbb CG}(\mathbb CG
+\otimes_{\mathbb CH} V, U) \cong \operatorname{Hom}_{\mathbb CH}(V,
+\operatorname{Hom}_{\mathbb CG}(\mathbb CG, U)) \cong
+\operatorname{Hom}_{\mathbb CH}(V, U)\]</span> where we applied the
+isomorphism <span class="math inline">\(\operatorname{Hom}_{A}(A, V)
+\cong V\)</span> for any ring <span class="math inline">\(A\)</span> and
+<span class="math inline">\(A\)</span>-module <span
+class="math inline">\(V\)</span>. ◻</p>
+</div>
+<h2 id="classifying-irreps-of-s_n">Classifying irreps of <span
+class="math inline">\(S_n\)</span></h2>
+<p>Now, we will deduce the representation theory of <span
+class="math inline">\(S_n\)</span>. We know in general there is a
+(non-canonical) bijection between irreps and conjugacy classes. Since
+conjugation in <span class="math inline">\(S_n\)</span> is just a
+permutation of the <span class="math inline">\(n\)</span> labels,
+conjugacy classes correspond to cycle types, which in turn correspond to
+partitions of <span class="math inline">\(n\)</span>. Therefore, we will
+look for a set of non-isomorphic irreps corresponding to every partition
+<span class="math inline">\(\lambda \vdash n\)</span>.</p>
+<p>First, we define Young diagrams and Young tableaux.</p>
+<div class="defn">
+<p><strong>Definition 4</strong>. Given a partition <span
+class="math inline">\(\lambda = \lambda_1 \geq \lambda_2 \geq \dots \geq
+  \lambda_k\)</span> of <span class="math inline">\(n\)</span>, a
+<em>Young diagram</em> is a set of boxes with <span
+class="math inline">\(\lambda_1\)</span> boxes in the first row, <span
+class="math inline">\(\lambda_2\)</span> boxes in the second, etc. Using
+this representation, the <em>transpose</em> of a partition <span
+class="math inline">\(\lambda\)</span> is defined as the partition
+associated to the Young diagram of <span
+class="math inline">\(\lambda\)</span> with the rows and columns
+interchanged. A <em>Young tableau</em> is a Young diagram with unique
+numbers from <span class="math inline">\(1, \dots, n\)</span> in each of
+the boxes. Given <span class="math inline">\(g \in S_n\)</span> and a
+Young tableau <span class="math inline">\(T\)</span>, we will write
+<span class="math inline">\(gT\)</span> for the tableau where each entry
+<span class="math inline">\(j\)</span> in <span
+class="math inline">\(T\)</span> is replaced with <span
+class="math inline">\(g(j)\)</span>.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 5</strong> (Young subgroups). Given a partition
+<span class="math inline">\(\lambda = \lambda_1 \geq \lambda_2 \geq
+\dots \geq
+  \lambda_k\)</span>, consider the Young tableau <span
+class="math inline">\(T_\lambda\)</span> which is filled with numbers
+sequentially left to right and bottom to top. Define <span
+class="math inline">\(P_\lambda\)</span> as the subgroup <span
+class="math inline">\(S_{\lambda_1} \times S_{\lambda_2} \times \dots
+\times S_{\lambda_k} \leq S_n\)</span> which preserves the rows of <span
+class="math inline">\(T_\lambda\)</span>, which is called the <em>Young
+subgroup</em> of <span class="math inline">\(\lambda\)</span>. Define
+<span class="math inline">\(Q_\lambda\)</span> to be the subgroup
+preserving the columns of <span
+class="math inline">\(T_\lambda\)</span>, which is equivalently the
+Young subgroup of the transpose <span
+class="math inline">\(\lambda^t\)</span>.</p>
+</div>
+<p>Then we will define the following distinguished representations of
+<span class="math inline">\(S_n\)</span>:</p>
+<div class="defn">
+<p><strong>Definition 6</strong>. Given a partition <span
+class="math inline">\(\lambda\)</span>, define <span
+class="math display">\[\begin{aligned}
+    I^+_\lambda &amp;\equiv
+\operatorname{Ind}_{P_\lambda}^{S_n}(\operatorname{triv}) &amp;
+I^-_\lambda &amp;\equiv
+\operatorname{Ind}_{Q_{\lambda}}^{S_n}(\operatorname{sgn})
+  
+\end{aligned}\]</span></p>
+</div>
+<p>Our goal will be to show that <span
+class="math inline">\(I_{\lambda}^+, I_{\lambda}^-\)</span> have one
+unique, irreducible summand in common, which we will call <span
+class="math inline">\(V_{\lambda}\)</span>, or a <em>Specht
+module</em>.</p>
+<div class="defn">
+<p><strong>Definition 7</strong> (Lexicographic ordering). We will say
+<span class="math inline">\(\lambda &gt; \mu\)</span> if the first
+nonzero <span class="math inline">\(\lambda_i - \mu_i\)</span> is
+positive.</p>
+</div>
+<div class="prop">
+<p><strong>Proposition 4</strong>. <em><span class="math inline">\(\dim
+\operatorname{Hom}(I_\mu^-, I_{\lambda}^+) = 0\)</span> if <span
+class="math inline">\(\lambda &gt; \mu\)</span> and 1 if <span
+class="math inline">\(\lambda = \mu\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By Frobenius reciprocity, <span
+class="math display">\[\begin{aligned}
+    \operatorname{Hom}_{S_n}(I^{-}_{\lambda}, I^+_{\lambda}) &amp;\cong
+\operatorname{Hom}_{Q_\lambda}(\mathrm{sgn}, \mathbb C[S_n/P_{\lambda}])
+\cong \operatorname{Hom}_{Q_{\lambda}}(\mathbb C[S_n/P_\lambda],
+\mathrm{sgn}) \\
+    &amp;\cong \{f:S_n \to \mathbb C: f(\tau g\sigma) =
+\operatorname{sgn}(\tau)f(g) \ \forall \ \tau \in Q_\lambda, \sigma \in
+P_\lambda\}
+  
+\end{aligned}\]</span> where we have identified <span
+class="math inline">\(\operatorname{Ind}_H^G(\mathrm{triv}) \cong
+\mathbb C[G/ H]\)</span>, and also used <span
+class="math inline">\(\operatorname{Hom}_G(U, V) \cong
+\operatorname{Hom}_G(V, U)\)</span> for completely reducible
+representations.</p>
+<p>Now we notice that if <span class="math inline">\(\tau  = g\sigma
+g^{-1}\)</span> for any transpositions <span class="math inline">\(\tau
+  \in Q_\mu, \sigma \in P_{\lambda}\)</span>, then <span
+class="math display">\[f(g) = f(g\sigma) = f(\tau g) = -f(g) \implies
+f(g) = 0\]</span></p>
+<p>This brings us to the following lemma:</p>
+<div class="lem">
+<p><strong>Lemma 7</strong>. <em>If <span class="math inline">\(\lambda
+&gt; \mu\)</span>, then for any <span class="math inline">\(g \in
+S_n\)</span> there exist <span class="math inline">\(\sigma \in
+    P_\lambda, \tau \in Q_{\mu}\)</span> with <span
+class="math inline">\(\tau = g\sigma g^{-1}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> If <span class="math inline">\(\lambda_1 &gt;
+\mu_1\)</span>, then there must be two integers in the first row of
+<span class="math inline">\(gT_\lambda\)</span> that lie in the same
+column of <span class="math inline">\(T_{\mu}\)</span>. The permutations
+interchanging these integers are the desired <span
+class="math inline">\(\tau, \sigma\)</span>. Otherwise, <span
+class="math inline">\(\lambda_1 = \mu_1\)</span>. If no two integers in
+the first row of <span class="math inline">\(T_\lambda\)</span> lie in
+the same column of <span class="math inline">\(T_\mu\)</span>, then we
+can find a permutation <span class="math inline">\(q \in
+Q_\lambda\)</span> which brings all the integers in <span
+class="math inline">\(T_\mu\)</span> lying in the first row of <span
+class="math inline">\(gT_\lambda\)</span> to the first row of <span
+class="math inline">\(T_{\mu}\)</span>, and a permutation <span
+class="math inline">\(p \in gP_\lambda g^{-1}\)</span> which re-orders
+the first row of <span class="math inline">\(gT_\lambda\)</span> so that
+the first rows of <span class="math inline">\(pgT_\lambda\)</span> and
+<span class="math inline">\(qT_\mu\)</span> are the same. Then we can
+eliminate the first row of both tableaux, and repeat the argument. ◻</p>
+</div>
+<p>The above lemma implies the first part of our claim, because if <span
+class="math inline">\(\lambda &gt;
+  \mu\)</span>, then for any <span class="math inline">\(g\)</span>,
+<span class="math inline">\(f(g) = 0\)</span>, so <span
+class="math inline">\(\operatorname{Hom}_{S_n}(I^-_\mu, I^+_\lambda) =
+0\)</span>.</p>
+<p>Next, we will make a similar argument for <span
+class="math inline">\(\lambda = \mu\)</span>. We notice that <span
+class="math inline">\(f(g)\)</span> is determined entirely by the
+double-coset <span class="math inline">\(Q_\lambda g
+  P_\lambda\)</span>. On the identity coset, i.e. any <span
+class="math inline">\(g = qp\)</span> with <span class="math inline">\(q
+\in Q_\lambda,
+  p\in P_\lambda\)</span>, we have <span class="math inline">\(f(g) =
+f(qp) = \operatorname{sgn}(q)f(1)\)</span>. We will now argue that <span
+class="math inline">\(f\)</span> must vanish on all non-identity
+double-cosets, which will follow from a lemma:</p>
+<div id="lem:same" class="lem">
+<p><strong>Lemma 8</strong>. <em>If <span class="math inline">\(g \not
+\in Q_\lambda P_\lambda\)</span>, then there exist <span
+class="math inline">\(\sigma \in P_\lambda\)</span>, <span
+class="math inline">\(\tau \in Q_\lambda\)</span> such that <span
+class="math inline">\(\tau = g \sigma g^{-1}\)</span>. </em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We will prove the contrapositive. Suppose such a
+<span class="math inline">\(\sigma, \tau\)</span> do not exist. Then any
+two elements of the first row of <span
+class="math inline">\(gT_\lambda\)</span> must be in different columns
+of <span class="math inline">\(T_{\lambda}\)</span>, otherwise
+transpositions interchanging these would produce the desired <span
+class="math inline">\(\sigma, \tau\)</span>. As in the previous lemma,
+we can thus construct <span class="math inline">\(q \in
+Q_\lambda\)</span>, <span class="math inline">\(p \in
+    gP_\lambda g^{-1}\)</span> such that <span
+class="math inline">\(pgT_\lambda = qT_\lambda\)</span>. This gives us
+<span class="math inline">\(pg = gp&#39;\)</span> where <span
+class="math inline">\(p&#39; = g^{-1}qg \in
+    P_\lambda\)</span>, and so <span class="math inline">\(g = qp&#39;
+\in Q_\lambda P_\lambda\)</span>, as desired. ◻</p>
+</div>
+<p>Now to complete the proof, if <span class="math inline">\(g \notin
+Q_\lambda P_\lambda\)</span> then <span class="math inline">\(f(g) =
+0\)</span> because by the lemma above, we can find such a <span
+class="math inline">\(\sigma, \tau\)</span>. If <span
+class="math inline">\(g = qp \in
+  Q_\lambda P_\lambda\)</span>, then <span class="math inline">\(f(g) =
+\operatorname{sgn}(q)f(1)\)</span>. This shows that <span
+class="math inline">\(\operatorname{Hom}_{S_n}(I_\lambda^-,
+I_\lambda^+)\)</span> is 1-dimensional, which completes the claim. ◻</p>
+</div>
+<p>The classification theorem then follows:</p>
+<div class="cor">
+<p><strong>Corollary 6</strong>. <em>The representations <span
+class="math inline">\(V_\lambda\)</span> are a complete set of
+non-isomorphic representations of <span
+class="math inline">\(S_n\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Since <span class="math inline">\(\dim
+\operatorname{Hom}(I^-_\lambda, I^+_\lambda) = 1\)</span>, there is
+exact one irreducible <span class="math inline">\(V_\lambda\)</span>
+which occurs in both <span class="math inline">\(I_\lambda^-,
+I_\lambda^+\)</span> by Schur’s lemma, which we call <span
+class="math inline">\(V_\lambda\)</span>. If <span
+class="math inline">\(\lambda \neq \mu\)</span>, then either <span
+class="math inline">\(\mu &gt; \lambda\)</span> or <span
+class="math inline">\(\lambda &gt;
+\mu\)</span>. We assume the latter without loss of generality. Then
+<span class="math inline">\(\dim \operatorname{Hom}(I^-_\mu,
+I^+_\lambda) = 0\)</span>, so <span
+class="math inline">\(V_\lambda\)</span> must not occur in <span
+class="math inline">\(I^-_\mu\)</span>, and therefore <span
+class="math inline">\(V_\mu\)</span> is not isomorphic to <span
+class="math inline">\(V_{\lambda}\)</span>. Since there are exactly as
+many nonisomorphic irreps as conjugacy classes in <span
+class="math inline">\(S_n\)</span> which are labeled by partitions, this
+completes the proof. ◻</p>
+</div>
+<h2 id="computations">Computations</h2>
+<h3 id="explicit-basis-for-v_lambda">Explicit basis for <span
+class="math inline">\(V_\lambda\)</span></h3>
+<div class="prop">
+<p><strong>Proposition 5</strong> (Formula for induced representations).
+<em>Suppose that <span class="math inline">\(\chi\)</span> is the
+character of a 1-dimensional representation. Then <span
+class="math display">\[\operatorname{Ind}_{H}^G \chi \cong \mathbb
+CG\epsilon \hspace{2cm}\text{where}\hspace{2cm}
+    \epsilon = \frac{1}{|H|}\sum_{h \in H}\overline \chi(h)h\]</span> is
+an idempotent.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\{g_1, \dots,
+g_k\}\)</span> be a set of coset representatives for <span
+class="math inline">\(G/ H\)</span>. <span
+class="math inline">\(\operatorname{Ind}_H^G \chi\)</span> is spanned by
+elements of the form <span class="math inline">\(g_i \otimes \mathbb
+C_\chi\)</span>, where <span class="math inline">\(\mathbb
+C_{\chi}\)</span> is a one-dimensional vector space. Then for any <span
+class="math inline">\(g \in G\)</span> we have <span
+class="math inline">\(gg_i = g_jh\)</span> for a unique <span
+class="math inline">\(g_j, h\)</span>. By definition, <span
+class="math display">\[\begin{aligned}
+    g(g_i \otimes \mathbb C_{\chi}) = \chi(h)(g_j \otimes \mathbb
+C_{\chi})
+  
+\end{aligned}\]</span> On the other hand, we observe that <span
+class="math inline">\(\mathbb CG \epsilon\)</span> is spanned by
+elements <span class="math inline">\(g_i
+  \epsilon\)</span>, and <span class="math display">\[\begin{aligned}
+    g g_i \epsilon = g_j\frac{1}{|H|}\sum_{k \in H}hk\overline \chi(k) =
+\chi(h)g_j\epsilon
+  
+\end{aligned}\]</span> Therefore the map <span class="math inline">\(g_i
+\otimes \mathbb C_\chi \mapsto g_i\epsilon\)</span> is the desired
+isomorphism, completing the proof. ◻</p>
+</div>
+<div class="lem">
+<p><strong>Lemma 9</strong>. <em>If <span
+class="math inline">\(\epsilon\)</span> is an idempotent, <span
+class="math inline">\(A\)</span> is an algebra, and <span
+class="math inline">\(V\)</span> is an <span
+class="math inline">\(A\)</span>-module, then <span
+class="math inline">\(\operatorname{Hom}_{A}(A\epsilon, V) \cong
+\epsilon
+  V\)</span>.</em></p>
+</div>
+<div class="thm">
+<p><strong>Theorem 6</strong> (Young Symmetrizers). <em>Given a
+partition <span class="math inline">\(\lambda\)</span>, let <span
+class="math display">\[\begin{aligned}
+    a_\lambda &amp; \equiv \frac{1}{|P_\lambda|}\sum_{\sigma \in
+P_\lambda} \sigma &amp; b_\lambda &amp; \equiv
+\frac{1}{|Q_\lambda|}\sum_{\tau \in
+Q_\lambda}\operatorname{sgn}(\tau)\tau &amp; c_{\lambda} &amp;\equiv
+a_\lambda b_\lambda
+  
+\end{aligned}\]</span> Then <span
+class="math inline">\(c_\lambda\)</span> (called a <em>Young
+symmetrizer</em>) is proportional to an idempotent, and we have the
+following explicit expression for <span
+class="math inline">\(V_\lambda\)</span>: <span
+class="math display">\[V_\lambda \cong \mathbb C[S_n]
+c_\lambda\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Notice that <span class="math inline">\(I^-_\lambda
+\cong \mathbb C[S_n]b_\lambda\)</span> and <span
+class="math inline">\(I^+_\lambda \cong
+  \mathbb C[S_n]a_\lambda\)</span> by the lemma above. Then we have
+<span class="math display">\[\operatorname{Hom}_{S_n}(I^-_\lambda,
+I^+_\lambda) \cong \operatorname{Hom}_{S_n}(\mathbb C[S_n], b_\lambda
+\mathbb C[S_n] a_{\lambda}) \cong b_\lambda \mathbb C[S_n]
+a_{\lambda}\]</span> so we conclude <span
+class="math inline">\(b_{\lambda} \mathbb C[S_n]a_\lambda\)</span> is
+one-dimensional. Also, this implies <span
+class="math inline">\((c_\lambda^*)^2 = b_{\lambda}a_\lambda
+b_{\lambda}a_{\lambda} \propto c_\lambda^*\)</span>, so <span
+class="math inline">\(c_{\lambda}\)</span> is proportional to an
+idempotent. Now we can compute <span
+class="math display">\[\operatorname{Hom}_{S_n}(I^-_\lambda, \mathbb
+C[S_n]a_\lambda b_\lambda)  \cong \operatorname{Hom}_{S_n}(\mathbb
+C[S_n]b_\lambda, \mathbb C[S_n]a_\lambda b_{\lambda}) \cong (b_{\lambda}
+\mathbb C[S_n] a_\lambda) b_{\lambda}\]</span> Similarly, <span
+class="math display">\[\begin{aligned}
+    \operatorname{Hom}_{S_n}(\mathbb C[S_n]a_\lambda b_{\lambda},
+I^+_{\lambda}) \cong \operatorname{Hom}_{S_n}(\mathbb C[S_n],
+a_{\lambda}b_{\lambda} \mathbb C[S_n] a_{\lambda}) \cong a_{\lambda}
+(b_{\lambda} \mathbb C[S_n]a_\lambda)
+  
+\end{aligned}\]</span> so both are one-dimensional. This shows that
+<span class="math inline">\(\mathbb
+C[S_n]a_{\lambda}b_{\lambda}\)</span> occurs once in <span
+class="math inline">\(I^+_\lambda\)</span> and <span
+class="math inline">\(I^-_\lambda\)</span>, so it must be isomorphic to
+<span class="math inline">\(V_\lambda\)</span>. ◻</p>
+</div>
+<div class="defn">
+<p><strong>Definition 8</strong> (Young tabloids and polytabloids).
+Given a Young tableau <span class="math inline">\(T\)</span>, define a
+<em>tabloid</em> <span class="math inline">\(\{T\}\)</span> to be the
+equivalence class of tableaux which are equal up to a permutation <span
+class="math inline">\(\sigma \in
+P_T\)</span> (the group preserving the rows of <span
+class="math inline">\(T\)</span>). Then define a <em>polytabloid</em> to
+be a tableaux which is antisymmetrized over <span
+class="math inline">\(\pi \in
+Q_{T}\)</span> (the group preserving the columns): <span
+class="math display">\[\begin{aligned}
+\mathrm{e}_{T} \equiv \sum_{\pi \in Q_T}\operatorname{sgn}(\pi)\{ \pi
+T\}
+\end{aligned}\]</span></p>
+</div>
+<div class="prop">
+<p><strong>Proposition 6</strong>. <em>Given a partition <span
+class="math inline">\(\lambda\)</span>, we have <span
+class="math display">\[\begin{aligned}
+    V_\lambda \cong \mathbb C[S_n] \mathrm{e}_{T_\lambda}
+  
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Consider the map <span
+class="math display">\[\begin{aligned}
+  V_\lambda \cong \mathbb C[S_n]c_\lambda \ni \sigma c_{\lambda} \mapsto
+\mathrm{e}_{\sigma T_{\lambda}}
+\end{aligned}\]</span> and we will prove this is an isomorphism of
+representations.</p>
+<p>First, we say that <span class="math inline">\(T_1 \sim T_2\)</span>
+iff <span class="math inline">\(T_2 = \sigma T_1\)</span> for some <span
+class="math inline">\(\sigma \in P_T\)</span>. This implies that <span
+class="math inline">\(\pi T_2 = (\pi \sigma \pi^{-1})\pi T_1\)</span>
+iff <span class="math inline">\(T_1 \sim T_2\)</span>. Since <span
+class="math inline">\(P_{\pi T} = \pi P_T\pi^{-1}\)</span>, this shows
+that <span class="math inline">\(\{\pi T\} =  \pi\{T\}\)</span>. From
+this, we find <span class="math display">\[\begin{aligned}
+  \sigma \mathrm{e}_{\{T\}} =  \sum_{\pi \in
+Q_T}\operatorname{sgn}(\pi)\{ \sigma\pi T\} &amp;=
+                                                                      \sum_{\pi
+\in Q_T}\operatorname{sgn}(\pi)\{(\sigma \pi\sigma^{-1}) \sigma
+T\}  \notag \\
+  &amp;=
+    \sum_{\pi \in Q_T}\operatorname{sgn}(\sigma\pi\sigma^{-1})\{(\sigma
+\pi\sigma^{-1}) \sigma T\} \notag \\
+  &amp;=
+  \sum_{\pi&#39; \in \sigma
+Q_T\sigma^{-1}}\operatorname{sgn}(\pi&#39;)\{\pi&#39; \sigma T\} =
+\mathrm{e}_{\sigma T}
+\end{aligned}\]</span> Therefore our map is a morphism of
+representations. Using this, we make the following observation: <span
+class="math display">\[\mathrm{e}_{T_\lambda} = c_\lambda T\]</span> We
+then see that <span class="math inline">\(\mathbb C[S_n]T\)</span> is a
+faithful representation of <span class="math inline">\(S_n\)</span> for
+any tableau <span class="math inline">\(T\)</span> (just the fundamental
+representation!). As an element of <span class="math inline">\(\mathbb
+C[S_n]T\)</span>, we have <span class="math display">\[\begin{aligned}
+v = \sum_{\sigma} a_\sigma \sigma \mathrm{e}_{T_\lambda} =
+\sum_{\sigma}a_{\sigma}\sigma c_{\lambda}T
+\end{aligned}\]</span> so if <span class="math inline">\(v\)</span>
+vanishes then <span class="math inline">\(\sum_{\sigma}a_{\sigma}\sigma
+c_{\lambda}\)</span> must vanish as well. This shows that our map is
+injective. Surjectivity follows by definition. ◻</p>
+</div>
+<p>The theorem above gives us an easy way to explicitly work out the
+basis for a given irreducible representation, which we will illustrate
+with some examples.</p>
+<h3 id="examples">Examples</h3>
+<p>Observe the polytabloid generated by the following tableau:
+<div class=pic>
+    <img src="triv_rep.png" class=figure />
+</div>
+There are no columns to antisymmetrize, so the
+corresponding polytabloid consists of only 1 tabloid, a single row with
+unordered elements <span class="math inline">\(1 \dots n\)</span>. This
+is the trivial representation.</p>
+<p>Now consider the polytabloid generated by the tableau 
+<div class=pic>
+    <img src="sign_rep.png" class=figure style="max-width:100px;"/>
+</div>
+There are now no rows to symmetrize, so the
+corresponding polytabloid is simply a linear combination of permutations
+of the <span class="math inline">\(n\)</span> boxes weighted by the sign
+of the permutation. This is the sign representation.</p>
+<p>Lastly, we have the permutation representation <span
+class="math inline">\(\operatorname{span}\{\ket{k}\}_{k=1}^n\)</span>
+where the action is defined by <span class="math inline">\(\sigma\ket{k}
+= \ket{\sigma(k)}\)</span>. There is a copy of the trivial
+representation <span class="math inline">\(\ket{\mathrm{triv}} =
+\frac{1}{n}\sum_k \ket{k}\)</span>. The orthogonal compliment <span
+class="math inline">\(\ket{\mathrm{triv}}^{\perp}\)</span> within the
+permutation representation has a special name, the <em>standard
+representation</em>, given explicitly by <span
+class="math display">\[\begin{aligned}
+  \left\{\sum_{k = 1}^n a_k \ket{k} : \sum_{k=1}^n a_k = 0 \right\}
+\end{aligned}\]</span> Is the standard representation irreducible?
+Consider the polytabloid generated by
+<div class=pic>
+    <img src="standard_rep.png" class=figure>
+</div>
+We will label this tabloid by which element
+appears in the top box, so the above tabloid is <span
+class="math inline">\(\vb n\)</span>. The corresponding polytabloid is
+obtained by antisymmetrizing the first column, so <span
+class="math inline">\(\vb n\)</span> becomes <span
+class="math inline">\(\vb n - \vb 1\)</span>. We can clearly see that
+the standard representation is spanned by <span
+class="math inline">\(\vb i - \vb 1\)</span> for all <span
+class="math inline">\(\vb i \neq
+1\)</span>.</p>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-sagan" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">B.
+Sagan, <em>The symmetric group: Representations, combinatorial
+algorithms, and symmetric functions</em>, vol. 203. Springer Science
+&amp; Business Media, 2001.</div>
+</div>
+<div id="ref-etingof" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">P.
+I. Etingof <em>et al.</em>, <em>Introduction to representation
+theory</em>, vol. 59. American Mathematical Soc., 2011.</div>
+</div>
+</div>
+    </main>
+    </body>
+</html>

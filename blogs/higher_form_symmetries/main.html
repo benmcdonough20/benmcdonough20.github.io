@@ -1,0 +1,644 @@
+<p><span>Higher-form symmetries in the language of differential
+geometry</span><br />
+<span><strong>Ben McDonough</strong></span><br />
+ <span>2026-08-21</span></p>
+<h1 id="introduction">Introduction</h1>
+<p>In recent years, the concept of symmetry in quantum field theory has
+been significantly generalized. Ordinary (0-form) symmetries act on
+pointlike operators and are associated with codimension-1 topological
+operators. Higher-form symmetries extend this paradigm by acting on
+extended objects, such as line or surface defects, and are characterized
+by higher-codimension topological operators. In these notes, we will
+explain the basics of higher-form symmetries and the differential
+geometry concepts needed to pursue further reading. The main sources for
+these notes are <span class="citation"
+data-cites="luo2024lecture brennan2023introductiongeneralizedglobalsymmetries"><a
+href="#ref-luo2024lecture" role="doc-biblioref">[1]</a>, <a
+href="#ref-brennan2023introductiongeneralizedglobalsymmetries"
+role="doc-biblioref">[2]</a></span>. The paper that introduced and
+consolidated many of these ideas is <span class="citation"
+data-cites="Gaiotto_2015"><a href="#ref-Gaiotto_2015"
+role="doc-biblioref">[3]</a></span>, and it is also quite readable.
+Lastly, we will explore the application of generalized symmetries to
+E&amp;M.</p>
+<h1 id="noethers-theorem">Noether’s theorem</h1>
+<p>Consider a QFT with action <span class="math inline">\(S\)</span>. An
+ordinary (0-form) symmetry of this QFT is a transformation <span
+class="math display">\[\begin{aligned}
+y^\mu &amp;= x^{\mu} + \varepsilon^\alpha \frac{\partial x^\mu}{\partial
+\varepsilon^\alpha} &amp;  \phi&#39;  = \mathcal F(\phi) &amp;\approx
+\phi + \varepsilon^\alpha\frac{\partial \mathcal F}{\partial
+\varepsilon^\alpha}
+\end{aligned}\]</span> under which the action is invariant. To compute
+the variation of the action explicitly, we first find the Jacobian of
+the transformation in the limit of small <span
+class="math inline">\(\varepsilon\)</span>: <span
+class="math display">\[\begin{aligned}
+\det\left(\left[\frac{\partial y^\nu}{\partial x^\mu}\right]_{\mu
+\nu}\right) \approx \det\left(\mathrm{e}^{\left[\frac{\partial}{\partial
+x^\nu}\left(\varepsilon^\alpha\frac{\partial x^\mu}{\partial
+\varepsilon^\alpha}\right)\right]_{\mu \nu}}\right) =
+\mathrm{e}^{\Tr\left[\frac{\partial}{\partial
+x^\nu}\left(\varepsilon^\alpha\frac{\partial x^\mu}{\partial
+\varepsilon^\alpha}\right)\right]_{\mu \nu}} \approx
+1+\frac{\partial}{\partial x^\mu}\left[\varepsilon^\alpha\frac{\partial
+x^\mu}{\partial \varepsilon^\alpha}\right] .
+\end{aligned}\]</span> This gives the determinant to <span
+class="math inline">\(\mathrm O(\varepsilon)\)</span>. Next, the partial
+derivatives transform as <span class="math display">\[\begin{aligned}
+  \frac{\partial y^\nu}{\partial x^\mu} = \delta_{\mu\nu} +
+\frac{\partial}{\partial x^\mu}\left[\varepsilon^\alpha \frac{\partial
+x^\nu}{\partial \varepsilon^\alpha}\right] ,
+\end{aligned}\]</span> so to first order in <span
+class="math inline">\(\varepsilon\)</span>, <span
+class="math display">\[\begin{aligned}
+  \frac{\partial}{\partial y^\nu} = \frac{\partial x^\mu}{\partial
+y^\nu}\frac{\partial}{\partial x^\mu} =  \frac{\partial}{\partial x^\nu}
+- \frac{\partial}{\partial x^\nu}\left[\varepsilon^\alpha \frac{\partial
+x^\mu}{\partial \varepsilon^\alpha}\right]\frac{\partial}{\partial
+x^\mu} .
+\end{aligned}\]</span> Plugging these into the action, we find <span
+class="math display">\[\begin{aligned}
+  \delta S &amp; = \int \dd^{d+1} y \mathcal L\left(\phi&#39;,
+\frac{\partial \phi&#39;}{\partial y^\mu}\right) - \int \dd^{d+1} x
+\mathcal L\left(\phi, \frac{\partial \phi}{\partial x^\mu}\right)
+\notag\\
+  &amp;= \int \dd^{d+1}x \left(1 + \partial_\mu \varepsilon^\alpha
+\frac{\partial x^\mu}{\partial \varepsilon^\alpha}\right)\mathcal
+L\left(\phi + \varepsilon^\alpha\frac{\partial \mathcal F}{\partial
+\varepsilon^\alpha}, (\delta_{\mu \nu} - \partial_\mu
+\varepsilon^\alpha\frac{\partial x^\nu}{\partial
+\varepsilon^\alpha})\partial_\mu \left[\phi +
+\varepsilon^\alpha\frac{\partial \mathcal F}{\partial
+\varepsilon^\alpha}\right]\right) - \mathcal L(\phi,\partial_\mu \phi) .
+\end{aligned}\]</span> Since we can take <span
+class="math inline">\(\partial_\mu \varepsilon^\alpha = 0\)</span> and
+then bring <span class="math inline">\(\varepsilon^\alpha\)</span>
+outside of the integral, this means that the terms not containing
+derivatives of <span class="math inline">\(\varepsilon^\alpha\)</span>
+must cancel. We can just keep the terms with <span
+class="math inline">\(\partial_\mu \varepsilon^\alpha\)</span> in the
+expansion, and we find <span class="math display">\[\begin{aligned}
+  \delta S &amp;= \int \dd^{d+1} x \left[ \frac{\partial \mathcal
+L}{\partial (\partial_\nu\phi)}\frac{\partial \mathcal F}{\partial
+\varepsilon^\alpha}\partial_\nu\varepsilon^\alpha - \frac{\partial
+\mathcal L}{\partial (\partial_\nu\phi)}\partial_\mu \varepsilon^\alpha
+\frac{\partial x^\nu}{\partial \varepsilon^\alpha}\partial_\mu \phi +
+\partial_\mu \varepsilon^\alpha\frac{\partial x^\mu}{\partial
+\varepsilon^\alpha} \mathcal L \right] \\
+  &amp;= \int \dd^{d+1} x j_\alpha^\nu \partial_\nu \varepsilon^\alpha =
+0,
+\end{aligned}\]</span> where we introduced the current <span
+class="math display">\[\begin{aligned}
+  j_\alpha^\nu &amp;= \frac{\partial \mathcal L}{\partial (\partial_\nu
+\phi)}\frac{\partial \mathcal F}{\partial \varepsilon^\alpha} +
+\frac{\partial x^\mu}{\partial
+\varepsilon^\alpha}\underbrace{\left[\mathcal L\delta_{\mu \nu} -
+\frac{\partial \mathcal L}{\partial (\partial_\nu \phi)}\partial_\mu
+\phi\right]}_{T_{\mu \nu}}
+\end{aligned}\]</span> and also identified the stress tensor <span
+class="math inline">\(T_{\mu \nu}\)</span>. Using integration by parts,
+we find <span class="math display">\[\begin{aligned}
+\int j_\alpha^\nu \partial_\nu \varepsilon^\alpha &amp;= - \int
+\partial_\nu j_\alpha^\nu \varepsilon^\alpha = 0.
+\end{aligned}\]</span> Then since <span
+class="math inline">\(\varepsilon^\alpha\)</span> is arbitrary, we must
+have the continuity equation <span
+class="math display">\[\begin{aligned}
+\partial_\mu j_\alpha^\nu &amp;= 0.
+\end{aligned}\]</span> This conserved current leads to a conserved
+charge <span class="math display">\[\begin{aligned}
+Q(t) = \int_M \dd^dx j_\alpha^0,
+\end{aligned}\]</span> where <span class="math inline">\(M\)</span> is a
+spatial slice of spacetime at time <span
+class="math inline">\(t\)</span>. This charge is conserved because <span
+class="math display">\[\begin{aligned}
+  \dot Q = \int_{M} \dd^d x \partial_0j_\alpha^0 &amp;= -\int_M \dd^d x
+\partial_i j_\alpha^i = \int_{\partial M} \dd^{d-1}x j_\alpha^i \cdot
+\hat n = 0,
+\end{aligned}\]</span> where <span class="math inline">\(i\)</span>
+refers to Euclidean indices and we assume that <span
+class="math inline">\(j_\alpha = 0\)</span> on <span
+class="math inline">\(\partial M\)</span>.</p>
+<h1 id="higher-form-symmetry">Higher-form symmetry</h1>
+<p>First, we notice that a fixed time <span
+class="math inline">\(t\)</span> is the same as a 3D slice of 4D
+spacetime, which we call <span class="math inline">\(\Sigma_3\)</span>.
+In this language the conserved charge is defined by <span
+class="math display">\[\begin{aligned}
+\label{eq:ordinary_charge}
+  Q_\alpha(\Sigma_3) = \int_{\Sigma_3} j_\alpha^\mu \hat n^\mu
+\end{aligned}\]</span> where <span class="math inline">\(\hat n\)</span>
+is the normal vector to <span class="math inline">\(\Sigma_3\)</span>.
+If <span class="math inline">\(\Sigma_3\)</span> is a slice of spacetime
+at a fixed time, then <span class="math inline">\(\hat n =
+(1,0,0,0)\)</span> and this reduces to the ordinary definition of <span
+class="math inline">\(Q(t)\)</span>. However, we notice that <span
+class="math inline">\(\Sigma_3\)</span> can just as well be an arbitrary
+3-submanifold of spacetime. What is the analogous conservation law?
+Suppose that <span class="math inline">\(M\)</span> is a 4-submanifold
+with boundary, and <span class="math inline">\(\partial M = \Sigma_3
+\sqcup \Sigma_3&#39;\)</span> with opposite orientations. Then <span
+class="math display">\[\begin{aligned}
+Q_\alpha(\Sigma_3) - Q_\alpha(\Sigma_3&#39;) =
+\int_{\Sigma_3}j_\alpha^\mu n^\mu - \int_{\Sigma_3&#39;}j_\alpha^\mu
+n^\mu = \int_{\partial M}j_\alpha^\mu n^\mu = \int_{M}\partial_\mu
+j_\alpha^\mu = 0
+\end{aligned}\]</span> This implies that <span
+class="math inline">\(Q_{\alpha}\)</span> is a <em>topological
+invariant</em> in that it only depends on the homology class of <span
+class="math inline">\(\Sigma_3\)</span>.</p>
+<p>In this language, we would call the global symmetry an
+<em>ordinary</em> or <em>0-form</em> symmetry, and say that it acts on a
+<em>codimension-1</em> submanifold (in spacetime). Viewing charges as
+topological invariants rather than conserved quantities will allow us to
+generalize to <span class="math inline">\(p &gt;
+0\)</span>.</p>
+<h2 id="riemannian-geometry-and-the-hodge-star">Riemannian geometry and
+the Hodge star</h2>
+<p>To generalize this idea, we introduce the Hodge star. First we need
+to talk about Riemannian structures. In the following, let <span
+class="math inline">\(M\)</span> denote spacetime. A Riemannian
+structure is a 2-covector field <span class="math inline">\(g \in
+\Omega^2(M)\)</span> which restricts on each tangent space <span
+class="math inline">\(T_pM\)</span> to an inner product. A Riemannian
+structure allows us to canonically relate vector fields and covector
+fields:</p>
+<div class="defn">
+<p><strong>Def 1</strong> (Musical isomorphisms). <em>Let <span
+class="math inline">\(\{E_i\}\)</span> be an orthonormal frame for <span
+class="math inline">\(T_pM\)</span> for <span class="math inline">\(p
+\in U\)</span>. Then if <span class="math inline">\(j = j^i E_i\)</span>
+is a vector field, we define the dual covector field to be <span
+class="math display">\[\begin{aligned}
+    j &amp;= j^i E_i \Rightarrow j^\flat = j_i \varepsilon^i \\
+    J &amp;= J_i \varepsilon^i \Rightarrow J^\sharp = J^iE_i
+  
+\end{aligned}\]</span> where <span class="math inline">\(\varepsilon^i =
+\langle E_i, \cdot \rangle_g\)</span> is a covector. The raised/lowered
+index on <span class="math inline">\(j\)</span> is irrelevant because we
+are working in a basis where <span class="math inline">\(g\)</span> is
+diagonal. The musical isomorphisms correspond to raising and lowering
+the indices, hence the sharp and flat. It is clear that this definition
+is invariant under isometry, corresponding to a different choice of
+orthonormal frame.</em></p>
+</div>
+<div class="defn">
+<p><strong>Def 2</strong>. <em>Given <span class="math inline">\(\omega
+\in \Omega^k(M)\)</span>, the Hodge star is a map <span
+class="math inline">\(*:\Omega^k(M) \to
+  \Omega^{d+1-k}(M)\)</span>, where <span
+class="math inline">\(*\omega\)</span> is the unique form such that
+<span class="math display">\[\begin{aligned}
+    \omega \wedge *\eta \equiv \langle \omega, \eta \rangle_g \dd V_g
+  
+\end{aligned}\]</span> where <span class="math inline">\(\dd
+V_g\)</span> is the Riemannian volume form.</em></p>
+</div>
+<p>The Hodge star generalizes divergence in the following way:</p>
+<div class="prop">
+<p><strong>Prop 1</strong>. <em>Given a vector field <span
+class="math inline">\(j\)</span>, the divergence at <span
+class="math inline">\(p\)</span> is <span class="math inline">\((\div
+j)_p =
+  \partial_ij^i\)</span> where <span
+class="math inline">\(\{x^i_p\}\)</span> are a set of orthonormal
+coordinates at <span class="math inline">\(p\)</span>. By orthonormal
+coordinates, we mean that <span
+class="math inline">\(\left\{\frac{\partial}{\partial
+x^i_p}\right\}_i\)</span> form an orthonormal basis for <span
+class="math inline">\(T_pM\)</span>. In terms of the Hodge star, we have
+<span class="math display">\[\begin{aligned}
+\div j = *\dd*j^\flat .
+\end{aligned}\]</span> This can be used to define the analogous
+divergence of a <span class="math inline">\(p\)</span>-form.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We have <span class="math display">\[\begin{aligned}
+* j^\flat = j^i\varepsilon_{i, i_1, \ldots, i_{d+1}} \dd x^{i_1} \wedge
+\ldots \wedge \dd x^{i_{d+1}}
+\end{aligned}\]</span> Taking the exterior derivative, <span
+class="math display">\[\begin{aligned}
+  \dd * j^\flat &amp;= \frac{\partial j^i}{\partial x^j} \varepsilon_{i,
+i_1, \ldots, i_{d+1}} \dd x^j \wedge \dd x^{i_1} \wedge \ldots \wedge
+\dd x^{i_{d+1}}
+  = \frac{\partial j^i}{\partial x^i}\dd V_g
+\end{aligned}\]</span> Then the result follows from <span
+class="math inline">\(* \dd V_g = 1\)</span>. ◻</p>
+</div>
+<div class="prop">
+<p><strong>Prop 2</strong> (Stokes’ theorem for divergence). <em><span
+class="math display">\[\begin{aligned}
+  \int_M (\div X)\dd V_g = \int_{\partial M}\langle  N, X \rangle_g
+\end{aligned}\]</span> where <span class="math inline">\(N\)</span> is
+the unit normal vector field to <span class="math inline">\(\partial
+M\)</span>.</em></p>
+</div>
+<p>The notion of a unit normal vector field just generalizes the normal
+vector <span class="math inline">\(\hat n\)</span>. The Riemannian
+structure affords a decomposition of each tangent space of <span
+class="math inline">\(M\)</span> for <span class="math inline">\(p
+\in \partial M\)</span> as <span class="math display">\[\begin{aligned}
+  T_p M = T_p \partial M \oplus (T_p \partial M)^\perp
+\end{aligned}\]</span> and then we can choose a unique normalized vector
+in <span class="math inline">\((T_p M)^\perp\)</span> to call <span
+class="math inline">\(N_p\)</span>. Since <span
+class="math inline">\(g\)</span> is smooth and <span
+class="math inline">\(\partial M\)</span> is a smooth submanifold, the
+resulting vector field <span class="math inline">\(N\)</span> is
+smooth.</p>
+<div id="prop:outflow" class="prop">
+<p><strong>Prop 3</strong>. <em>Let <span
+class="math inline">\(\Sigma\)</span> be a codimension-1 submanifold
+with a unit normal vector field <span class="math inline">\(N\)</span>.
+Then <span class="math display">\[\begin{aligned}
+    * X^\flat = \langle N, X \rangle \dd V_{\tilde g}
+  
+\end{aligned}\]</span> where <span class="math inline">\(\dd V_{\tilde
+g} = i_N \dd V_{g}\)</span> is the volume form induced on <span
+class="math inline">\(\Sigma\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We choose the oriented orthonormal basis <span
+class="math inline">\(\varepsilon^0 = N^\flat, \varepsilon^1, \ldots,
+\varepsilon^{d-1}\)</span>. Then <span
+class="math display">\[\begin{aligned}
+*X^\flat|_{\Sigma} = X^i \varepsilon_{i, i_1, \ldots,
+i_{d-1}}\varepsilon^{i_1} \wedge \ldots \wedge
+\varepsilon^{i_{d-1}}|_{\Sigma} = X^0 \varepsilon^{1} \wedge \ldots
+\wedge \varepsilon^{d-1}
+\end{aligned}\]</span> where the volume form induced on <span
+class="math inline">\(\Sigma\)</span> is exactly <span
+class="math inline">\(\varepsilon^1 \wedge \ldots
+\wedge \varepsilon^{d-1} = i_N(\dd V_g)\)</span> and <span
+class="math inline">\(X^i = \varepsilon^i(X) = \langle
+(\varepsilon^i)^\sharp, X\rangle\)</span>. ◻</p>
+</div>
+<p>From this, the divergence theorem follows as a consequence of Stokes’
+theorem <span class="math display">\[\begin{aligned}
+\int_M \div X \dd V_g = \int_M \dd * X^\flat = \int_{\partial M} *
+X^\flat = \int_{\partial M}\langle  X, N \rangle_g \dd V_{\tilde g}
+\end{aligned}\]</span></p>
+<h2 id="p-form-currents"><span class="math inline">\(p\)</span>-form
+currents</h2>
+<div class="defn">
+<p><strong>Def 3</strong>. <em>We will define the generalized continuity
+equation for a <span class="math inline">\(p+1\)</span>-form current
+<span class="math inline">\(j\)</span>: <span
+class="math display">\[\begin{aligned}
+\dd * j = 0
+\end{aligned}\]</span> and we will call such a current
+co-closed.</em></p>
+</div>
+<div class="rmk">
+<p><strong>Remark 1</strong>. <em>The reason for calling this condition
+co-closure is that <span class="math inline">\(*\dd* = \pm
+\dd^\dagger\)</span> with respect to the <span
+class="math inline">\(L^2\)</span> inner product on forms (for a closed,
+compact manifold <span class="math inline">\(M\)</span>): <span
+class="math display">\[\begin{aligned}
+    \langle \omega, \dd\eta  \rangle &amp;= \int_M \langle \omega, \dd
+\eta\rangle_g   \dd V_g
+                                     = \pm \int_M \dd \eta \wedge *
+\omega
+                                       = \pm\int_M\eta \wedge \dd *
+\omega\notag\\
+                                       &amp;
+                                     = \pm \int_M \eta \wedge ** \dd *
+\omega
+                                     = \pm \int_M \langle  \eta, * \dd *
+\omega \rangle_g \dd V_g
+    = \pm \langle  * \dd * \omega, \eta \rangle
+  
+\end{aligned}\]</span> where we used <span class="math inline">\(** =
+\pm 1\)</span> depending on the degree of the forms.</em></p>
+</div>
+<p>Then we can define the generalized conserved charge</p>
+<div class="defn">
+<p><strong>Def 4</strong>. <em>Given a codimension-<span
+class="math inline">\(p+1\)</span> manifold <span
+class="math inline">\(\Sigma\)</span> and a <span
+class="math inline">\(p+1\)</span>-form current <span
+class="math inline">\(j\)</span>, define <span
+class="math display">\[\begin{aligned}
+    Q(\Sigma) &amp;= \int_{\Sigma} *j
+  
+\end{aligned}\]</span></em></p>
+</div>
+<p>To see how this definition reduces to the previous one when <span
+class="math inline">\(j\)</span> is a vector field (i.e. <span
+class="math inline">\(p = 0\)</span>), we apply Prop. <a
+href="#prop:outflow" data-reference-type="ref"
+data-reference="prop:outflow">3</a> to find <span
+class="math display">\[\begin{aligned}
+Q(\Sigma_3) = \int_{\Sigma_3}*j^\flat = \int_{\Sigma_3}\langle N,
+j\rangle_{g}\dd V_{\tilde g},
+\end{aligned}\]</span> which is identical to Eq. <a
+href="#eq:ordinary_charge" data-reference-type="eqref"
+data-reference="eq:ordinary_charge">[eq:ordinary_charge]</a>. We can see
+that this generalizes to <span class="math inline">\(p\)</span>-forms by
+computing the magnitude of the projection of <span
+class="math inline">\(j^\sharp\)</span> onto directions orthogonal to
+the immersed submanifold <span class="math inline">\(\Sigma\)</span>,
+just like the notion of flux through a surface.</p>
+<p>Importantly, generalized symmetries give rise to topological
+invariants. Suppose that <span class="math inline">\(\Sigma,
+\Sigma&#39;\)</span> bound a codimension-<span
+class="math inline">\(p\)</span> manifold <span
+class="math inline">\(M\)</span>, i.e. <span
+class="math inline">\(\partial M = \Sigma \sqcup \Sigma&#39;\)</span>.
+Then <span class="math display">\[\begin{aligned}
+  Q(\Sigma) - Q(\Sigma&#39;) = \int_{\partial M}* j = \int_{M}\dd * j =
+0 \ .
+\end{aligned}\]</span> Therefore <span class="math inline">\(Q(\Sigma) =
+Q([\Sigma])\)</span>, where <span
+class="math inline">\([\Sigma]\)</span> is the homotopy class of <span
+class="math inline">\(\Sigma\)</span>. Furthermore, if <span
+class="math inline">\(\beta\)</span> is a codimension-<span
+class="math inline">\(p+2\)</span> form and <span
+class="math inline">\(*j&#39; = *j + \dd \beta\)</span>, then <span
+class="math display">\[\begin{aligned}
+Q&#39;(\Sigma) - Q(\Sigma) = \int_{\Sigma}\dd \beta = \int_{\partial
+\Sigma}\beta = 0
+\end{aligned}\]</span> since we assumed that <span
+class="math inline">\(\Sigma\)</span> was a manifold without boundary.
+Thus, the generalized charge is actually just the duality pairing
+between homology and cohomology, i.e. <span
+class="math inline">\(Q(\Sigma) \equiv [*j]([\Sigma])\)</span>, where
+<span class="math inline">\([*j]\)</span> is the cohomology class of
+<span class="math inline">\(*j\)</span>.</p>
+<h1 id="observables-in-qft">Observables in QFT</h1>
+<p>The discussion so far has been purely classical, and when translating
+from currents to charged observables and unitary operators, the
+reframing of symmetries as topological invariants becomes very
+helpful.</p>
+<p>First, a brief reminder about observables in QFT. Given a Hamiltonian
+<span class="math inline">\(H\)</span>, the path integral is derived
+through Trotterization: <span class="math display">\[\begin{aligned}
+  \bra{\phi_i}\mathrm{e}^{\mathrm{i}H(t+
+\mathrm{i}\varepsilon)}\ket{\phi_f} &amp;=
+\int_{\phi_i(0)}^{\phi_f(t)}\mathcal
+D[\phi]\mathrm{e}^{\mathrm{i}S_\varepsilon}
+\end{aligned}\]</span> where <span
+class="math inline">\(S_\varepsilon\)</span> is the appropriately
+regularized action. Using this prescription, we can compute a
+time-ordered correlation function: <span
+class="math display">\[\begin{aligned}
+  &amp;\bra{0}\hat\phi_1(x_1, t_1) \ldots \hat \phi_n(x_n, t_n) \ket{0}
+\notag \\
+  &amp;= \lim_{\varepsilon\to 0}\lim_{\substack{T_i \to -\infty\\ T_f
+\to \infty}}\frac{\bra{\phi_i}\mathrm{e}^{\mathrm{i}H (T_i - t_1)(1-
+\mathrm{i}\varepsilon)}\hat \phi(x_1) \mathrm{e}^{\mathrm{i}H(t_1 -
+t_2)(1 - \mathrm{i}\varepsilon)} \hat \phi(x_2) \ldots \hat \phi(x_n)
+\mathrm{e}^{-\mathrm{i}HT_f(1+\mathrm{i}\varepsilon)}\ket{\phi_f}}{\bra{\phi_i}\mathrm{e}^{\mathrm{i}H(T_i
+- T_f)(1+ \mathrm{i}\varepsilon)}\ket{\phi_f}} \\
+  &amp;= \lim_{\varepsilon\to 0}\frac{\int_{\phi_i}^{\phi_f}\mathcal
+D[\phi]\phi(t_1, x_1)\phi(t_2, x_2)\ldots \phi(t_n, x_n)\mathcal
+D[\phi]\mathrm{e}^{\mathrm{i}S_\varepsilon}}{\int_{\phi_i}^{\phi_f}\mathcal
+D[\phi]\mathrm{e}^{\mathrm{i}S_\varepsilon}},
+\end{aligned}\]</span> for <em>any</em> <span
+class="math inline">\(\phi_i, \phi_f\)</span>, so we usually integrate
+them out. We also assumed the system is gapped, so <span
+class="math display">\[\begin{aligned}
+  \lim_{t \to \infty}\mathrm{e}^{-\mathrm{i}H
+(t-\mathrm{i}\varepsilon)}\ket{\phi} &amp;= \lim_{t \to \infty}\sum_{n}
+\ket{n} \mathrm{e}^{-\mathrm{i}E_n (t -
+\mathrm{i}\varepsilon)}\braket{n}{\phi} \notag\\
+  &amp;= \braket{0}{\phi}
+\end{aligned}\]</span> We see that the path integral naturally forces
+time-ordering under the expectation value.</p>
+<h2 id="symmetry-defects">Symmetry defects</h2>
+<p>We will call a family <span class="math inline">\(\{O_i\}_i\)</span>
+of observables charged under a symmetry group <span
+class="math inline">\(G\)</span>, acting by a representation <span
+class="math inline">\(U_g\)</span>, if <span
+class="math display">\[\begin{aligned}
+  U_g^\dagger O_i U_{g} = R_{i}^j(g)O_j \label{eq:charged}
+\end{aligned}\]</span> for some representation <span
+class="math inline">\(R\)</span> of <span
+class="math inline">\(G\)</span>. From above, since <span
+class="math inline">\(U_g\)</span> commutes with <span
+class="math inline">\(H\)</span>, we have <span
+class="math display">\[\begin{aligned}
+  \langle  U_g^\dagger(t_1)O_i(t)U_g(t_2) \rangle =
+  \langle  U_g^\dagger(t_1&#39;)O_i(t)U_g(t_2&#39;) \rangle
+\end{aligned}\]</span> for any <span class="math inline">\(t_1 &lt; t
+&lt; t_2\)</span> and <span class="math inline">\(t&#39;_1 &lt; t &lt;
+t_2&#39;\)</span>. However, by <a href="#eq:charged"
+data-reference-type="eqref"
+data-reference="eq:charged">[eq:charged]</a>, this is not true for <span
+class="math inline">\(t_1 &lt; t\)</span> and <span
+class="math inline">\(t&#39;_1 &gt; t\)</span>. If we imagine each time
+<span class="math inline">\(t\)</span> as specifying a 3d slice <span
+class="math inline">\(\Sigma_3\)</span> of spacetime, then this means we
+can topologically deform <span class="math inline">\(\Sigma_3\)</span>,
+but <span class="math inline">\(O_i\)</span> acts like a puncture in
+spacetime, through which <span class="math inline">\(\Sigma_3\)</span>
+cannot be smoothly deformed. Taking advantage of the ability to deform
+<span class="math inline">\(\Sigma_3\)</span> in the time direction as
+well, we can deform <span class="math inline">\(\Sigma_3\)</span> and
+<span class="math inline">\(\Sigma_3&#39;\)</span> (corresponding to
+<span class="math inline">\(t_2\)</span>) until <span
+class="math inline">\(\Sigma_3 \cup
+\Sigma_3&#39;\)</span> form the boundary of an arbitrarily small
+manifold <span class="math inline">\(M\)</span> containing the point at
+which <span class="math inline">\(O_i\)</span> acts, as shown in Fig. <a
+href="#fig:deformation" data-reference-type="ref"
+data-reference="fig:deformation">1</a>.</p>
+<figure id="fig:deformation">
+<img src="symmetry_homotopy.png"
+alt="Figure 1: Figure showing how to interpret a zero-form symmetry as a homological pairing and a charged operator O_i as a point-like singularity." />
+<figcaption aria-hidden="true">Figure 1: Figure showing how to interpret
+a zero-form symmetry as a homological pairing and a charged operator
+<span class="math inline">\(O_i\)</span> as a point-like
+singularity.</figcaption>
+</figure>
+<p>This is our first example of <em>linking</em>:</p>
+<div class="prop">
+<p><strong>Prop 4</strong>. <em>Given a <span
+class="math inline">\(p\)</span>-dimensional submanifold <span
+class="math inline">\(M\)</span> and a codimension <span
+class="math inline">\(p+1\)</span> submanifold <span
+class="math inline">\(N\)</span>, we define a <em>linking number</em> as
+follows: choose a submanifold <span
+class="math inline">\(M&#39;\)</span> (resp. <span
+class="math inline">\(N&#39;\)</span>) such that <span
+class="math inline">\(M = \partial M&#39;\)</span> (resp. <span
+class="math inline">\(N = \partial N&#39;\)</span>), and define <span
+class="math display">\[\begin{aligned}
+\langle  M, N \rangle \equiv \mathrm{Int}(M, N&#39;)  =
+\mathrm{Int}(M&#39;, N)
+  
+\end{aligned}\]</span> where <span
+class="math inline">\(\mathrm{Int}\)</span> counts the number of
+oriented intersections between the two submanifolds. It is a theorem
+that this number is a homotopy invariant of <span
+class="math inline">\(M\)</span> and <span
+class="math inline">\(N\)</span>.</em></p>
+</div>
+<p>In the case of an ordinary symmetry, <span class="math inline">\(p =
+0\)</span> and <span class="math inline">\(O_i\)</span> which is
+point-like links with the codimension-1 manifold <span
+class="math inline">\(\Sigma_3\)</span> if <span
+class="math inline">\(\Sigma_3\)</span> bounds a manifold containing the
+support of <span class="math inline">\(O_i\)</span>.</p>
+<p>To generalize this, given a <span
+class="math inline">\(p+1\)</span>-form current <span
+class="math inline">\(j\)</span>, a codimension-<span
+class="math inline">\(p+1\)</span> submanifold <span
+class="math inline">\(\Sigma\)</span>, and a Lie algebra element <span
+class="math inline">\(\mathfrak g\)</span>, we define the symmetry
+defect operator to be <span class="math display">\[\begin{aligned}
+  U_g(\Sigma) \equiv \mathrm{e}^{\mathfrak g Q(\Sigma)} =
+\mathrm{e}^{\mathfrak g \int_{\Sigma}*j}.
+\end{aligned}\]</span> Then we will use the linking from before to
+define a general charged operator:</p>
+<div class="defn">
+<p><strong>Def 5</strong>. <em>Let <span
+class="math inline">\(\Sigma\)</span> be any codimension <span
+class="math inline">\(p+1\)</span> submanifold. We call <span
+class="math inline">\(\{O_i(M)\}\)</span> charged if for <span
+class="math inline">\(p\)</span>-submanifold <span
+class="math inline">\(M\)</span> which links once with <span
+class="math inline">\(\Sigma\)</span>, we have <span
+class="math display">\[\begin{aligned}
+    \langle \mathcal T\{U_g(\Sigma)O_i(M)\}\rangle = R_i^j(g)\langle
+\mathcal T\{O_j(M)\}\rangle
+  
+\end{aligned}\]</span> where <span class="math inline">\(O_i(M)\)</span>
+is supported on <span class="math inline">\(M\)</span>, and we used
+<span class="math inline">\(\mathcal T\)</span> to emphasize the
+time-ordering under the expectation value.</em></p>
+</div>
+<p>Notice that the time-order captures the conjugation of <span
+class="math inline">\(O_i\)</span> by <span
+class="math inline">\(U_g\)</span> that we saw in the zero-form case
+when <span class="math inline">\(M\)</span> is point-like and <span
+class="math inline">\(\Sigma\)</span> is a submanifold containing <span
+class="math inline">\(\Sigma\)</span>! This is also why we call the
+symmetry <span class="math inline">\(p-\)</span>form; because the
+operators which are charged under the symmetry are <span
+class="math inline">\(p\)</span>-dimensional.</p>
+<h1 id="application-em">Application: E&amp;M</h1>
+<p>We will illustrate these concepts in matter-free electromagnetism.
+First, we have seen how to write the Maxwell action as <span
+class="math display">\[\begin{aligned}
+  S = -\frac{1}{4e^2}\int \dd^4 x F^{\mu\nu}F_{\mu \nu} =
+-\frac{1}{2e^2}\int \langle  F, F \rangle_{g} = -\frac{1}{2e^2}\int F
+\wedge *F .
+\end{aligned}\]</span> We recognized the presence of the Riemannian
+inner product in the action <span class="math inline">\(S\)</span> and
+re-wrote it in terms of the Hodge-star! The field strength tensor <span
+class="math inline">\(F\)</span> is defined as <span
+class="math inline">\(F_{\mu \nu} = \partial_\mu A_\nu - \partial_\nu
+A_\mu\)</span>, which can be written as a 2-form in coordinate-free
+notation as <span class="math display">\[\begin{aligned}
+F = \dd A
+\end{aligned}\]</span> where <span class="math inline">\(\dd\)</span> is
+the exterior derivative. To find the classical equations of motion, we
+vary the action with respect to <span class="math inline">\(A\)</span>:
+<span class="math display">\[\begin{aligned}
+  \delta S &amp;= -\frac{1}{2e^2}\int \dd \delta A \wedge *F + F \wedge
+* \dd \delta A \notag\\
+  &amp;= -\frac{1}{e^2}\int \dd \delta A \wedge *F \notag\\
+  &amp;= -\frac{1}{e^2}\int \left[ \dd (\delta A \wedge *F) + \delta A
+\wedge \dd *F \right] \notag\\
+  &amp;= -\frac{1}{e^2} \int \delta A \wedge \dd *F
+\end{aligned}\]</span> where we used integration by parts and the
+symmetry of the <span class="math inline">\(\cdot \wedge * \cdot=
+\langle
+\cdot, \cdot  \rangle_g\)</span> operator. This shows that <span
+class="math display">\[\begin{aligned}
+\frac{\delta S}{\delta A} = -\frac{1}{e^2} \dd *F = 0
+\end{aligned}\]</span> so <span class="math inline">\(j = F\)</span> is
+the co-closed 2-form current! What is the corresponding symmetry
+operator? We have <span class="math display">\[\begin{aligned}
+Q(\Sigma_2) = \int_{\Sigma_2} *F
+\end{aligned}\]</span> The operator which is charged under this symmetry
+is the Wilson line operator. Given a closed 1-submanfold (a line) <span
+class="math inline">\(\gamma\)</span>, this is defined as <span
+class="math display">\[\begin{aligned}
+  W_q(\gamma) = \exp\left(\mathrm{i}q\int_\gamma A\right)
+\end{aligned}\]</span> We remember from undergrad E&amp;M that the term
+added to the action to couple to a charge <span
+class="math inline">\(q\)</span> is simply <span
+class="math display">\[\begin{aligned}
+- q\int \dd t A \cdot \dot x = -q\int_\gamma A
+\end{aligned}\]</span> so the Wilson loop corresponds to inserting the
+worldline <span class="math inline">\(\gamma\)</span> of a charge <span
+class="math inline">\(q\)</span>. It turns out that <span
+class="math inline">\(Q\)</span> is just Gauss’s law. To see how these
+operators link, consider the action in the presence of charge: <span
+class="math display">\[\begin{aligned}
+  S&#39; = -\frac{1}{2e^2}\int F \wedge *F + 2e^2 q A \wedge
+\delta_\gamma
+\end{aligned}\]</span> where <span
+class="math inline">\(\delta_\gamma\)</span> is a 3-form <span
+class="math inline">\(\delta\)</span>-function on the loop <span
+class="math inline">\(\gamma\)</span>. Carrying out the variation again,
+we now find that <span class="math display">\[\begin{aligned}
+  \delta S&#39; = \int \delta A \wedge \left(-\frac{1}{e^2}\dd *F +
+q\delta_\gamma\right) = 0 \implies \dd * F = qe^2\delta_\gamma
+\end{aligned}\]</span> Therefore the value of the charge is <span
+class="math display">\[\begin{aligned}
+Q(\Sigma_2) = \int_{\Sigma_2} *F = \int_{\Sigma_3} \dd *F =
+qe^2\int_{\Sigma_3}\delta_\gamma = qe^2 \langle  \Sigma_2 ,
+\gamma\rangle
+\end{aligned}\]</span> where we chose <span
+class="math inline">\(\partial \Sigma_3 = \Sigma_2\)</span> and applied
+Stokes’ theorem. We can see that this is just the linking number,
+confirming that <span class="math inline">\(W_q(\gamma)\)</span> is
+charged under the symmetry! Furthermore, since <span
+class="math inline">\(Q(\Sigma_2)\)</span> measures the amount of charge
+within <span class="math inline">\(\Sigma_2\)</span>, we can identify
+this charge with Gauss’s law, and the corresponding symmetry as
+conservation of field lines.</p>
+<p>Lastly, we remark on EM duality. Using <span
+class="math inline">\(\dd^2 = 0\)</span>, we see that <span
+class="math inline">\(\dd F = \dd^2A
+= 0\)</span>, also known as the Bianchi identity. Since <span
+class="math inline">\(** = \pm 1\)</span>, this gives another conserved
+2-form current <span class="math inline">\(*F\)</span> corresponding to
+conservation of magnetic field lines. The corresponding dual symmetry
+operators are known as t’Hooft loops.</p>
+<h1 id="coupling-to-gauge-fields">Coupling to gauge fields</h1>
+<p>The principal way to study an ordinary symmetry is to couple it to a
+1-form gauge field. Intuitively, domains in the gauge field become
+domains of the symmetry. To generalize this, we can see that a <span
+class="math inline">\(p+1\)</span>-form current naturally couples to a
+<span class="math inline">\(p+1\)</span>-form gauge field: <span
+class="math display">\[\begin{aligned}
+  S_{\mathrm{int}} = \int A \wedge * j
+\end{aligned}\]</span> What we need to verify is that the action is
+invariant under a gauge transformation <span class="math inline">\(A
+\mapsto A + \dd \lambda\)</span>, where <span
+class="math inline">\(\lambda\)</span> is a <span
+class="math inline">\(p\)</span>-form. We see that <span
+class="math display">\[\begin{aligned}
+  \delta S_{\mathrm{int}} = \int \dd \lambda \wedge * j = (-1)^{p+1}\int
+\lambda \wedge \dd * j = 0,
+\end{aligned}\]</span> so the invariance of this “minimal coupling”
+under gauge transformations is implied by the co-closure condition.</p>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-luo2024lecture" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R.
+Luo, Q.-R. Wang, and Y.-N. Wang, <span>“Lecture notes on generalized
+symmetries and applications,”</span> <em>Physics Reports</em>, vol.
+1065, pp. 1–43, 2024.</div>
+</div>
+<div id="ref-brennan2023introductiongeneralizedglobalsymmetries"
+class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">T.
+D. Brennan and S. Hong, <span>“Introduction to generalized global
+symmetries in QFT and particle physics.”</span> 2023. Available: <a
+href="https://arxiv.org/abs/2306.00912">https://arxiv.org/abs/2306.00912</a></div>
+</div>
+<div id="ref-Gaiotto_2015" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">D.
+Gaiotto, A. Kapustin, N. Seiberg, and B. Willett, <span>“Generalized
+global symmetries,”</span> <em>Journal of High Energy Physics</em>, vol.
+2015, no. 2, Feb. 2015, doi: <a
+href="https://doi.org/10.1007/jhep02(2015)172">10.1007/jhep02(2015)172</a>.</div>
+</div>
+</div>

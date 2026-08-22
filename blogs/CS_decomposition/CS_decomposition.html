@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>Blog Post - Ben McDonough</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Link to your existing stylesheet -->
+        <link rel="stylesheet" type="text/css" href="../../blog-styles.css">
+        <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+        
+        <!-- MathJax Script for rendering LaTeX math -->
+          <script>
+            window.MathJax = {
+              loader: {
+                load: ['[tex]/physics']
+              },
+              tex: {
+                packages: {'[+]': ['physics']}
+              }
+            };
+        </script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    <body>
+    <header>
+        <h1>Ben McDonough</h1>
+        <nav>
+            <a href="../../index.html#research">Research</a>
+            <a href="../../index.html#projects">Projects</a>
+            <a href="../../index.html#community">Community</a>
+            <a href="../../blog.html">Blog</a>
+        </nav>
+    </header>
+    
+    <!-- Your Blog Content Goes Here -->
+    <main class="card" style="margin-top: 40px; padding: 40px;">
+        <!-- PASTE PANDOC OUTPUT HERE -->
+        <p><span>Angles between subspaces</span><br />
+<strong>Blog Post 2-10-25</strong></p>
+<h1 id="introduction">Introduction</h1>
+<p>It is often desirable to measure the difference between two
+subspaces. The case where this often arises is in perturbation theory.
+For instance, let <span class="math inline">\(H\)</span> be Hermitian,
+and consider <span class="math inline">\(H \oplus (1 + \epsilon
+Z)\)</span> and <span class="math inline">\(H \oplus (1 +
+\epsilon X)\)</span>. As <span class="math inline">\(\epsilon \to
+0\)</span>, it is clear that the eigenvalues of both matrices approach
+each other, but what about the eigenvectors? In the first case, the new
+eigenvectors are <span class="math inline">\(\ket{0}, \ket{1}\)</span>,
+and in the second case they are <span class="math inline">\(\ket{+},
+\ket{-}\)</span> for any finite value of <span
+class="math inline">\(\epsilon\)</span>. The key realization is that the
+subspaces they span will become closer and closer. We can characterize
+the separation of 1D subspaces by an angle <span
+class="math inline">\(\theta\)</span>, and this idea is generalized to
+multi-dimensional subspaces through the notion of principal angles.</p>
+<h1 id="principal-angles-and-the-svd">Principal angles and the SVD</h1>
+<div class="defn">
+<p><strong>Def 1</strong>. <em>Given two (finite-dimensional) subspaces
+<span class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span>, let <span
+class="math inline">\(\cos(\theta_1) = \langle \vec u, \vec
+v\rangle\)</span>, where <span class="math inline">\(\mathbb B\)</span>
+is the unit ball. Since <span class="math inline">\(\mathbb B\)</span>
+is compact in finite dimensions, we can choose <span
+class="math inline">\(u_1, v_1\)</span> that achieve the maximal <span
+class="math inline">\(\theta_1\)</span>. With <span
+class="math inline">\(\{u_1, \dots, u_k\}\)</span> and <span
+class="math inline">\(\{v_1, \dots, v_k\}\)</span> constructed, we
+choose <span class="math inline">\(u_{k+1}, v_{k+1}\)</span> to maximize
+<span class="math inline">\(\cos(\theta_k)\)</span> subject to the
+constraint <span class="math inline">\(\langle u_{k+1}, u_{i \leq
+k}\rangle = \langle v_{k+1}, v_{i \leq k}\rangle = 0\)</span>. The
+vectors <span class="math inline">\(\{u_1, \dots, u_n\}\)</span> and
+<span class="math inline">\(\{v_1, \dots, v_n\}\)</span> are called
+principal vectors, and <span class="math inline">\(\{\theta_1, \dots,
+\theta_k\}\)</span> are called principal angles.</em></p>
+</div>
+<div class="rmk">
+<p><strong>Remark 1</strong>. <em>While the principal vectors are not
+unique, the principal angles are.</em></p>
+</div>
+<div class="defn">
+<p><strong>Def 2</strong>. <em>Let <span
+class="math inline">\(M\)</span> be a matrix. <span
+class="math inline">\(\Vert M \Vert_2 = \max_{\vec v \in \mathbb B}\Vert
+M \vec v \Vert_2\)</span> is called the Schatten <span
+class="math inline">\(2-\)</span>norm.</em></p>
+</div>
+<div class="prop">
+<p><strong>Prop 1</strong>. <em><span class="math inline">\(\Vert M
+\Vert_2\)</span> is given by <span class="math inline">\(\Vert M \Vert_2
+= \max_{y \in \mathbb B}\max_{x \in \mathbb B}\langle y,
+Mx\rangle\)</span>. This follows from the singular value
+decomposition.</em></p>
+</div>
+<div class="prop">
+<p><strong>Prop 2</strong>. <em>Let <span
+class="math inline">\(P_F\)</span> project onto <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(P_G\)</span> project onto <span
+class="math inline">\(G\)</span>. Then the canonical angles are given by
+the singular values of <span class="math inline">\(P_F^\dagger
+P_G\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Simply note that the largest singular value is <span
+class="math display">\[\max_{y \in \mathbb B}\max_{x \in \mathbb
+B}\langle P_F y, P_G x\rangle = \max_{y \in \mathbb B \cap F}\max_{x \in
+\mathbb B \cap G} \langle y,x\rangle = \theta_1\]</span> where <span
+class="math inline">\(\theta_1\)</span> is the largest principal angle.
+The iteration to the subsequent singular values is the same as the one
+used to find the principal angles. ◻</p>
+</div>
+<h1 id="the-cs-decomposition">The CS decomposition</h1>
+<div class="prop">
+<p><strong>Prop 3</strong>. <em>If <span
+class="math inline">\(A\)</span> is a submatrix of <span
+class="math inline">\(M\)</span>, then the singular values of <span
+class="math inline">\(A\)</span> are bounded by the maximum singular
+value of <span class="math inline">\(M\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Put <span class="math display">\[M = \begin{pmatrix}A
+&amp; B \\ C &amp; D\end{pmatrix}\]</span> The maximum singular value of
+<span class="math inline">\(M\)</span> is given by <span
+class="math inline">\(\Vert M \Vert_2\)</span>, which follows from the
+singular value decomposition. Then <span
+class="math display">\[\begin{aligned}
+    \Vert M \Vert_2^2 \geq \Vert M \vec v\Vert_2^2 = \Vert A \vec v
+\Vert_2^2 + \Vert C \vec v \Vert_2^2 \geq \Vert A \vec v \Vert_2^2
+\end{aligned}\]</span> Taking the supremum on both sides and using the
+definition <span class="math inline">\(\Vert A \Vert_2 = \sup_{\vec v
+\in \mathbb B}\Vert A\vec v \Vert\)</span> proves the claim. ◻</p>
+</div>
+<div class="thm">
+<p><strong>Theorem 1</strong> (CS Decomposition (thin)). <em>Let <span
+class="math inline">\(M\)</span> be a <span class="math inline">\(2k
+\times 2k\)</span> matrix with orthonormal columns. Then there exists a
+unitary <span class="math inline">\(U = \operatorname{diag}(U_1,
+U_2)\)</span> and <span class="math inline">\(V\)</span> such that <span
+class="math display">\[\begin{aligned}
+    U^\dagger M V &amp;= \begin{pmatrix}C \\ S\end{pmatrix}
+\end{aligned}\]</span> where <span class="math inline">\(C =
+\operatorname{diag}(\cos(\theta_1), \dots, \cos(\theta_k))\)</span> and
+<span class="math inline">\(S = \operatorname{diag}(\sin(\theta_1),
+\dots, \sin(\theta_k))\)</span> for some angles <span
+class="math inline">\(0 \leq \theta_1, \dots, \theta_k \leq
+1\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(M = \begin{pmatrix}X
+\\ Y\end{pmatrix}\)</span>. Choose unitaries <span
+class="math inline">\(U_1, V\)</span> such that <span
+class="math inline">\(U_1^\dagger X V = C\)</span>, where <span
+class="math inline">\(C = \operatorname{diag}(c_1, \dots, c_k)\)</span>.
+Since <span class="math inline">\(X\)</span> is a submatrix of <span
+class="math inline">\(M\)</span> whose singular values are all 1, we
+have <span class="math inline">\(c_i \leq 1\)</span>. Then <span
+class="math display">\[\begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+1\end{pmatrix}\begin{pmatrix}X \\ Y\end{pmatrix}V =
+\begin{pmatrix}U_1^\dagger X V \\ YV\end{pmatrix} = \begin{pmatrix}C \\
+YV\end{pmatrix}\]</span> This transformation preserves the
+orthonormality of the columns of <span class="math inline">\(M\)</span>.
+We have <span class="math inline">\(M^\dagger M = C^2 + (YV)^\dagger
+(YV)  = 1\)</span>. This implies that the columns of <span
+class="math inline">\(YV\)</span> are orthogonal, and their norm is
+<span class="math inline">\(\Vert y_i \Vert^2 = 1-c_i^2\)</span>. Thus
+we can find a unitary matrix <span class="math inline">\(Q\)</span> so
+that <span class="math inline">\(Q^\dagger YV = S\)</span>, where <span
+class="math inline">\(S = \operatorname{diag}(1-c_1^2, \dots,
+1-c_k^2)\)</span>. Therefore <span
+class="math display">\[\begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+Q^\dagger\end{pmatrix}\begin{pmatrix}X \\ Y\end{pmatrix}V =
+\begin{pmatrix}U_1^\dagger X V \\ QYV\end{pmatrix} = \begin{pmatrix}C \\
+S\end{pmatrix}\]</span> This completes the proof. ◻</p>
+</div>
+<div class="thm">
+<p><strong>Theorem 2</strong> (CS decomposition). <em>Let <span
+class="math display">\[\begin{aligned}
+    M = \begin{bmatrix}X &amp; Y \\ Z &amp; W\end{bmatrix}
+\end{aligned}\]</span> be a unitary matrix with <span
+class="math inline">\(k \times k\)</span> blocks <span
+class="math inline">\(X, Y, Z, W\)</span>. Then there exist unitaries
+<span class="math inline">\(U = \operatorname{diag}(U_1, U_2)\)</span>,
+<span class="math inline">\(V = \operatorname{diag}(V_1, V_2)\)</span>
+such that <span class="math display">\[U^\dagger M V = \begin{pmatrix}C
+&amp; -S \\ S &amp; C\end{pmatrix}\]</span> where <span
+class="math inline">\(C = \operatorname{diag}(\cos(\theta_1), \dots,
+\cos(\theta_k))\)</span> and <span class="math inline">\(S =
+\operatorname{diag}(\sin(\theta_1), \dots, \sin(\theta_k))\)</span> with
+angles <span class="math inline">\(\theta_1, \dots, \theta_k \leq
+\frac{\pi}{2}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> First, choose <span class="math inline">\(U_1,
+V_1\)</span> so that <span class="math inline">\(U_1^\dagger X V_1 =
+C\)</span>. Since <span class="math inline">\(X\)</span> is a submatrix
+of <span class="math inline">\(M\)</span> whose singular values are all
+1, we have <span class="math inline">\(C = \operatorname{diag}(c_1,
+\dots, c_k)\)</span> where <span class="math inline">\(0 \leq c_i \leq
+1\)</span>. Then we have <span
+class="math display">\[\begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+1\end{pmatrix}\begin{pmatrix}X &amp; Y \\ Z &amp; W\end{pmatrix}
+\begin{pmatrix}V_1 &amp; 0 \\ 0 &amp; 1\end{pmatrix} =
+\begin{pmatrix}U_1^\dagger X V_1 &amp; U_1^\dagger Y \\ ZV_1 &amp;
+W\end{pmatrix} = \begin{pmatrix}C &amp; Y&#39; \\ Z&#39; &amp;
+W\end{pmatrix}\]</span> This transformation preserves the orthonormality
+of the rows and columns. Therefore <span class="math inline">\(\langle
+\vec z&#39;_i, \vec z&#39;_j \rangle = \delta_{ij}(1-c_i^2)\)</span>.
+This same equation is satisfied by the rows of <span
+class="math inline">\(Y&#39;\)</span>. Therefore we can find unitaries
+<span class="math inline">\(R\)</span> and <span
+class="math inline">\(L\)</span> such that <span
+class="math inline">\(L^\dagger Z&#39; = T\)</span> and <span
+class="math inline">\(Y&#39;R = -S\)</span>, where <span
+class="math inline">\(S = \operatorname{diag}(1-c_1^2, \dots,
+1-c_k^2)\)</span>. As such,</p>
+<p><span class="math display">\[\begin{pmatrix}U_1^\dagger &amp; 0 \\ 0
+&amp; L^\dagger\end{pmatrix}\begin{pmatrix}X &amp; Y \\ Z &amp;
+W\end{pmatrix} \begin{pmatrix}V_1 &amp; 0 \\ 0 &amp; R\end{pmatrix} =
+\begin{pmatrix}U_1^\dagger X V_1 &amp; U^\dagger_1YR \\  L^\dagger ZV_1
+&amp; L^\dagger WR\end{pmatrix} = \begin{pmatrix}C &amp; S \\ -S &amp;
+W&#39;\end{pmatrix}\]</span> Writing <span class="math inline">\(C = 1
+\oplus C&#39;\)</span>, where <span
+class="math inline">\(C&#39;\)</span> consists of <span
+class="math inline">\(c_i\)</span> strictly less than 1, then we have
+<span class="math display">\[\begin{pmatrix}C &amp; S \\ -S &amp;
+W&#39;\end{pmatrix} = \begin{pmatrix}\mqty{1 &amp; 0 \\ 0 &amp;
+C&#39;}  &amp; \mqty{0 &amp; 0 \\ 0 &amp; S&#39;} \\ \mqty{0 &amp; 0 \\
+0 &amp; -S&#39;} &amp; \mqty{X_1 &amp; X_2 \\ X_3 &amp;
+X_4}\end{pmatrix}\]</span> Taking the inner product of the last row with
+the second row gives <span
+class="math inline">\(S&#39;X_4^\dagger-S&#39;C&#39; = 0\)</span>, where
+the unitarity of <span class="math inline">\(M\)</span> guarantees that
+the inner product of rows is zero. Since <span
+class="math inline">\(S&#39;\)</span> is invertible (because <span
+class="math inline">\(1-c_i^2 &gt; 0\)</span>), we have <span
+class="math inline">\(X_4 = C&#39;\)</span>, and by the orthonormality
+of the rows, <span class="math inline">\(X_2 = X_3 = 0\)</span>. This
+then implies that <span class="math inline">\(X_1 = 1\)</span> by the
+same logic. Therefore we have <span
+class="math display">\[\begin{pmatrix}\mqty{1 &amp; 0 \\ 0 &amp;
+C&#39;}  &amp; \mqty{0 &amp; 0 \\ 0 &amp; S&#39;} \\ \mqty{0 &amp; 0 \\
+0 &amp; -S&#39;} &amp; \mqty{X_1 &amp; X_2 \\ X_3 &amp;
+X_4}\end{pmatrix} = \begin{pmatrix}\mqty{1 &amp; 0 \\ 0 &amp;
+C&#39;}  &amp; \mqty{0 &amp; 0 \\ 0 &amp; S&#39;} \\ \mqty{0 &amp; 0 \\
+0 &amp; -S&#39;} &amp; \mqty{1 &amp; 0 \\ 0 &amp; C&#39;}\end{pmatrix}
+=\begin{pmatrix}C &amp; -S \\ S &amp; C\end{pmatrix}\]</span> Since
+<span class="math inline">\(0 \leq c_i \leq 1\)</span>, we can put <span
+class="math inline">\(c_i \equiv \cos(\theta_i)\)</span> for some <span
+class="math inline">\(0 \leq \theta \leq \pi/2\)</span>, and <span
+class="math inline">\(s_i = 1-c_i^2 = \sin(\theta_i)\)</span>. This
+completes the proof. ◻</p>
+</div>
+<h1 id="halmos-two-projections-theorem">Halmos two-projections
+theorem</h1>
+<div class="thm">
+<p><strong>Theorem 3</strong> (Halmos two-projection theorem (finite
+dimensions)). <em>Suppose that <span class="math inline">\(F, G \leq
+V\)</span> are finite-dimensional subspaces of equal dimensions <span
+class="math inline">\(k\)</span> with <span class="math inline">\(\dim V
+= 2k\)</span> and <span class="math inline">\(P_F, P_G\)</span> are
+projectors onto these spaces. Put <span class="math display">\[P(\theta)
+= \begin{pmatrix}\cos^{2}(\theta) &amp; \sin(\theta)\cos(\theta) \\
+\sin(\theta)\cos(\theta)  &amp; \sin^{2}(\theta)\end{pmatrix}\]</span>
+and <span class="math display">\[P_0 = \begin{pmatrix}1 &amp; 0 \\ 0
+&amp; 0\end{pmatrix}\]</span> then there are angles <span
+class="math inline">\(\theta_1, \dots, \theta_k\)</span> and a basis in
+which <span class="math display">\[\begin{aligned}
+    P_F &amp;= \begin{pmatrix}P_0 &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp;
+P_0 &amp; \dots &amp; 0 \\ 0 &amp; 0 &amp; \dots &amp; P_0\end{pmatrix}
+\\
+    P_G &amp;= \begin{pmatrix}P(\theta_1) &amp; 0 &amp; \dots &amp; 0\\
+0 &amp; P(\theta_2) &amp; \dots &amp; 0 \\ 0 &amp; 0 &amp; \dots &amp;
+P(\theta_k)\end{pmatrix}
+\end{aligned}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(X,X_\perp, Y,
+Y_{\perp}\)</span> be matrices whose columns form a basis for <span
+class="math inline">\(F,F^\perp, G, G^\perp\)</span> respectively. Then
+<span class="math inline">\((X, X_\perp)\)</span> is unitary. Thus <span
+class="math inline">\(M = (X, X_\perp)^\dagger Y\)</span> has orthogonal
+columns. Therefore we can find <span class="math inline">\(U_1, U_2,
+V\)</span> such that <span class="math display">\[U^\dagger M V =
+\begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+U_2^\dagger\end{pmatrix}\begin{pmatrix}X^\dagger Y \\ X_\perp^\dagger
+Y\end{pmatrix}V = \begin{pmatrix}U_1^\dagger X^\dagger YV \\ U_2^\dagger
+X_\perp^\dagger YV\end{pmatrix} = \begin{pmatrix}C \\
+S\end{pmatrix}\]</span> Since <span class="math inline">\(P_F =
+XX^\dagger\)</span> and <span class="math inline">\(P_G =
+YY^\dagger\)</span>, putting <span class="math inline">\(U = (XU_1,
+X_{\perp} U_2)\)</span>, we have <span class="math display">\[U^\dagger
+P_F U = \begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+U_2^\dagger\end{pmatrix}\begin{pmatrix}1 &amp; 0 \\ 0 &amp;
+0\end{pmatrix} \begin{pmatrix}U_1^\dagger &amp; 0 \\ 0 &amp;
+U_2^\dagger\end{pmatrix} = \begin{pmatrix}1 &amp; 0 \\ 0 &amp;
+0\end{pmatrix}\]</span> <span class="math display">\[U^\dagger P_G U =
+(U^\dagger Y V)(V^\dagger Y^\dagger U) = \begin{pmatrix}C \\
+S\end{pmatrix} \begin{pmatrix}C &amp; S\end{pmatrix} =
+\begin{pmatrix}C^2 &amp; CS \\ CS &amp; S^2\end{pmatrix}\]</span> Row
+and column operations corresponding to unitary matrices can then be used
+to bring this into the desired form. ◻</p>
+</div>
+<p>There is also a slick proof using group representation theory:</p>
+<div class="proof">
+<p><em>Proof using group representation theory.</em> Let <span
+class="math inline">\(P_F, P_G\)</span> be as before. Put <span
+class="math inline">\(R_F = 1 - 2P_F\)</span> and <span
+class="math inline">\(R_G = 1-2P_G\)</span> (these are reflections about
+the given subspaces). One can check that these are unitary operators.
+Putting <span class="math inline">\(s = R_F\)</span> and <span
+class="math inline">\(r = R_FR_G\)</span>, we can see that <span
+class="math inline">\(s^2 = (1-2P_F)(1-2P_F) = 1-4P_F + 4P_F^2 =
+1\)</span> and <span class="math display">\[srs = R_F^2R_G R_F  = R_GR_F
+= r^{-1}\]</span> Thus, the group <span class="math inline">\(G\)</span>
+generated by <span class="math inline">\(R_F, R_G\)</span> is an
+infinite dihedral group, and <span class="math inline">\(\langle r
+\rangle\)</span> is a normal abelian subgroup.</p>
+<p>Now we classify the irreducible representations <span
+class="math inline">\(V\)</span> of <span
+class="math inline">\(G\)</span>. Let <span
+class="math inline">\(N\)</span> be the group generated by <span
+class="math inline">\(r\)</span>. There are two cosets in <span
+class="math inline">\(G/N\)</span>, represented by <span
+class="math inline">\(e\)</span> and <span
+class="math inline">\(s\)</span>. Let <span class="math inline">\(W \leq
+V\)</span> be an irreducible representation of <span
+class="math inline">\(N\)</span>. Then <span class="math inline">\(W +
+sW\)</span> is an invariant subspace of <span
+class="math inline">\(V\)</span>, so <span class="math inline">\(V = W +
+sW\)</span>. By Shur’s lemma, since <span
+class="math inline">\(N\)</span> is Abelian, <span
+class="math inline">\(W\)</span> is one-dimensional. This classifies all
+the irreps, and also gives us a way to construct them. We must have
+<span class="math inline">\(r \mapsto e^{i\lambda}\)</span> for some
+<span class="math inline">\(\lambda\)</span>. Therefore <span
+class="math inline">\(V\)</span> is spanned by <span
+class="math inline">\(v, sv\)</span>, and since <span
+class="math inline">\(s^2 = 1\)</span>, we have <span
+class="math inline">\(s \mapsto \begin{pmatrix}0 &amp; 1\\ 1 &amp;
+0\end{pmatrix}\)</span> in this basis. Since <span
+class="math inline">\(rs = sr^{-1}\)</span>, we have <span
+class="math inline">\(r = \operatorname{diag}(e^{i\lambda},
+e^{-i\lambda})\)</span>, where <span class="math inline">\(\lambda &lt;
+\pi\)</span> (this is because <span class="math inline">\(\lambda &gt;
+\pi\)</span> is clearly isomorphic to a representation with <span
+class="math inline">\(\lambda &lt; \pi\)</span>). A basis transformation
+brings these operators into the form <span
+class="math display">\[\begin{aligned}
+        s &amp;= \begin{pmatrix}-1 &amp; 0 \\ 0 &amp; 1\end{pmatrix} \\
+        r &amp;= \begin{pmatrix}\cos(\lambda) &amp; -\sin(\lambda) \\
+\sin(\lambda) &amp; \cos(\lambda)\end{pmatrix}
+    
+\end{aligned}\]</span> Since all unitary representations are completely
+reducible, we can decompose <span class="math inline">\(R_F,
+R_G\)</span> into a block-diagonal form with blocks resembling the
+above. Then the blocks of the projectors are given by <span
+class="math display">\[P_F = \frac{1-s}{2} = \begin{pmatrix}1 &amp; 0 \\
+0 &amp; 0\end{pmatrix}\]</span> <span class="math display">\[P_G =
+\frac{1-sr}{2} = \begin{pmatrix}\cos^{2}(\lambda/2) &amp;
+\cos(\lambda/2)\sin(\lambda/2) \\ \cos(\lambda/2)\sin(\lambda/2) &amp;
+\sin^{2}(\lambda/2)\end{pmatrix}\]</span> Since we can take <span
+class="math inline">\(\lambda/2 &lt; \pi/2\)</span>, the conclusion is
+the same. ◻</p>
+</div>
+<div class="prop">
+<p><strong>Prop 4</strong>. <em>The angles in the two-projections
+theorem are the principal angles between the subspaces.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Consider <span class="math display">\[P_F^\dagger P_G
+\sim \begin{pmatrix}1 &amp; 0 \\ 0 &amp; 0\end{pmatrix}
+\begin{pmatrix}C^2 &amp; CS \\ CS &amp; S^2\end{pmatrix} =
+\begin{pmatrix}C^2 &amp; CS \\ 0 &amp; 0\end{pmatrix}\]</span> Then the
+singular values of the above matrix are the square roots of the
+eigenvalues of <span class="math display">\[\begin{pmatrix}C^2 &amp; CS
+\\ 0 &amp; 0\end{pmatrix} \begin{pmatrix}C^2 &amp; CS \\ 0 &amp;
+0\end{pmatrix}^\dagger = \begin{pmatrix}C^2(C^2+S^2) &amp; 0 \\ 0 &amp;
+0\end{pmatrix} = \begin{pmatrix}C^2 &amp; 0 \\ 0 &amp;
+0\end{pmatrix}\]</span> Therefore the eigenvalues are just the diagonal
+entries of <span class="math inline">\(C\)</span>, which are <span
+class="math inline">\(\cos(\theta_1), \dots,
+\cos(\theta_k)\)</span>. ◻</p>
+</div>
+<h2 id="connection-to-direct-rotations">Connection to direct
+rotations</h2>
+<p>Note that the projectors <span class="math inline">\(P_0\)</span> and
+<span class="math inline">\(P(\theta)\)</span> are exactly the
+projection operators we would get if <span
+class="math inline">\(F\)</span> and <span
+class="math inline">\(G\)</span> were two dimensional subspaces spanned
+by <span class="math inline">\(v_1\)</span> and <span
+class="math inline">\(\cos(\theta)v_1 + \sin(\theta)v_2\)</span>. This
+is made even clearer by the group-theoretic proof; the images of <span
+class="math inline">\(s\)</span> and <span
+class="math inline">\(r\)</span> in the irreps of the infinite dihedral
+group are just an Euler rotation matrix and a reflection. The action of
+<span class="math inline">\(G\)</span> is therefore always expressible
+as a action on a direct sum of two-dimensional subspaces. This gives a
+simple description of direct rotations between subspaces. Since a direct
+rotation between two 1D subspaces is always given by an Euler rotation
+matrix, a direct rotation more generally can be written as a sum of
+these direct rotations between two subspaces.</p>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-behncke1971projections" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">H.
+Behncke, <span>“Projections in hilbert space II,”</span> <em>Tohoku
+Mathematical Journal, Second Series</em>, vol. 23, no. 3, pp. 349–352,
+1971.</div>
+</div>
+<div id="ref-bottcher2010gentle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A.
+Böttcher and I. M. Spitkovsky, <span>“A gentle guide to the basics of
+two projections theory,”</span> <em>Linear Algebra and its
+Applications</em>, vol. 432, no. 6, pp. 1412–1459, 2010.</div>
+</div>
+<div id="ref-golub2013matrix" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">G.
+H. Golub and C. F. Van Loan, <em>Matrix computations</em>. JHU press,
+2013.</div>
+</div>
+<div id="ref-bjorck1973numerical" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">A.
+Björck and G. H. Golub, <span>“Numerical methods for computing angles
+between linear subspaces,”</span> <em>Mathematics of computation</em>,
+vol. 27, no. 123, pp. 579–594, 1973.</div>
+</div>
+<div id="ref-bhatia2013matrix" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">R.
+Bhatia, <em>Matrix analysis</em>, vol. 169. Springer Science &amp;
+Business Media, 2013.</div>
+</div>
+</div>
+    </main>
+    </body>
+</html>
