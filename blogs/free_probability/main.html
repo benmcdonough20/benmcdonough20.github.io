@@ -1,0 +1,671 @@
+<p><span>Free Probability and Random matrices</span><br />
+<span>Math Physics Journal Club notes</span> 2026-09-04<br />
+Ben Bobell and Ben McDonough</p>
+<h1 id="introduction">Introduction</h1>
+<p>Whenever you roll a die, flip a coin, or do election forecasting on
+Polymarket, you are engaging in probability theory. Classical
+probability centers around random variables which commute—a measurement
+of one variable has no impact on the measurement of another. However,
+quantum mechanics violates this classical intuition, and so we need our
+probabilistic theories to work for random objects (like matrices) that
+do not commute.</p>
+<p>The energy levels of a large nucleus are best described by the
+Hamiltonian, which behaves like a massive ensemble of non-commuting
+random matrices whose spectral moments rigidly concentrate around an
+average. In the 1980s, Voiculescu began formulating what independence
+would look like for these noncommuting objects. This notion is called
+<em>free independence</em>. By replacing classical independence with
+free independence, the strict order of noncommutative variables is
+preserved. Furthermore, by trading the standard cumulant generating
+function for the <span class="math inline">\(R\)</span>-transform—a
+mathematical analogue of the free energy—we unlock a purely
+noncommutative central limit theorem that perfectly dictates the
+macroscopic behavior of these quantum systems.</p>
+<h1 id="central-limit-theorem-and-combinatorics">Central limit theorem
+and combinatorics</h1>
+<h2 id="gaussian-moments">Gaussian moments</h2>
+<p>Consider random coin flips <span class="math inline">\(\{X_i\}_{i =
+1, \ldots, N}\)</span> which take the value <span
+class="math inline">\(\pm 1\)</span> with probability <span
+class="math inline">\(1/2\)</span>, and consider the sums <span
+class="math display">\[\begin{align}
+S_N \equiv \frac{1}{\sqrt{N}}\sum_{i = 1}^N X_i\label{eq:partial_sum}
+\end{align}\]</span> The distribution of <span
+class="math inline">\(S_N\)</span> is characterized completely by its
+moments <span class="math display">\[\begin{align}
+M_d \equiv \langle S_N^d\rangle.
+\end{align}\]</span> In terms of the <span
+class="math inline">\(X_i\)</span>, the moment <span
+class="math inline">\(M_d\)</span> can be expanded into <span
+class="math display">\[\begin{align}
+\frac{1}{N^{d/2}}\sum_{i_1, \ldots, i_d}\langle X_{i_1} \ldots
+X_{i_d}\rangle
+\end{align}\]</span> We can organize the sum by set partitions of <span
+class="math inline">\(\{1, \ldots, d\}\)</span> by grouping together the
+<span class="math inline">\(i_j\)</span>’s, i.e. if <span
+class="math inline">\(i_j = i_k\)</span>, then <span
+class="math inline">\(j\)</span> and <span
+class="math inline">\(k\)</span> belong to the same block of the
+partition: <span class="math display">\[\begin{align}
+M_d = \frac{1}{N^{d/2}}\sum_{\pi \in \mathcal
+P(d)}\sum_{\lambda_i}\langle X_{\lambda_1}^{|\pi_1|} \rangle \cdots
+\langle X_{\lambda_k}^{|\pi_k|}\rangle
+\end{align}\]</span> where <span class="math inline">\(\mathcal
+P(d)\)</span> is the set of set partitions and <span
+class="math inline">\(|\pi_i|\)</span> is the size of the <span
+class="math inline">\(i^{\text{th}}\)</span> block. We can see that the
+factor of <span class="math inline">\(1/N^{d/2}\)</span> is only
+canceled if <span class="math inline">\(k \geq d/2\)</span>. However,
+since <span class="math inline">\(M_d = 0\)</span> if <span
+class="math inline">\(d\)</span> is odd, each block must have an even
+number of elements, and therefore <span class="math inline">\(k \leq
+d/2\)</span>. Therefore, <span class="math display">\[\begin{align}
+M_d = \sum_{\substack{\pi \in \mathcal P(d) // k = d/2}}1 = (d-1)(d-3)
+\ldots = (d-1)!!,
+\end{align}\]</span> i.e. the moment is given by the number of pairings
+of <span class="math inline">\(d\)</span> elements. There are <span
+class="math inline">\(d-1\)</span> ways to pair the first, <span
+class="math inline">\(d-3\)</span> ways to pair the second, etc. We
+notice that <span class="math display">\[\begin{align}
+(2d-1)!! &amp;= \frac{2d(2d-1)(2d-2)(2d-3)\ldots 1}{2d(2d-2)(2d-4)\ldots
+1} = \frac{(2d)!}{2^d d!}
+\end{align}\]</span></p>
+<p>We know from the central limit theorem that the distribution of <span
+class="math inline">\(S_N\)</span> is Gaussian. To prove this, it is
+sufficient to examine the Fourier transform of the PDF, which is the
+characteristic function: <span class="math display">\[\begin{align}
+\langle \mathrm e^{\mathrm it S_N} \rangle &amp;= \sum_{d  =0}^\infty
+\frac{(\mathrm it)^{d}}{d!}\langle S_N^d\rangle =\sum_{d  =0}^\infty
+\frac{(\mathrm it)^{2d}}{(2d)!}\frac{(2d)!}{2^dd!} = \sum_{d = 0}^\infty
+\frac{(-t^2/2)^d}{d!} = \mathrm e^{-t^2/2}
+\end{align}\]</span> We can evaluate the characteristic function of the
+Gaussian directly; <span class="math display">\[\begin{align}
+\frac{1}{\sqrt{4\pi}}\int \dd x\mathrm e^{\mathrm itx}\mathrm e^{-x^2/2}
+= \mathrm e^{-t^2/2}\frac{1}{\sqrt{4\pi}}\int \dd x \mathrm
+e^{-\frac{1}{2}(x + \mathrm it)^2} = \mathrm e^{-t^2/2},
+\end{align}\]</span> where we used the analytic continuation trick to
+evaluate the integral. This illustrates the connection between the
+central limit theorem, i.i.d. variables, and combinatorics.</p>
+<h2 id="spectral-distribution-of-gaussian-matrices">Spectral
+distribution of Gaussian matrices</h2>
+<p>Suppose that a <span class="math inline">\(n\times n\)</span>
+Hermitian matrix <span class="math inline">\(M\)</span> is drawn from an
+i.i.d ensemble. The relevant quantity for an ensemble of non-commuting
+variables is the moments of the <em>eigenvalue</em> distribution <span
+class="math display">\[\begin{align}
+M_d = \left\langle\frac{1}{n}\sum_{\lambda}\lambda^d\right\rangle_M =
+\frac{1}{n}\langle \tr(M^d) \rangle_M
+\end{align}\]</span> where the average in both cases is taken over <span
+class="math inline">\(M\)</span>. If <span
+class="math inline">\(M\)</span> is drawn from the ensemble of Gaussian
+matrices, we can equivalently consider <span
+class="math display">\[\begin{align}
+M = \lim_{N \to \infty}\frac{1}{\sqrt{N}}\sum_{i=1}^N B^{(i)}
+\end{align}\]</span> where <span class="math inline">\(B^{(i)}\)</span>
+are symmetric Bernoilli matrices, i.e. with entries drawn from <span
+class="math inline">\(\{-1,1\}\)</span> with probability <span
+class="math inline">\(1/2\)</span>. The moments are <span
+class="math display">\[\begin{align}
+M_d = \frac{1}{n\sqrt{N^d}}\sum_{i_1, \ldots, i_d}^n\sum_{j_1,\ldots,
+j_d}^N \langle B^{(j_1)}_{i_1i_2} B^{(j_2)}_{i_2i_3} \ldots
+B^{(j_d)}_{i_di_1}\rangle.
+\end{align}\]</span> From the gaussian discussion, we know that
+variables must be paired, and so the sum over the <span
+class="math inline">\(j_i\)</span>’s cancel the factor of <span
+class="math inline">\(N^{-d/2}\)</span>. The sum over <span
+class="math inline">\(i_1, \ldots, i_d\)</span> comes potentially with a
+factor of <span class="math inline">\(n^d\)</span>, so the problem
+reduces to counting the number of summed indices. We observe when
+happens when we pair two variables which are not adjacent: <span
+class="math display">\[\begin{align}
+\wick{B_{i_{j-1}i_{j}}\c B_{i_ji_{j+1}}B_{i_{j+1}i_{j+2}} \ldots
+B_{i_{k-2}i_{k-1}}\c B_{i_{k-1}i_{k}}B_{i_ki_{i+1}}}.
+\end{align}\]</span> This introduces <em>two</em> constraints: <span
+class="math inline">\(i_j = i_k\)</span> and <span
+class="math inline">\(i_{j+1} = i_{k+1}\)</span>, eliminating two
+independent sums and thus two factors of <span
+class="math inline">\(n\)</span>. However, when we pair two
+<em>adjacent</em> variables, <span class="math display">\[\begin{align}
+\wick{\c B_{i_j i_{j+1}}\c B_{i_{j+1}i_{j+2}}},
+\end{align}\]</span> we only introduce <em>one</em> constraint, <span
+class="math inline">\(i_j = i_{j+2}\)</span>. Once we do this, we are
+left with <span class="math display">\[\begin{align}
+B_{i_{j-1}i_{j}}(B_{i_j i_{j+1}}B_{i_{j+1}i_j})B_{i_j i_{j+3}},
+\end{align}\]</span> so we are now allowed to pair <span
+class="math inline">\(B_{i_{j-1}i_j}\)</span> with <span
+class="math inline">\(B_{i_j i_{j+3}}\)</span> while still only
+introducing one constraint: <span class="math display">\[\begin{align}
+\wick{\c2 B_{i_{j-1}i_{j}}\c1 B_{i_j i_{j+1}}\c1 B_{i_{j+1}i_j} \c2
+B_{i_j i_{j+3}}}.
+\end{align}\]</span> Partitions formed in this way are called
+<em>noncrossing</em> partitions, and so we have found <span
+class="math display">\[\begin{align}
+M_d = n^{d/2} \times \text{\# of non-crossing partitions},
+\end{align}\]</span> where the factor of <span
+class="math inline">\(n^{d/2}\)</span> comes from the fact that there
+are <span class="math inline">\(d/2-1\)</span> independent pairings and
+a sum over <span class="math inline">\(d\)</span> variables. We can also
+normalize <span class="math inline">\(M \mapsto
+\frac{1}{\sqrt{n}}M\)</span> to eliminate this factor.</p>
+<p>We will call the number of non-crossing partitions of <span
+class="math inline">\(2d\)</span> numbers <span
+class="math inline">\(C_d\)</span>, or the <span
+class="math inline">\(d^{\text{th}}\)</span> Catalan number. We observe
+the the Catalan numbers satisfy a recursion relation; to find the number
+of non-crossing partitions of <span class="math inline">\(2d +
+2\)</span> numbers, we choose the 1st number to pair with the <span
+class="math inline">\(t^{\text{th}}\)</span> number. This splits the
+problem into partitioning the numbers from 2 to <span
+class="math inline">\(t-1\)</span> and from <span
+class="math inline">\(t+1\)</span> to <span
+class="math inline">\(d\)</span>, as illustrated with an example below:
+<span class="math display">\[\begin{align}
+\wick{\c2 1 \qquad(\c1\bullet\quad \cdots \quad\c1\bullet)\qquad \c2 t
+\qquad(\c1 \bullet \quad\cdots\quad \c1 \bullet)}
+\end{align}\]</span> Therefore, the Catalan numbers are defined by the
+recurrence formula <span class="math display">\[\begin{align}
+C_d = \sum_{t&lt;d} C_{t}C_{d-t-1}
+\end{align}\]</span> If we examine the generating function, we find
+<span class="math display">\[\begin{align}
+f(x) = \sum_{n = 0}^\infty C_nx^n =
+\sum_{n = 0}^\infty \sum_{t = 0}^{n-1}C_tC_{n-t-1} x^{n} = x\qty(\sum_{t
+= 0}^\infty C_tx^t)^2 +1 = xf^2(x) + 1
+\end{align}\]</span> Solving this equation yields <span
+class="math display">\[\begin{align}
+f(x) = \frac{1}{2x} \pm \frac{1}{2x}\sqrt{1 - 4x}
+\end{align}\]</span> and we know to take the negative branch because
+<span class="math inline">\(\lim_{x\to 0}f(x) = C_0 = 1\)</span>.</p>
+<h2 id="stieltjes-transform">Stieltjes transform</h2>
+<p>To derive the PDF <span class="math inline">\(p(x)\)</span>, we can
+go via the characteristic function (which turns out to be nasty) or use
+a trick called the <em>Stieljes transform</em>. We define <span
+class="math display">\[\begin{align}
+\label{eq:stieltjes}
+G(t) \equiv \left \langle \frac{1}{t-x}\right \rangle = \int \dd
+x\frac{p(x)}{t-x}.
+\end{align}\]</span> Expanding the integrand as a power series, <span
+class="math display">\[\begin{align}
+G(x) = \int \dd x p(x) \sum_{n = 0}^\infty t^{1-n}x^n = \sum_{n =
+0}^\infty \frac{\langle x^n \rangle}{t^{n+1}},
+\end{align}\]</span> so <span class="math inline">\(G(x)\)</span> can be
+easily expressed as a series in the moments. Furthermore, we have <span
+class="math display">\[\begin{align}
+\Im(\lim_{\varepsilon\to 0}G(t - \mathrm i\varepsilon)) &amp;=
+\Im(\lim_{\varepsilon\to 0}\int \dd x \frac{p(x)}{t-x-\mathrm
+i\varepsilon}) \notag\\
+&amp;= \lim_{\varepsilon\to 0}\int \dd x
+\frac{p(x)\varepsilon}{(t-x)^2+\varepsilon^2}  = \pi\int \dd x
+p(x)(t-x)\delta(t-x) = \pi p(t).
+\end{align}\]</span> Applying this to the Catalan numbers, we find <span
+class="math display">\[\begin{align}
+G(t) = \sum_{n = 0}^\infty \frac{C_{n/2}}{t^{n+1}} = \sum_{n= 0}^\infty
+C_{n}(1/t)^{2n+1} = (1/t)f(1/t^2) = \frac{t-\sqrt{t^2-4}}{2}
+\end{align}\]</span> Substituting in <span class="math inline">\(t
+\mapsto t - \mathrm i\varepsilon\)</span> and taking <span
+class="math inline">\(|t| &lt; 2\)</span>, we get <span
+class="math display">\[\begin{align}
+\label{eq:Cauchy}
+\frac{1}{\pi}\Im G(t - \mathrm i\varepsilon) = \frac{1}{2\pi}\sqrt{4 -
+t^2}
+\end{align}\]</span> which is the famous <em>semicircle
+distribution</em>.</p>
+<h2 id="expression-for-catalan-numbers">Expression for Catalan
+numbers</h2>
+<p>To derive an expression for the Catalan numbers, we can consider
+every non-crossing partition as a set of parenthesis, where an open
+parenthesis begins a partition and a closed parenthesis ends the
+partition. A parenthesization is only valid if in every initial
+substring there are more open parenthesis than closed parenthesis. We
+can organize such strings by “height" <span
+class="math inline">\(h\)</span>, which is the largest excess of closed
+parenthesis before open parenthesis in any initial substring. For a
+partition of <span class="math inline">\(2n\)</span> numbers, <span
+class="math inline">\(0 \leq h \leq n\)</span>, with <span
+class="math inline">\(h = 0\)</span> representing a valid partition.
+Consider the following iterative process: take the longest valid initial
+string, then find the next location in the string where the excess is
+zero, and reflect these two substrings. This exhibits a bijection
+between strings at height <span class="math inline">\(h\)</span> and
+strings at height <span class="math inline">\(0\)</span>. Therefore the
+number of noncrossing partitions are <span
+class="math display">\[\begin{align}
+C_n = \frac{1}{n+1}\binom{2n}{n},
+\end{align}\]</span> where <span
+class="math inline">\(\binom{2n}{n}\)</span> is the number of strings
+with the same number of open and closed parenthesis, and <span
+class="math inline">\(n+1\)</span> is the number of values <span
+class="math inline">\(h\)</span> may take.</p>
+<h2 id="concentration-of-moments">Concentration of moments</h2>
+<p>One property that makes random matrix ensembles particular
+interesting for physicist is the tendency of spectral moments to
+<em>concentrate</em> around their average. Therefore, the spectral
+distribution of the Hamiltonian of a large nucleus will be
+well-described by these average statistics. We can prove this using the
+Markov inequality: <span class="math display">\[\begin{align}
+\mathbb P(|X - \langle X \rangle|^2 &gt; \varepsilon) \leq
+\frac{\operatorname{Var}(X)}{\varepsilon}
+\end{align}\]</span> where <span class="math inline">\(X\)</span> is a
+random variable and <span
+class="math inline">\(\operatorname{Var}(X)\)</span> is its variance.
+Then a partition-counting argument will easily bound the variance <span
+class="math display">\[\begin{align}
+&amp;\langle M_d^2 \rangle - \langle M_d \rangle^2 =\\
+&amp;\frac{1}{n^2N^d}\sum_{i_1, \ldots, i_d}\sum_{j_1, \ldots,
+j_d}\sum_{k_1, \ldots, k_d} \sum_{\ell_1, \ldots, \ell_d} \langle
+B^{(k_1)}_{i_1i_2} \cdots B_{i_d i_{1}}^{(k_d)} B^{(\ell_1)}_{j_1j_2}
+\cdots B_{j_d j_{1}}^{(\ell_d)} \rangle - \langle B^{(k_1)}_{i_1i_2}
+\cdots B_{i_d i_{1}}^{(k_d)}\rangle \langle B^{(\ell_1)}_{j_1j_2} \cdots
+B_{j_d j_{1}}^{(\ell_d)} \rangle .
+\end{align}\]</span> We can immediately see that the difference in these
+two sums are the pairings of <span class="math inline">\(B_{i_k,
+i_{k+1}}\)</span> with <span class="math inline">\(B_{j_\ell, j_{\ell +
+1}}\)</span>. But as in the argument for the average moments, we see
+that this introduces two constraints into the sum, and so this term is
+subleading. This proves that the moments concentrate.</p>
+<h1 id="free-independence">Free Independence</h1>
+<p>Let’s suppose we have a free group generated by the matrices <span
+class="math inline">\(g_1, \ldots, g_N\)</span>, and we define a
+functional <span class="math inline">\(\tr\)</span> such that <span
+class="math inline">\(\tr(g_i) = \mathbf{I}[g_i =
+\operatorname{id}]\)</span>, the group identity. Let <span
+class="math inline">\(g_0 = \operatorname{id}\)</span>. Now we define
+the matrix <span class="math display">\[\begin{align}
+M = \sum_{i=1}^N g_i + g_i^{-1}.
+\end{align}\]</span> We can see that <span
+class="math display">\[\begin{align}
+\tr(M^d) = \sum_{h_1,\ldots, h_d \in \{g_i\}} \mathbf{I}[h_1\ldots h_d =
+\operatorname{id}].
+\end{align}\]</span> Since <span class="math inline">\(h_1, \ldots,
+h_d\)</span> are generators of a free group, the only way for <span
+class="math inline">\(h_1 \ldots h_d = \operatorname{id}\)</span> is for
+some <span class="math inline">\(h_i\)</span> to cancel with its
+adjacent inverse, up to cyclic permutations. Iterating this construction
+gives exactly the non-crossing partitions! Therefore we have a kind of
+“central limit theorem" for the matrices <span class="math inline">\(g_i
++ g_{i}^{-1}\)</span>: whenever relations between <span
+class="math inline">\(g_i, g_j\)</span> vanish under the trace, the
+spectrum obeys a semicircle law. These considerations lead us to the
+notion of free independence.</p>
+<p>For classical random variables, independence is easy; for random
+variables <span class="math inline">\(X_1\)</span> and <span
+class="math inline">\(X_2\)</span> with zero mean <span
+class="math display">\[\begin{equation}
+\langle X_1X_2\rangle =\langle X_1\rangle\langle X_2\rangle, \langle
+X_1^2X_2\rangle = \langle X_1^2\rangle \langle X_2\rangle=0, \mathrm{
+etc}  .
+\end{equation}\]</span> Independence implies that the expectation value
+of polynomials of independent random variables will be polynomials of
+the expectation values of random variables. However, independence for
+GUEs is subtle because the random matrices will typically not commute.
+Specifically, <span class="math display">\[\begin{equation}
+    \langle X_1X_2\rangle \neq \langle X_2X_1\rangle
+\end{equation}\]</span> in general. Free probability rectifies this by
+creating a notion of “noncommutative independence". Henceforth, we shall
+denote the mean (typically a normalized trace) of random matrices by
+<span class="math inline">\(\langle \cdot \rangle\)</span>. This mean
+shall be normalized to be <em>unital</em>, i.e. <span
+class="math inline">\(\langle \mathbb{I} \rangle =1\)</span>. Since
+independence cares about polynomials of random variables, we let <span
+class="math inline">\(\mathcal{A}_{j,n}\)</span> (<span
+class="math inline">\(1\leq j\leq M\)</span>) denote the set of
+polynomials in <span class="math inline">\(X_j\)</span> with complex
+coefficients and <span class="math inline">\(\mathcal{A}_n\)</span> be
+the algebra generated by <span
+class="math inline">\(\mathcal{A}_{j,n}\)</span>. Each <span
+class="math inline">\(\mathcal{A}_{j,n}\)</span> is a <em>unital
+subalgebra</em> of <span class="math inline">\(\mathcal{A}_n\)</span>
+(because they all contain the identity).</p>
+<div class="definition">
+<p><strong>Definition 1</strong>. We say that any collection of <span
+class="math inline">\(M\)</span> unital subalgebras of <span
+class="math inline">\(\mathcal{A}_{n}\)</span> are <strong>freely
+independent</strong> with respect to <span class="math inline">\(\langle
+\cdot \rangle\)</span> if, whenever we have <span
+class="math inline">\(r\geq 2\)</span> and <span
+class="math inline">\(a_{1,n},\cdots a_{r,n}\in \mathcal{A}_n\)</span>
+such that</p>
+<ol>
+<li><p><span class="math inline">\(\langle a_i \rangle=0\)</span> for
+<span class="math inline">\(i=1,\ldots,r\)</span></p></li>
+<li><p><span class="math inline">\(a_i\in \mathcal{A}_{j_i}\)</span>,
+with <span class="math inline">\(1\leq j_i\leq M\)</span> for <span
+class="math inline">\(i=1,\ldots,r\)</span> and <span
+class="math inline">\(j_1\neq j_2, j_2\neq j_3, \ldots, j_{r-1}\neq
+j_r\)</span>,</p></li>
+</ol>
+<p>then <span class="math inline">\(\langle a_1\cdots a_r
+\rangle=0\)</span>. In other words, <em>alternating products of centered
+elements is centered</em>.</p>
+</div>
+<p>Intuitively, this generalizes independence in the following sense: If
+I have a polynomial of random variables <span
+class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span> with mean zero (say <span
+class="math inline">\(X^k\)</span> and <span
+class="math inline">\(Y^L\)</span>) and I want to compute the
+expectation value of their product, it will just be the product of
+expectation values, which will vanish. We can think of probability
+theories <span class="math inline">\((\mathcal{A},\langle \cdot
+\rangle)\)</span> satisfying free independence as <em>noncommutative
+probability theories</em>. Elements of <span
+class="math inline">\(\mathcal{A}\)</span> are called
+<em>non-commutative random variables</em>. Further, if a noncommutative
+probability theory becomes free as <span class="math inline">\(n\to
+\infty\)</span> we call it <em>asymptotically free</em>. Perhaps the
+most exciting thing is one can show that a collection of GUE matrices is
+asymptotically free. This allows the technology developed in free
+probability to make asymptotic statements about GUE matrices. To see how
+the noncommutativity matters, consider centered random variables <span
+class="math inline">\(a_1\)</span> and <span
+class="math inline">\(a_2\)</span> with <span
+class="math inline">\(\langle a_1^2 \rangle=\sigma_1^2\)</span> and
+<span class="math inline">\(\langle a_2^2 \rangle=\sigma_2^2\)</span>.
+By the definition of freeness <span
+class="math display">\[\begin{equation}
+    \langle (a_1^2-\sigma_1^2)(a_2^2-\sigma_2^2)\rangle =0
+\implies  \langle a_1^2a_2^2 \rangle=\sigma_1^2\sigma_2^2
+\end{equation}\]</span> However, <span
+class="math display">\[\begin{equation}
+    \langle a_1a_2a_1a_2 \rangle =0
+\end{equation}\]</span> by the definition of freeness. Thus the same
+random variable content yields different moments when in different
+orders. This example illustrates that <em>freeness is not just a
+generalization of independence</em>. At no point in the above derivation
+did we claim that <span class="math inline">\(a_1\)</span> and <span
+class="math inline">\(a_2\)</span> did not commute. In principle, these
+could have also been regular random variables. But if they commuted,
+either <span class="math inline">\(\sigma_1\)</span> or <span
+class="math inline">\(\sigma_2=0\)</span>, implying it was almost surely
+just constant. Freeness therefore imposes a much <em>stronger</em>
+condition than regular independence. Also note that freeness is
+<em>not</em> a generalization of factoring the joint measure. For
+classical probability theory, independence means our joint measure <span
+class="math inline">\(\mu(x,y)=\mu(x) *\mu(y)\)</span> (<span
+class="math inline">\(*\)</span> is a convolution). However, no
+criterion holds for our equivalent state <span
+class="math inline">\(\langle \cdot \rangle\)</span>. The notion of
+independence is thus restricted to how independence behaves for
+<em>moments</em>, not measures. There is, however, an analogue in free
+probability. When two distributions are freely independent we define the
+<em>free convolution</em> such that <span class="math inline">\(\mu(x)
+\boxtimes \mu(y)\)</span> will be the joint distribution.</p>
+<h1 id="r-transform-and-free-cumulants"><span
+class="math inline">\(R\)</span>-transform and free cumulants</h1>
+<h2 id="classical-cumulants">Classical cumulants</h2>
+<p>In classical probability, the cumulants <span
+class="math inline">\(\kappa_n\)</span> are defined as follows: <span
+class="math display">\[\begin{align}
+\log \langle \mathrm e^{tX} \rangle = \sum_{n=0}^\infty \frac{\kappa_n
+t^n}{n!}.
+\end{align}\]</span> Therefore, we find <span
+class="math display">\[\begin{align}
+\langle \mathrm e^{t X}\rangle &amp;= \sum_{n=0}^\infty
+\frac{t^nM_n}{n!} = \exp(\sum_{n=0}^\infty \frac{\kappa_n t^n}{n!}) =
+\sum_{k = 0}^{\infty}\frac{1}{k!}\sum_{n_1, \ldots, n_k}\prod_{i=1}^k
+\frac{t^{n_i}}{n_i!}\kappa_{n_i}.
+\end{align}\]</span> Comparing terms, we find that <span
+class="math display">\[\begin{align}
+M_n = \sum_{k=0}^{\infty}\frac{n!}{k!}\sum_{n_1 + \cdots + n_k =
+n}\prod_{i=1}^k \frac{\kappa_{n_i}}{n_i!},
+\end{align}\]</span> Then the number of <em>set</em> partitions of <span
+class="math inline">\(\{1 \ldots n\}\)</span> with <span
+class="math inline">\(k\)</span> blocks is related to the number of
+<span class="math inline">\(\lambda \in [n]\)</span> with blocks <span
+class="math inline">\(n_1, \ldots, n_k\)</span> by the factor <span
+class="math display">\[\begin{align}
+\frac{n!}{k!n_1! \ldots n_k!}
+\end{align}\]</span> where <span class="math inline">\(n!\)</span>
+counts the permutations of the elements, <span
+class="math inline">\(n_i!\)</span> mods out by the permutations of each
+block, and <span class="math inline">\(k!\)</span> counts the
+permutations of the blocks. Therefore we can write <span
+class="math display">\[\begin{align}
+M_n = \sum_{\pi \in \mathcal P(n)}\kappa_{\pi},
+\end{align}\]</span> where <span class="math inline">\(\mathcal
+P\)</span> are the set partitions of <span class="math inline">\(\{1,
+\ldots, n\}\)</span> and <span class="math inline">\(\kappa_{\pi} =
+\prod_{S \in \pi}\kappa_{|S|}\)</span>. The most important property of
+the classical cumulants is that since the cumulant generating function
+<span class="math inline">\(K(t)\)</span> satisfies <span
+class="math display">\[\begin{align}
+K_{X+Y}(t) = \log(\langle \mathrm e^{t(X+Y)}\rangle)  =\log(\langle
+\mathrm e^{tX}\rangle \langle \mathrm e^{tY}\rangle) = K_X(t) + K_Y(t)
+\end{align}\]</span> when <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> are independent variables, this
+implies that <span class="math display">\[\begin{align}
+\kappa_n(X + Y) = \kappa_n(X) + \kappa_n(Y).
+\end{align}\]</span></p>
+<h2 id="r-transform"><span
+class="math inline">\(R\)</span>-transform</h2>
+<p>To define the <span class="math inline">\(R\)</span>-transform,
+consider the function <span class="math inline">\(G(z)\)</span> defined
+in Eq. <a href="#eq:stieltjes" data-reference-type="eqref"
+data-reference="eq:stieltjes">[eq:stieltjes]</a>. For small enough <span
+class="math inline">\(z\)</span>, <span
+class="math inline">\(G(z)\)</span> is invertible, and therefore put
+<span class="math display">\[\begin{align}
+R(z) = G^{-1}(z) - \frac{1}{z}.\label{eq:R}
+\end{align}\]</span> The <span class="math inline">\(R\)</span>
+transform will play the role of the cumulant generating function in
+classical probability. By evaluating both sides of <a href="#eq:R"
+data-reference-type="eqref" data-reference="eq:R">[eq:R]</a> at <span
+class="math inline">\(z = G(w)\)</span> we find <span
+class="math display">\[\begin{align}
+R(G(z)) = z - \frac{1}{G(z)} \implies G(z) = \frac{1}{z-R(G(z))}.
+\label{eq:GR}
+\end{align}\]</span> This functional equation will be important
+later.</p>
+<h2 id="free-cumulants">Free cumulants</h2>
+<p>We will introduce the notion of a <em>free cumulant</em>, which is
+defined similar with respect to <em>non-crossing</em> partitions, and we
+will see that they satisfy the same additive property.</p>
+<div class="definition">
+<p><strong>Definition 2</strong> (Free cumulant). Now we define the free
+cumulants as the coefficients in the series expansion of <span
+class="math inline">\(R\)</span>: <span
+class="math display">\[\begin{align}
+R(z) &amp;= \sum_{n=1}^\infty z^{n-1} \kappa_n.
+\end{align}\]</span></p>
+</div>
+<p>Now consider expanding <a href="#eq:GR" data-reference-type="eqref"
+data-reference="eq:GR">[eq:GR]</a> as a power series: <span
+class="math display">\[\begin{align}
+zG(z) &amp;= G(z)R(G(z)) \\
+\sum_{n = 1}^\infty \frac{M_n}{z^n} &amp;= \sum_{n=1}^\infty
+\frac{M_n}{z^{n+1}}\sum_{k}\kappa_k\qty(\sum_{j = 1}^\infty
+\frac{M_j}{z^{j+1}})^{k-1} \notag \\
+&amp;= \sum_{n=1}^\infty\sum_{k=1}^\infty\sum_{j_1\ldots j_{n-1}}
+\frac{\kappa_k M_n M_{j_1}\ldots M_{j_{n-1}}}{z^{\sum_i j_i + k+n}}
+\end{align}\]</span> Equating powers, we find <span
+class="math display">\[\begin{align}
+M_n &amp;= \sum_{n=1}^\infty\sum_{k=1}^\infty\sum_{\substack{j_1\ldots
+j_{n-1} \\ \sum_ij_i = n-k}} \kappa_k M_{j_0} M_{j_1}\ldots M_{j_{n-1}}
+\label{eq:cumulant_recursion}
+\end{align}\]</span> While it may not be immediately obvious, the
+solution to this recurrence relation is <span
+class="math display">\[\begin{align}
+M_n = \sum_{\pi \in \mathcal P_{\rm{NC}}(n)}\kappa_{\pi}
+\end{align}\]</span> where <span class="math inline">\(\mathcal
+P_{\rm{NC}}(n)\)</span> denotes the set of non-crossing partitions of
+<span class="math inline">\(\{1, \ldots, n\}\)</span> and <span
+class="math inline">\(\kappa_\pi \equiv \prod_{S \in
+\pi}\kappa_{|S|}\)</span>. Plugging this back into Eq. <a
+href="#eq:cumulant_recursion" data-reference-type="eqref"
+data-reference="eq:cumulant_recursion">[eq:cumulant_recursion]</a>, we
+can see that this sums over all the ways to separate a non-crossing
+partition into disjoint components.</p>
+<p>This motivates us to define the free (multivariate) cumulants by</p>
+<div class="definition">
+<p><strong>Definition 3</strong>. <span
+class="math display">\[\begin{align}
+\langle A_1\ldots A_n \rangle  = \sum_{\pi \in \mathcal
+P_{\rm{NC}}(n)}\kappa_{\pi}(A_1, \ldots, A_n)
+\end{align}\]</span> We will call a cumulant <em>mixed</em> if <span
+class="math inline">\(A_1, \ldots, A_n\)</span> are freely
+independent.</p>
+</div>
+<div id="lem:Mobius" class="lemma">
+<p><strong>Lemma 1</strong> (Mobius inversion). <em>There exist
+constants <span class="math inline">\(\mu_n\)</span> such that <span
+class="math display">\[\begin{align}
+\kappa_n(A_1, \ldots, A_n) = \sum_{\pi \in \mathcal P_{\rm{NC}}(n)}\mu_d
+\langle A_1\cdots A_n\rangle_\pi
+\end{align}\]</span> i.e. the above formula can be inverted, where <span
+class="math inline">\(\langle \cdot \rangle_\pi\)</span> is the trace
+evaluated over blocks of <span
+class="math inline">\(\pi\)</span>.</em></p>
+</div>
+<div class="prop">
+<p><strong>Proposition 1</strong>. <em>The algebras <span
+class="math inline">\(A_1, \ldots, A_n\)</span> are freely independent
+iff the mixed cumulants vanish.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For the first direction, we observe that <span
+class="math display">\[\begin{align}
+\langle A_1\ldots A_n\rangle = \sum_{\pi \in \mathcal
+P_{\rm{NC}}(n)}\kappa_\pi(A_1, \ldots, A_n).
+\end{align}\]</span> Since <span class="math inline">\(\pi\)</span> is
+non-crossing, it must contain at least one contiguous block, which is
+therefore a mixed cumulant and must vanish.</p>
+<p>For the other direction, we will induct. We have <span
+class="math display">\[\begin{align}
+0 = \langle A_1\ldots A_N \rangle = \kappa_n(A_1, \ldots, A_n) +
+\sum_{\substack{\pi \in \mathcal P_{\rm{NC}}\\ |\pi| &gt; 1}} =
+\kappa_n(A_1, \ldots, A_n),
+\end{align}\]</span> so this proves that <span
+class="math inline">\(\kappa_n(A_1, \ldots, A_n) = 0\)</span>. ◻</p>
+</div>
+<p>The vanishing of mixed cumulants immediately implies the additivity
+of the <span class="math inline">\(R\)</span>-transform:</p>
+<div class="prop">
+<p><strong>Proposition 2</strong>. <em>Let <span
+class="math inline">\(X,Y\)</span> be two freely independent variables.
+Then the <span class="math inline">\(R\)</span>-transform distributes
+additively: <span class="math display">\[\begin{align}
+R_{X+Y}(z) = R_X(z) + R_Y(z)
+\end{align}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By Lem. <a href="#lem:Mobius"
+data-reference-type="ref" data-reference="lem:Mobius">1</a>, the
+cumulants are multilinear functions. Therefore we have <span
+class="math display">\[\begin{align}
+R_{X+Y}(z) = \sum_{n}z^{n-1}\kappa_n(X+Y) = \sum_{n}z^{n-1}[\kappa_n(X)
++ \kappa_n(Y) + \text{mixed}] = R_X(z) + R_Y(z)
+\end{align}\]</span> ◻</p>
+</div>
+<p>This makes the <span class="math inline">\(R\)</span>-transform into
+the free analogue of the cumulant generating function. For physicists,
+you can think of the free energy as the log of the moment/cumulant
+generating function and so the <span
+class="math inline">\(R\)</span>-transform is the analogue of the free
+energy.</p>
+<h1 id="free-central-limit-theorem">Free central limit theorem</h1>
+<p>Where does the classical central limit theorem come from? Suppose
+that <span class="math inline">\(X\)</span> is a random variable and
+<span class="math inline">\(\kappa_n = 0\)</span> for all <span
+class="math inline">\(n &gt; 2\)</span>. Then we find <span
+class="math display">\[\begin{align}
+\log \langle \mathrm e^{tX}\rangle = \kappa_1 t + \frac{1}{2}\kappa_2
+t^2,
+\end{align}\]</span> and exponentiating both sides gives <span
+class="math display">\[\begin{align}
+M_X(t) = \mathrm e^{\frac{1}{2}\kappa_2 t^2 + \kappa_1 t}.
+\end{align}\]</span> Analytic continuation to the imaginary axis gives
+the characteristic function, and then we Fourier transform to get back
+the PDF: <span class="math display">\[\begin{align}
+p(x) =  \int\dd t \mathrm e^{-\mathrm ixt}\mathrm
+e^{-\frac{1}{2}\kappa_2 t^2 + \mathrm i\kappa_1 t} =
+\sqrt{\frac{\kappa_2}{2\pi}}\mathrm
+e^{-\frac{(x-\kappa_1)^2}{2\kappa_2}}.
+\end{align}\]</span> Therefore the vanishing of higher cumulants is
+equivalent to the Gaussian distribution, where <span
+class="math inline">\(\kappa_2\)</span> is the variance and <span
+class="math inline">\(\kappa_1\)</span> is the mean.</p>
+<p>The same is true for free probability about the semicircle
+distribution. Suppose that all higher cumulants vanish. We always
+subtract the mean so that variables are centered and <span
+class="math inline">\(\kappa_1 = 0\)</span>. Then <span
+class="math display">\[\begin{align}
+R(z) = \sum_{n=1}z^{n-1}\kappa_n = z\kappa_2.
+\end{align}\]</span> Plugging this into the functional equation <a
+href="#eq:GR" data-reference-type="eqref"
+data-reference="eq:GR">[eq:GR]</a>, we find <span
+class="math display">\[\begin{align}
+G(z) = \frac{1}{z-R(G(z))} = \frac{1}{z-\kappa_2 G(z)}.
+\end{align}\]</span> Solving for <span class="math inline">\(G\)</span>
+gives <span class="math display">\[\begin{align}
+G(z) = \frac{z \pm \sqrt{z^2-4\kappa_2}}{2\kappa_2}.
+\end{align}\]</span> Plugging this into formula <a href="#eq:Cauchy"
+data-reference-type="eqref" data-reference="eq:Cauchy">[eq:Cauchy]</a>
+gives us <span class="math display">\[\begin{align}
+p(x) = \Im(\lim_{\varepsilon\to 0}G(z - \mathrm i\varepsilon)) =
+\frac{\sqrt{4\kappa_2-z^2}}{2\pi\kappa_2},
+\end{align}\]</span> recovering the semicircle distribution.</p>
+<p>Additionally, this shows that <span class="math inline">\(M\)</span>
+independent <span class="math inline">\(n\times n\)</span> GUEs are
+freely independent: since GUE’s converge to the semi-ciricle
+distribution, all of the <span class="math inline">\(k\geq 3\)</span>
+cumulants vanish. Further, one can show that the <span
+class="math inline">\(k=2\)</span> cumulants will be proportional to
+<span class="math inline">\(\delta_{ij}\)</span> in the limit <span
+class="math inline">\(n \to \infty\)</span>, implying that all mixed
+cumulants vanish.</p>
+<div class="theorem">
+<p><strong>Theorem 1</strong>. <em>Suppose that <span
+class="math inline">\(\{X_i\}_{i = 1\ldots N}\)</span> are identical and
+freely independent variables whose spectral measure <span
+class="math inline">\(\mu\)</span> has zero mean and variance <span
+class="math inline">\(\kappa_2\)</span>. Then the limit of the the free
+convolution <span class="math display">\[\begin{align}
+\lim_{N\to \infty}\mu^{\boxtimes N}(x) =
+\frac{\sqrt{4\kappa_2-x^2}}{2\pi \kappa_2}
+\end{align}\]</span> is the semicircle distribution.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> First note that, by the series expansion definition,
+<span class="math inline">\(R_{\lambda X}(z)=\lambda R_X(\lambda
+z)\)</span>. Now recall that the goal is to study the <span
+class="math inline">\(R\)</span> transform of <span
+class="math inline">\(S_N =\frac{1}{\sqrt{N}}\sum_{i=1}^{N}X_i\)</span>
+as <span class="math inline">\(N\to \infty\)</span>. Because each <span
+class="math inline">\(X_i\)</span> is identically distributed and is
+asymptotically free, it has the same cumulant expansion and will
+factorize. Therefore <span class="math display">\[\begin{align}
+      R_{S_N}(z)
+&amp;=  \frac{1}{\sqrt{N}}R_{S_N}\left(\frac{z}{\sqrt{N}}\right)=\frac{N}{\sqrt{N}}R_{X_1}\left(\frac{z}{\sqrt{N}}\right)  \\
+      &amp;=\sqrt{N}  \sum_{k=0}^{\infty}\kappa_{k+1}(X_1)\left(\frac{z}{\sqrt{N}}\right)^n=
+\kappa_2(X_1)z +O\left(\frac{1}{\sqrt{N}}\right)
+\end{align}\]</span> Taking <span class="math inline">\(N\to
+\infty\)</span> give the desired result. ◻</p>
+</div>
+<div id="refs" class="references csl-bib-body" data-entry-spacing="0"
+role="list">
+<div id="ref-hiai2000semicircle" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">F.
+Hiai and D. Petz, <em>The semicircle law, free random variables and
+entropy</em>. American Mathematical Soc., 2000.</div>
+</div>
+<div id="ref-feier2012methods" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A.
+R. Feier, <em>Methods of proof in random matrix theory</em>, vol. 9.
+Harvard University, 2012.</div>
+</div>
+<div id="ref-kargin2013lecture" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">V.
+Kargin, <span>“Lecture notes on free probability,”</span> <em>arXiv
+preprint arXiv:1305.2611</em>, 2013.</div>
+</div>
+<div id="ref-speicher2009free" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R.
+Speicher, <span>“Free probability theory,”</span> <em>arXiv preprint
+arXiv:0911.0087</em>, 2009.</div>
+</div>
+<div id="ref-xia2019simple" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div
+class="csl-right-inline">X.-G. Xia, <span>“A simple introduction to free
+probability theory and its application to random matrices,”</span>
+<em>arXiv preprint arXiv:1902.10763</em>, 2019.</div>
+</div>
+</div>
