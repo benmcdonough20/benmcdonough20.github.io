@@ -1,0 +1,355 @@
+\input{preamble}
+
+\newcommand{\e}{\mathrm e}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\C}{\mathbb C}
+\newcommand{\kb}{k_{\mathrm{B}}}
+\newcommand{\ext}{\mathrm{ext}}
+\newcommand{\rad}{\mathcal R}
+\newcommand{\PT}{T_{\mathrm{P}}}
+
+\begin{document}
+\title{Introduction to entanglement entropy in CFT}
+\author{Ben McDonough}
+\maketitle
+
+
+\section{Introduction}\label{sec:calabrese_cardy}
+Entanglement entropy in quantum field theory can generally be computed using the replica trick, but in few situations is this method exact. One such situation is field theories in 2d with conformal symmetry. The now-famous formula for the entanglement entropy in an interval $I$ with length $\ell$ in a CFT was derived by Calabrese and Cardy in \cite{entanglement-CFT, entanglement-QFT}:
+\begin{align}
+    S(I) = \frac{c}{3}\log(\ell),
+\end{align}
+where $c$ is the central charge. Remarkably, the entanglement can be related to a correlator of two primary field, so in some ways, the entanglement can be seen as a ''response function" to moving the interval endpoints. 
+Here, I build up this calculation starting from the basics of conformal field theory. I also show how the formula changes in curved spacetime, which is important when the CFT is the matter sector of a theory with classical gravity.
+
+\section{Background on CFT}
+The stress-energy tensor of a field theory may be defined by
+\begin{align}
+T_{\mu \nu} = -2\frac{\delta S}{\delta g^{\mu \nu}}
+\end{align}
+in flat spacetime, where $S$ is the action and $g$ is the metric.
+Since the metric is symmetric, the stress tensor
+is symmetric.
+Under a change of coordinates 
+\begin{align}
+\delta \sigma^\mu = f^\mu(\sigma)
+\end{align}
+the metric changes by
+\begin{align}
+  \delta g^{\mu \nu} = \partial^\mu f^\nu + \partial^\nu f^\mu.\label{eq:metric-change}
+\end{align}
+Therefore
+the action changes as
+\begin{align}
+  \delta S = \int \dd^2 \sigma \frac{\delta S}{\delta g^{\mu \nu}}\delta g^{\mu \nu} = -\int \dd^2 \sigma T_{\mu \nu}\partial^\mu f^\nu = \int \dd^2 \sigma f^\nu \partial^\mu T_{\mu \nu}.\label{eq:variation}
+\end{align}
+When the equations of motion are satisfied, then the action is stationary with
+respect to arbitrary variations, and so
+\begin{align}
+\partial^\mu T_{\mu \nu} = 0\label{eq:conservation}
+\end{align}
+is a conserved current. In general, if 
+\begin{align}
+\sigma^\mu \mapsto f^\mu(\epsilon, \sigma) \label{eq:symmetry}
+\end{align}
+where $f(\sigma) \to \sigma$ as $\epsilon \to 0$, is a symmetry of the theory for
+all $\epsilon$, then we consider infinitesimal $\epsilon$, and promote
+$\epsilon$ to be a function of $\sigma$:
+\begin{align}
+  \sigma^\mu \mapsto f^\mu(\epsilon(\sigma), \sigma) \approx \sigma^\mu + \epsilon(\sigma)\frac{\delta f^\mu}{\delta \epsilon}.
+\end{align}
+Comparing this to Eq.~\eqref{eq:variation},
+the action changes by
+\begin{align}
+\delta S &= -\int \dd^2 \sigma \partial_\nu \qty(\epsilon \frac{\delta f^\mu}{\delta \epsilon})T_{\mu \nu} \\
+&= -\int \dd^2 \sigma \partial_\nu \epsilon \qty[\frac{\delta f^\mu}{\delta \epsilon}T_{\mu \nu}] +\qty(\partial_\nu\frac{\delta f^\mu}{\delta \epsilon}) \epsilon T_{\mu \nu}.
+\end{align}
+Since Eq.~\eqref{eq:symmetry} is a symmetry when $\epsilon$ is constant, the second term must
+vanish.\footnote{In general, the second term does not have to vanish, it could be
+  a total derivative. We will not need to worry about this.} Therefore,
+\begin{align}
+\delta S
+&= \int \dd^2 \sigma \epsilon(\sigma) \partial_\nu \qty[\frac{\delta f^\mu}{\delta \epsilon}T_{\mu \nu}] \equiv \int \dd^2 \sigma \epsilon(\sigma) \partial_\nu J_\nu \label{eq:action-variation}
+\end{align}
+where
+\begin{align}
+J_\nu \equiv \frac{\delta f^\mu}{\delta \epsilon}T_{\mu \nu} \label{eq:Noether}
+\end{align}
+is the associated Noether current. Conformal symmetry refers to all transformations which take
+the form
+\begin{align}
+ z &\mapsto z + \epsilon f(z) \\
+ \overline z &\mapsto \overline z + \epsilon g(\overline z)
+\end{align}
+for a holomorphic function $f$ and anti-holomorphic function $g$ (we use the
+trick of treating $z$ and $\overline z$ as independent coordinates).
+From Eq.~\eqref{eq:Noether}, the associated Noether currents
+(in holomorphic coordinates) are
+\begin{align}
+ J(z) = f(z) T_{z z} &\equiv  f(z) T(z) \\
+  \overline J(\overline z) = g(\overline z)T_{\overline z \overline z} &\equiv g(\overline z) \overline T(\overline z)
+\end{align}
+since $T_{z\overline z} = T_\alpha^\alpha$ vanishes due to conformal symmetry.
+The conservation equation [Eq.~\eqref{eq:conservation}] implies that $T$ is holomorphic and $\overline T$ is anti-holomorphic.
+Therefore, if we allow $\epsilon = \epsilon(z, \overline z)$ to be an arbitrary
+function and take $g=0$, then Eq.~\eqref{eq:action-variation} implies that
+\begin{align}
+\delta S = \frac{1}{2}\int \dd z \dd \overline z \epsilon(z, \overline z) \partial^z(f(z)T(z)) =  \int \dd z \dd \overline z \epsilon(z, \overline z) \overline \partial(f(z)T(z)),
+\end{align}
+where we lowered the index of $\partial^z = \partial_{\overline z} \equiv
+\overline \partial$.\footnote{The factors of $2$ and $1/2$ come from the fact
+  that the transformation $\sigma^1, \sigma^2 \mapsto \sigma^1+\ii \sigma^2, \sigma^1-\ii \sigma^2$ has Jacobian with
+  determinant 2, so $\dd z \dd \overline z = 2\dd \sigma^1\dd \sigma^2$, and the
+metric in holomorphic coordinates is $g_{z\overline z} =
+\qty(\pdv{\sigma^\mu}{z})\qty(\pdv{\sigma^\nu}{\overline z})g_{\mu \nu} = \frac{1}{2}$.}
+If we choose $\epsilon(z, \overline z) = \epsilon \mathds 1[R]$ to be the indicator function on some region
+$R$, then we find
+\begin{align}
+  \delta S = \epsilon\int_{R} \dd z \dd \overline z  \overline \partial(f(z)T(z)).
+\end{align}
+Ward identities arise from changing variables under the path integral:
+\begin{align}
+  \langle  X \rangle = \frac{1}{Z}\int \mathcal D \phi'(X + \delta X)\e^{-S - \delta S} = \langle  X \rangle + \langle  \delta X \rangle - \langle \delta S X \rangle.
+\end{align}
+This was derived without assuming a symmetry.\footnote{We did assume that
+  $\mathcal D\phi = \mathcal D\phi'$, which is a standard assumption.}
+Symmetry constrains the form of
+$\delta S$, and for the case of a conformal transformation, we can write
+\begin{align}
+\langle  \delta X \rangle = \epsilon\int_R \dd z \dd \overline z \overline \partial\langle f(z)T(z)X \rangle = \ii\epsilon\int_{\partial R} \dd z \langle f(z)T(z)X \rangle.
+\end{align}
+where in the last step we applied Green's theorem.
+Crucially, if $X = \mathcal O(\sigma_1)\ldots \mathcal O(\sigma_n)X'$, where
+$\mathcal O(\sigma_i)$ are \emph{local} operators at $\sigma_i \in R$ and $X'$
+is supported only outside of $R$, then because $f(z)T(z)$ is meromorphic, the
+contour integral is determined by its residues:
+\begin{align}
+\langle  \delta X \rangle = 2\pi \epsilon\sum_{i=1}^n\Res_{\sigma_i}\langle  f(z)T(z)\mathcal O(\sigma_1)\ldots \mathcal O(\sigma_n)X' \rangle.
+\end{align}
+The corresponding antiholomorphic current when $f = 0$ is 
+\begin{align}
+\langle  \delta X \rangle = 2\pi\epsilon\sum_{i=1}^n\Res_{\sigma_i}\langle  g(\overline z)\overline T(\overline z)\mathcal O(\sigma_1)\ldots \mathcal O(\sigma_n)X' \rangle.\label{eq:Ward}
+\end{align}
+This can be used to great effect to determine the transformation properties of
+operators.
+First, under an infinitesimal translation $z \mapsto z
++ \epsilon$, the corresponding Ward identity gives
+\begin{align}
+  \langle  \delta O(\sigma) \rangle = -\langle  \epsilon \partial O(\sigma) \rangle = -2\pi \epsilon\Res_{\sigma}[\langle T(z)O(\sigma)\rangle]
+\end{align}
+which implies that the coefficient of $1/(z - \sigma)$ in the Laurent series
+expansion of $\langle T(z) O(\sigma)\rangle$ is $\langle  \partial O(\sigma)
+\rangle/2\pi$. 
+Next, consider an arbitrary rotation and scaling transformation
+\begin{align}
+z \mapsto z' = \e^{\omega}z = \e^{\sigma}\e^{\ii \tau}z.
+\end{align}
+Fields with a scaling dimension
+$\Delta$ and spin $s$ transform as
+\begin{align}
+O'(z) = \e^{-\Delta \sigma - \ii s \tau}O(z) = \e^{-\omega h - \tilde h \overline \omega}O(z)
+\end{align}
+where $h = (\Delta + s)/2$ and $\tilde h = (\Delta - s)/2$ are the
+\emph{conformal weights} of $O$. Under the
+infinitesimal scaling $z \mapsto (1+\omega) z$,
+the Ward identity [Eq.~\eqref{eq:Ward}] gives
+\begin{align}
+\langle  \delta O(\sigma) \rangle = -\langle \omega h O(\sigma) + \omega \sigma \partial O(\sigma) \rangle+ \text{a.h.} = -2\pi\omega \Res_{\sigma}[\langle z T(z)O(\sigma) \rangle] + \text{a.h.}.\label{eq:transformation}
+\end{align}
+where we wrote ``a.h.'' for the antiholomorphic part.
+We find
+\begin{align}
+  \Res_{\sigma}[\langle z T(z)O(\sigma) \rangle] &= \sigma\Res_{\sigma}[\langle  T(z)O(\sigma) \rangle] + \Res_{\sigma}[\langle (z-\sigma)T(z)O(\sigma) \rangle] \\
+  &= \frac{\sigma}{2\pi}\langle  \partial O \rangle + \Res_{\sigma}[\langle (z-\sigma)T(z)O(\sigma) \rangle]
+\end{align}
+so the coefficient of the second-order pole in the expansion of $\langle  T(z)O(\sigma) \rangle$ is
+given by $\langle  hO(\sigma) \rangle$. Therefore, the conformal weights are
+found by
+\begin{align}
+  h &=  \frac{2\pi\langle  (z-\sigma)T(z)O(\sigma) \rangle}{\langle  O(\sigma) \rangle} \\
+  \tilde h &=  \frac{2\pi\langle  (\overline z-\sigma)\overline T(\overline z)O(\sigma) \rangle}{\langle  O(\sigma) \rangle},\label{eq:determine-conformal-weight}
+\end{align}
+and this determines the correlation function up to a constant:\footnote{
+The constant may be $0$, and in fact invariance under special conformal
+transformations as well would force $h_1 = h_2$, $\tilde h_1 = \tilde h_2$.
+}
+\begin{align}
+  \langle  O_1(u)O_2(v) \rangle = \frac{C_{12}}{|u-v|^{h_1+h_2}|u-v|^{\tilde h_1 + \tilde h_2}}.
+  \label{eq:correlator}
+\end{align}
+Furthermore, when the Laurent series expansion of $\langle T(z)O(\sigma)\rangle$
+truncates at second order, then Eq.~\eqref{eq:transformation} holds for all
+conformal transformations (not only rigid rotations and dilations), and can be
+integrated to obtain
+\begin{align}
+\langle  O(z') \rangle = \qty(\pdv{z'}{z})^{-h}\qty(\pdv{\overline z'}{\overline z})^{-\tilde h}\langle  O(z) \rangle.\label{eq:defprimary}
+\end{align}
+Such operators are called \emph{primary.}
+
+\section{Entanglement entropy of a single interval}
+Now, we will derive the entanglement entropy of a single interval $A = (u,v)$
+in CFT. First, consider the limit
+\begin{align}
+\lim_{n \to 1}\pdv{n} \Tr(\rho_A^n) = \lim_{n\to 1}\sum_{\lambda \in \spec(\rho_A)}\pdv{n}\e^{n\log \lambda} = \sum_{\lambda \in \spec(\rho_A)} \lambda \log(\lambda) = \Tr(\rho_A\log(\rho_A)) = -S_A
+\end{align}
+where $S_A$ is the von Neumann entropy of the region $A$. This is known broadly
+as the ``replica method'', and it is exact in the context of CFT. The density
+matrix is constructed as
+\begin{align}
+\rho(\phi_0, \phi_1) = \frac{1}{Z}\int_{\phi_0}^{\phi_1}\mathcal D[\phi(x, \tau')]\e^{-S[\phi]}
+\end{align}
+where we work in Euclidean signature, and the integration limits denote the
+boundary conditions $\phi(x,
+\tau' = 0) = \phi_0$ and $\phi(x, \tau' = \tau) = \phi_1$. The partition
+function $Z$ is the trace over the density matrix:
+\begin{align}
+  Z = \int \mathcal D[\phi] \rho(\phi, \phi).
+\end{align}
+The reduced density matrix $\rho_{A}$ is obtained by tracing over $B$:
+\begin{align}
+\rho_A(\phi^A_0, \phi^A_1) = \frac{1}{Z}\int \mathcal D[\phi^B] \rho(\phi^A_0 \oplus \phi^B, \phi^A_1 \oplus \phi^B).
+\end{align}
+To raise the density matrix to a power, we must simply contract adjacent indices:
+\begin{align}
+  \Tr[\rho_A^n] &= \frac{1}{Z^n} \int \mathcal D[\phi^A_1]\ldots \mathcal D[\phi^A_n] \rho_A(\phi_1^A, \phi_2^A)\rho_A(\phi_2^A, \phi_3^A)\ldots \rho_A(\phi_{n}^A, \phi_1^A) \\
+   &= \frac{1}{Z^n} \int \mathcal D[\phi^A_1]\mathcal D[\phi^B_1]\ldots \mathcal D[\phi^A_n]\mathcal D[\phi^B_n]\e^{-\sum_i S[\phi_i^A \oplus \phi_i^B]}V_A \label{eq:Sn}
+\end{align}
+where
+\begin{align}
+V_A = \prod_i\qty(\prod_{x \in A}\delta(\phi_i^A(x, \tau) - \phi_{i+1}^A(x, 0))\prod_{x \in B}\delta(\phi_i^B(x, 0) - \phi^B(x, \tau)))
+\end{align}
+is simply an operator that we defined to enforce the necessary boundary
+conditions in each integral for the contraction. The crucial observation is that
+Eq.~\eqref{eq:Sn} can be viewed as the expectation value of the operator $V_A$
+on $n$ copies of the CFT:
+\begin{align}
+\Tr[\rho_A^n]  = \langle  V_A \rangle_n.
+\end{align}
+Furthermore, we can express
+\begin{align}
+  V_A = \mathcal T_n(u) \mathcal T_{-n}(v)
+\end{align}
+where $\mathcal T_{n}, \mathcal T_{-n}$ are \emph{local operators}. This is because the
+$n$-sheeted theory has a global symmetry with respect to a permutation of the
+sheets $\phi_i \to \phi_{i\pm 1}$, so the location of the boundary is
+irrelevant; the operator $V_A$ must act only at the branch points $u$ and $v$.
+Amazingly, this also shows that the entanglement entropy is obtained from the limit of a
+certain response function, i.e. the response of the $n$-sheeted theory to shifts
+of the branch points $u,v$.
+Applying the transformation
+\begin{align}
+z' = \qty[\frac{(z-u)}{(v-z)}]^{1/n},
+\end{align}
+maps the branch points to $(0,\infty)$ and the $n$-sheeted surface to a single
+sheet. 
+The defining property of the central charge is the transformation of the
+expectation value of the stress tensor:\footnote{I chose not to normalize the
+  stress tensor to eliminate the factors of $2\pi$, which is why we have
+  $c/24\pi$ instead of $c/12$.}
+\begin{align}
+\langle  T(z) \rangle_{M} = \langle T(z') \rangle_{1} + \frac{c}{24\pi}\{z', z\} = \frac{c}{24\pi}\{z', z\}\label{eq:anomaly}
+\end{align}
+where
+\begin{align}
+\{z', z\} = \qty[\pdv[3]{z'}{z}\pdv{z'}{z} - \frac{3}{2}\qty(\pdv[2]{z'}{z})^2]\qty(\pdv{z'}{z})^{-2}\label{eq:schwarzian}
+\end{align}
+and $\langle T \rangle_{1}$ vanishes due to rotation and translation invariance
+once the theory is mapped to $\C$. 
+Therefore
+\begin{align}
+\langle  T(z)\mathcal T_n(u)\mathcal T_{-n}(v) \rangle_{n} = \langle  T(z) \rangle_{M} = \frac{c}{24\pi}\{z', z\},
+\end{align}
+where $M$ is the $n$-sheeted complex surface. The
+Schwarzian can be computed explicitly:
+\begin{align}
+\{z', z\} = \frac{1}{2}\qty(1-\frac{1}{n^2})\frac{(u-v)^2}{(z-u)^2(z-v)^2}.
+\end{align}
+The stress tensor in the replicated theory is
+\begin{align}
+T^{(n)} = \sum_{i =1}^n T_i,
+\end{align}
+so from this we directly obtain the operator product expansion of $\mathcal T_n
+\mathcal T_{-n}$ with the stress tensor:
+\begin{align}
+\langle  T^{(n)}(z)\mathcal T_n(u)\mathcal T_{-n}(v) \rangle_{n} = n\langle T(z) \mathcal T_n(u)\mathcal T_{-n}(v)\rangle_{n} = \frac{c}{48\pi}\qty(n-\frac{1}{n})\frac{(u-v)^2}{(z-u)^2(z-v)^2}.\label{eq:OPEs}
+\end{align}
+Phenomenally, this is enough to determine the conformal weights of the twist
+operators, and therefore the scaling of their correlator. Expanding near the
+pole $z = u$ gives 
+\begin{align}
+\frac{(u-v)^2}{(z-u)^2(z-v)^2} &= 
+  \frac{(u-v)^2}{([z-u]+[u-v])^2(z-u)^2} \\
+  &\approx \frac{1}{(z-u)^2}-\frac{2}{(z-u)(u-v)}.
+\end{align}
+Therefore the conformal weight of $\mathcal T_n$, using Eq.~\eqref{eq:determine-conformal-weight} is
+\begin{align}
+h = \frac{c}{24}(n - \frac{1}{n}).
+\end{align}
+The same argument will give the anti-conformal weight $\tilde h = h$, and
+expanding around $z = v$ shows that $\mathcal T_n, \mathcal T_{-n}$ have the
+same conformal weights. Therefore, we can apply Eq.~\eqref{eq:correlator} to find
+\begin{align}
+\Tr(\rho_A^n) = \langle  \mathcal T_n(u) \mathcal T_{-n}(v)\rangle_{n} = \frac{C_{12}}{|u-v|^{4h}} = |u-v|^{-\frac{c}{6}(n-\frac{1}{n})}.
+\end{align}
+Taking the limit as $n \to 1$, we finally have the celebrated formula
+\begin{align}
+  S_A = -\lim_{n\to 1}\pdv{n} |A|^{-\frac{c}{6}(n-\frac{1}{n})} = \frac{c}{3}\log|A|.\label{eq:entropy_limit}
+\end{align}
+Another important observation is that Eq.~\eqref{eq:OPEs} implies that the
+fields $\mathcal T_n, \mathcal T_{-n}$ are \emph{primary}
+[Eq.~(\ref{eq:defprimary})], so the entropy can be easily determined in other
+geometries given a conformal transformation relating the two geometries. One
+particularly useful example is 
+\begin{align}
+z \mapsto w = -\frac{\ii L}{2\pi}\log z,
+\end{align}
+which maps the complex plane to a cylinder of circumference $L$. Using the
+inverse transformation $z = \e^{2\pi \ii w/L}$, we find
+\begin{align}
+  \langle  \mathcal T_n(w_1) \mathcal T_{-n}(w_2) \rangle &= \qty|\pdv{z_1}{w_1}|^{2h}\qty|\pdv{z_2}{w_2}|^{2h}\langle  \mathcal T_n(z_1)\mathcal T_{-n}(z_2) \rangle \\
+  &= \qty(\frac{2\pi}{L})^{4h}|z_1z_2|^{2h}|z_1-z_2|^{-4h}
+    = \qty(\frac{L}{\pi}\sin(\pi[w_1-w_2]/L))^{-4h}
+\end{align}
+and the limit is found similarly to be
+\begin{align}
+S_A = \lim \pdv{n}\qty(\frac{L}{\pi}\sin(\pi[w_1-w_2]/L))^{-4h} = \frac{c}{3}\log(\frac{L}{\pi}\sin(\frac{\pi[w_1 - w_2]}{L})),
+\end{align}
+giving the entropy of a segment of a finite system of size $L$.
+
+\section{Curved spacetime}
+Also important is the generalization to real time and curved spacetime. For two points $z_1, z_2$
+that are spacelike separated, 
+we can analytically continue
+the formula \eqref{eq:entropy_limit} to Minkowski signature, as the derivation was
+performed in Euclidean signature. If $z_1 = x_1 + \ii t_1$ and $z_2 = x_2 + \ii
+t_2$, then
+\begin{align}
+  |z_1-z_2|^2 = (\Delta x + \ii \Delta t)(\Delta x - \ii \Delta t) = (\Delta x)^2 + (\Delta t)^2 \mapsto (\Delta x)^2 - (\Delta t)^2 = (u_2 - u_1)(v_1 - v_2)
+\end{align}
+where $u_i = x_i + t_i$ and $v_i = t_i - x_i$ are the light cone coordinates.
+Now if we further consider a Weyl transformation
+\begin{align}
+g \mapsto \Omega(z)g,
+\end{align}
+where $\Omega$ is real for simplicity,
+then quasiprimary operators $\mathcal O$ with scaling dimension $\Delta$
+transform as
+\begin{align}
+  \mathcal O \mapsto \Omega(x)^{-\Delta/2}\mathcal O.
+\end{align}
+Treating this as simply a diffeomorphic change of coordinates, the correlator of
+two primary fields must be
+\begin{align}
+\langle \Phi_1(z_1)\Phi_2(z_2) \rangle = \frac{\Omega(x)^{\Delta_1/2}\Omega(x)^{\Delta_2/2}}{(z_1-z_2)^{h_1+h_2}(\overline z_1 - \overline z_2)^{\tilde h_1 + \tilde h_2}}.
+\end{align}
+Substituting this back into Eq.~\eqref{eq:entropy_limit}, we have the
+corresponding formula for the entropy of a spacelike interval $A = [z_1,
+z_2]$ in Minkowski spacetime:
+\begin{align}
+S_A = \frac{c}{6}\log(\frac{(u_1 - u_2)(v_1-v_2)}{\sqrt{\Omega(z_1)\Omega(z_2)}}). \label{eq:curved-spacetime}
+\end{align}
+
+\bibliographystyle{unsrt}
+\bibliography{refs}
+\end{document}
